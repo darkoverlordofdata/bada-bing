@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Bing Wallpaper
+GenericName=Bing Wallpaper
+Comment=Bing Wallpaper Daily Changer
+Categories=Utility;
+Exec=com.github.darkoverlordofdata.bing-wall
+Icon=application-default-icon
+Terminal=false
+Type=Application
+Keywords=Bing;Wallpaper;
