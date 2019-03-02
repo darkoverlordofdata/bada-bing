@@ -1,0 +1,35 @@
+<schemalist>
+  <schema id="com.github.darkoverlordofdata.bing-wall" path="/com/github/darkoverlordofdata/bing-wall/" gettext-domain="com.github.darkoverlordofdata.bing-wall">
+
+    <key name="dark" type="b">
+      <default>false</default>
+      <summary>Dark Theme</summary>
+      <description>Use dark theme in application</description>
+    </key>
+
+    <key name="indicator" type="b">
+        <default>false</default>
+        <summary>Use indicator</summary>
+        <description>Mark to use app indicator and minimized to system tray.</description>
+    </key>
+
+    <key name="minimized" type="b">
+        <default>false</default>
+        <summary>Minimized on start</summary>
+        <description>When use indicator, start with minimized window.</description>
+    </key>
+
+    <key name="interval" type="i">
+        <default>86400</default>
+        <summary>Update interval</summary>
+        <description>Time in seconds to update wallpaper.</description>
+    </key>
+
+    <key name="start-on-boot" type="b">
+      <default>false</default>
+      <summary>Start on boot</summary>
+      <description>Start application when user log into the desktop</description>
+    </key>
+
+  </schema>
+</schemalist>
