@@ -54,10 +54,25 @@ subdir('po')
 # Create a new executable, list the files we want to compile, list the dependencies we need, and install
 executable(
     meson.project_name(),
-    'src/Application.vala',
+    'src/Constants.vala',
+    'src/BingWallpaper.vala',
+    asresources,
+    c_args: c_args,
     dependencies: [
-        dependency('gtk+-3.0')
+        dependency('gio-2.0'),
+        dependency('gobject-2.0'),
+        dependency('glib-2.0'),
+        dependency('gtk+-3.0'),
+        dependency('libsoup-2.4'),
+        dependency('json-glib-1.0'),
+        dependency('libxml-2.0'),
+        dependency('webkit2gtk-4.0'),
+        dependency('appindicator3-0.1'),
     ],
+    vala_args: [
+        meson.source_root() + '/vapi/config.vapi'
+    ],
+    link_args: ['-lm'],
     install: true
 )
 

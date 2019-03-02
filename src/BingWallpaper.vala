@@ -15,9 +15,9 @@
  ******************************************************************************/
 
 
-public class MyApp : Gtk.Application {
+public class BingWallpaper : Gtk.Application {
 
-    public MyApp () {
+    public BingWallpaper () {
         Object (
             application_id: "com.github.darkoverlordofdata.bing-wall",
             flags: ApplicationFlags.FLAGS_NONE
@@ -36,7 +36,7 @@ public class MyApp : Gtk.Application {
     }
 
     public static int main (string[] args) {
-        var app = new MyApp ();
+        var app = new BingWallpaper ();
         return app.run (args);
     }
 }
