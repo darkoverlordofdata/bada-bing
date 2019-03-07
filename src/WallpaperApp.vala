@@ -13,30 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
+public class Wallpaper.WallpaperApp : Gtk.Application 
+{
+    public MainWindow window;
 
-
-public class BingWallpaper : Gtk.Application {
-
-    public BingWallpaper () {
-        Object (
+    public WallpaperApp() {
+        Object(
             application_id: "com.github.darkoverlordofdata.bing-wall",
             flags: ApplicationFlags.FLAGS_NONE
         );
     }
 
-    protected override void activate () {
-        var main_window = new Gtk.ApplicationWindow (this);
-        main_window.default_height = 300;
-        main_window.default_width = 300;
-        main_window.title = "Bing Wallpaper";
-
-        var label = new Gtk.Label ("Bing Wallpaper");
-        main_window.add (label);
-        main_window.show_all ();
+    public override void activate() {
+        if(get_windows() == null) {
+            window = new MainWindow(this);
+            window.show_all();
+        } else {
+            window.present();
+        }
     }
 
-    public static int main (string[] args) {
-        var app = new BingWallpaper ();
-        return app.run (args);
+    public static int main(string[] args) {
+        var app = new WallpaperApp();
+        return app.run(args);
     }
 }

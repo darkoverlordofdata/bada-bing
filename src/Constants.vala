@@ -1,4 +1,5 @@
-namespace Constants {
+namespace Constants 
+{
     public const string DATADIR = Config.DATADIR;
     public const string PKGDATADIR = Config.PKG_DATADIR;
     public const string GETTEXT_PACKAGE = Config.GETTEXT_PACKAGE;
@@ -10,5 +11,6 @@ namespace Constants {
     public const string APP_NAME = "Bing Wallpaper";
     public const string VERSION_INFO = "Stable";
     public const string RELEASE = "stable";
-    public const string BING_API_ADDR = "http://api.openweathermap.org/data/2.5/";
+    public const string BING_URL = "https://www.bing.com";
+    public const string BING_API = "https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1";
 }

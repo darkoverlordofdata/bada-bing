@@ -4,7 +4,9 @@
 ## WIP - work in progress
 
 
-    Images are copyright to their respective owners. Bing is a trademark of Microsoft. This application is not affiliated with Bing or its services in any way.
+    Images are copyright to their respective owners. 
+    Bing is a trademark of Microsoft. 
+    This application is not affiliated with Bing or its services in any way.
 
 ### build
 
@@ -17,7 +19,6 @@
 
     ninja com.github.darkoverlordofdata.bing-wall-pot
     ninja com.github.darkoverlordofdata.bing-wall-update-po
-
 
 ### remove from menu
 

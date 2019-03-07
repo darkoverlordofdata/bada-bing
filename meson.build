@@ -1,9 +1,6 @@
-    # project name and programming language
+# project name and programming language
 project('com.github.darkoverlordofdata.bing-wall', ['vala', 'c'], version: '0.0.1')
 
-gnome = import('gnome')
-# Include the translations module
-i18n = import('i18n')
 
 # Set our translation domain
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
@@ -17,7 +14,7 @@ add_project_arguments(
   language: 'vala'
 )
 
-# Add locale support
+# Set configuration data
 conf = configuration_data()
 conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf.set_quoted('PREFIX', get_option('prefix'))
@@ -31,33 +28,35 @@ configure_file(
   output: 'config.h',
   configuration: conf
 )
-config_h_dir = include_directories('src')
-
-# Arguments C - no gcc warnings
-c_args = [
-  '-include', 'config.h',
-  '-w', '-DGETTEXT_PACKAGE="' + meson.project_name() + '"'
-]
-
-cc = meson.get_compiler('c')
-
-# Compile GResources
-asresources = gnome.compile_resources(
-    'as-resources', join_paths('data', meson.project_name() + '.gresource.xml'),
-    source_dir: 'data',
-    c_name: 'as'
-)
 
 subdir('data')
 subdir('po')
 
-# Create a new executable, list the files we want to compile, list the dependencies we need, and install
+# Create a new executable
 executable(
     meson.project_name(),
     'src/Constants.vala',
-    'src/BingWallpaper.vala',
-    asresources,
-    c_args: c_args,
+    'src/WallpaperApp.vala',
+    'src/MainWindow.vala',
+    'src/widget/About.vala',
+    'src/widget/Header.vala',
+    'src/widget/Location.vala',
+    'src/widget/Preferences.vala',
+    'src/widget/Refresh.vala',
+
+    import('gnome').compile_resources(
+        'as-resources', join_paths('data', meson.project_name() + '.gresource.xml'),
+        source_dir: 'data',
+        c_name: 'as'
+    ),
+    c_args: [
+      '-include', 'config.h',
+      '-w', 
+      '-DGETTEXT_PACKAGE="' + meson.project_name() + '"'
+    ],
+    vala_args: [
+        meson.source_root() + '/vapi/config.vapi'
+    ],
     dependencies: [
         dependency('gio-2.0'),
         dependency('gobject-2.0'),
@@ -68,11 +67,11 @@ executable(
         dependency('libxml-2.0'),
         dependency('webkit2gtk-4.0'),
         dependency('appindicator3-0.1'),
+        meson.get_compiler('c').find_library('m', required: false)        
     ],
-    vala_args: [
-        meson.source_root() + '/vapi/config.vapi'
-    ],
-    link_args: ['-lm'],
+    # link_args: ['-lm'],
     install: true
 )
 
+# Add post install script
+meson.add_install_script('meson/post_install.py')
