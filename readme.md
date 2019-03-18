@@ -36,5 +36,17 @@ https://www.bing.com/th?id=OHR.SeptimiusSeverus_EN-US6750540711_1920x1080.jpg&rf
 https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=US-en
 
 
-sudo cp ~/Pictures/OHR.SeptimiusSeverus_EN-US6750540711_1920x1200.jpg /usr/share/wallpapers/deepin
 
+
+th?id=OHR.TofinoCoast_EN-US7059338912_1920x1200.jpg&rf=NorthMale_1920x1200.jpg&pid=hp
+
+th?id=OHR.TofinoCoast_EN-US7059338912
+
+https://www.bing.com/th?id=OHR.TofinoCoast_EN-US7059338912_1920x1200.jpg
+
+
+to run:
+com.github.darkoverlordofdata.bing-wall --update
+com.github.darkoverlordofdata.bing-wall --update --force
+com.github.darkoverlordofdata.bing-wall --display
+com.github.darkoverlordofdata.bing-wall --help

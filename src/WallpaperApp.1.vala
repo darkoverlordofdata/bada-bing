@@ -114,45 +114,6 @@ public class Wallpaper.WallpaperApp : Gtk.Application
         }
     }
 
-    /**
-     * Gets the text from the named node
-     * 
-     * @param Context ctx
-     * @param string name
-     * returns string
-     * 
-     */
-    private static string getNodeText(XPath.Context ctx, string name) throws Exception {
-        var obj = ctx.eval(name);
-        if (obj == null) 
-            throw new Exception.UnableToEvalXPath(@"Failed to evaluate xpath: $name");
-
-        if (obj->type != XPath.ObjectType.NODESET) 
-            throw new Exception.InvalidXPathObjectType("Expected NodeSet");
-
-        if (obj->nodesetval == null) 
-            throw new Exception.ValueNotSet("NodeSet is null");
-
-        if (obj->nodesetval->length() == 0) 
-            throw new Exception.NoContent("NodeSet has no content");
-
-
-        var node = obj->nodesetval->item(0);
-        var text = node->get_content();
-        delete obj;
-        return text;
-    }
-
-    /**
-     * Get the bing daily metadata
-     * first, try to get the hi-res (1980x1200) jpg
-     * if that is not found, retrieve the default jpg
-     * save jpg and text info to ~/Pictures/Bing and 
-     * update dconf picture-uri setting.
-     * 
-     * @param force update
-     * 
-     */
     public static void updateWallpaper(bool force) {
         print("Do Update\n");
         try {
@@ -177,39 +138,58 @@ public class Wallpaper.WallpaperApp : Gtk.Application
             if (ctx == null) 
                 throw new Exception.UnableToCreateContext("Failed to create the xpath context");
     
+            var obj = ctx.eval("//images/image/url");
+            if (obj == null) 
+                throw new Exception.UnableToEvalXPath("Failed to evaluate xpath");
+    
+            if (obj->type != XPath.ObjectType.NODESET) 
+                throw new Exception.InvalidXPathObjectType("Expected NodeSet");
+    
+            if (obj->nodesetval == null) 
+                throw new Exception.ValueNotSet("NodeSet is null");
+    
+            if (obj->nodesetval->length() == 0) 
+                throw new Exception.NoContent("NodeSet has no content");
+    
+    
+            var node = obj->nodesetval->item(0);
+            var orig = node->get_content();
+            var path = orig.replace("x1080", "x1200");
+
+            var srcUrl = @"$(Constants.BING_URL)$(path)";
             var dstUri = File.new_for_uri(pictureUri);
-            var url = getNodeText(ctx, "//images/image/url");
-            var urlBase = getNodeText(ctx, "//images/image/urlBase");
-            var copyright = getNodeText(ctx, "//images/image/copyright");
-            string filename;
-            if (urlBase.index_of("=") > 0)
-                filename = urlBase.split("=")[1];
-            else
-                filename = urlBase;
+            var srcFile = File.new_for_path(path);
+    
+            print(@"srcUrl = $srcUrl\n");
+            print(@"pictureUri = $pictureUri\n");
+            print(@"srcFile = $(srcFile.get_path())\n");
 
-            string local_jpg = @"$(dstUri.get_parent().get_path())/$(filename).jpg";
-            string local_txt = @"$(dstUri.get_parent().get_path())/$(filename).txt";
+            string jpg = dstUri.get_parent().get_path() + "/" + srcFile.get_basename();
+            print("jpg = %s\n", jpg);
 
-            var srcUrl = @"$(Constants.BING_URL)$(urlBase)_1920x1200.jpg";
             var download = new Soup.Message("GET", srcUrl);
             session.send_message(download);
             
             if (download.response_body.length == 0) {
-                srcUrl = @"$(Constants.BING_URL)$(url)";
+                srcUrl = @"$(Constants.BING_URL)$(orig)";
                 print(@"srcUrl = $srcUrl\n");
+                srcFile = File.new_for_path(path);
+                jpg = dstUri.get_parent().get_path() + "/" + srcFile.get_basename();
                 download = new Soup.Message("GET", srcUrl);
                 session.send_message(download);
             }
+            jpg = jpg.replace("?", "");
             
+            print("jpg = %s\n", jpg);
 
-            if (!FileUtils.test(local_jpg, FileTest.EXISTS) || force) {
-                FileUtils.set_data(local_jpg, download.response_body.data);
+            if (!FileUtils.test(jpg, FileTest.EXISTS) || force) {
+                FileUtils.set_data(jpg, download.response_body.data);
             }
-            if (!FileUtils.test(local_txt, FileTest.EXISTS) || force) {
-                FileUtils.set_data(local_txt, copyright.data);
-            }
-            settings.set_string("picture-uri", @"file://$local_jpg");
+
+            
+            //  settings.set_string("picture-uri", @"file://$jpg);
     
+            delete obj;
             delete doc;
 
         } catch (GLib.Error e) {
