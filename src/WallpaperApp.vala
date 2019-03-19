@@ -26,23 +26,10 @@ errordomain Exception {
 
 public class Wallpaper.WallpaperApp : Gtk.Application 
 {
-    //  public const string BING_URL = "https://www.bing.com";
-    //  public const string BING_API = "https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1";
-    //  const string imagePath = "HPImageArchive.aspx?format=xml&idx=0&n=1"; 
-    //  const string bingUrl = "https://www.bing.com";
-    
-    public MainWindow window;
-
+    public static int schedule;
     public static bool update;
     public static bool force;
     public static bool gui;
-
-	const OptionEntry[] options = {
-		{ "display", 0, 0, OptionArg.NONE, ref gui, "Display the gui", null },
-		{ "update", 0, 0, OptionArg.NONE, ref update, "Update the wallpaper", null },
-		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
-		{ null }
-    };
 
     /**
      * 
@@ -53,9 +40,23 @@ public class Wallpaper.WallpaperApp : Gtk.Application
      *  -h, --help       Show help options
      *
      *  Application Options:
-     *  --update         Update the wallpaper
+     *  --schedule=INT   Run scheduled
      *  --display        Display the gui
+     *  --update         Update the wallpaper
+     *  --force          Force overwwrite
+     * 
      */
+	const OptionEntry[] options = {
+		{ "schedule", 0, 0, OptionArg.INT, ref schedule, "Run scheduled", "INT" },
+		{ "display", 0, 0, OptionArg.NONE, ref gui, "Display the gui", null },
+		{ "update", 0, 0, OptionArg.NONE, ref update, "Update the wallpaper", null },
+		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
+		{ null }
+    };
+
+    public MainWindow window;
+    private uint timer_id;
+
     public static int main(string[] args)
     {
 
@@ -78,8 +79,16 @@ public class Wallpaper.WallpaperApp : Gtk.Application
          */
         if (update) {
             updateWallpaper(force);
-            return 0;
         }
+
+        if (schedule > 0) {
+            Timeout.add_seconds(schedule, () => {
+                updateWallpaper(force);
+                return true;
+            });
+            new MainLoop().run();    
+            return 0;
+        }    
 
         /**
          * --gui
@@ -144,7 +153,7 @@ public class Wallpaper.WallpaperApp : Gtk.Application
     }
 
     /**
-     * Get the bing daily metadata
+     * Get the bing schedule metadata
      * first, try to get the hi-res (1980x1200) jpg
      * if that is not found, retrieve the default jpg
      * save jpg and text info to ~/Pictures/Bing and 
@@ -154,7 +163,6 @@ public class Wallpaper.WallpaperApp : Gtk.Application
      * 
      */
     public static void updateWallpaper(bool force) {
-        print("Do Update\n");
         try {
 
             // get the locale
@@ -178,6 +186,10 @@ public class Wallpaper.WallpaperApp : Gtk.Application
                 throw new Exception.UnableToCreateContext("Failed to create the xpath context");
     
             var dstUri = File.new_for_uri(pictureUri);
+            var bing = dstUri.get_parent();
+            if (!bing.query_exists()) 
+                bing.make_directory(); 
+
             var url = getNodeText(ctx, "//images/image/url");
             var urlBase = getNodeText(ctx, "//images/image/urlBase");
             var copyright = getNodeText(ctx, "//images/image/copyright");
@@ -196,7 +208,6 @@ public class Wallpaper.WallpaperApp : Gtk.Application
             
             if (download.response_body.length == 0) {
                 srcUrl = @"$(Constants.BING_URL)$(url)";
-                print(@"srcUrl = $srcUrl\n");
                 download = new Soup.Message("GET", srcUrl);
                 session.send_message(download);
             }
@@ -213,7 +224,7 @@ public class Wallpaper.WallpaperApp : Gtk.Application
             delete doc;
 
         } catch (GLib.Error e) {
-            print("Error: %s\n", e.message);
+            print(@"Error: $(e.message)\n");
         }
     }
 }

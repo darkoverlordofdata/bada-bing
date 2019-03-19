@@ -46,7 +46,21 @@ https://www.bing.com/th?id=OHR.TofinoCoast_EN-US7059338912_1920x1200.jpg
 
 
 to run:
-com.github.darkoverlordofdata.bing-wall --update
-com.github.darkoverlordofdata.bing-wall --update --force
 com.github.darkoverlordofdata.bing-wall --display
 com.github.darkoverlordofdata.bing-wall --help
+com.github.darkoverlordofdata.bing-wall --update
+com.github.darkoverlordofdata.bing-wall --update --force
+com.github.darkoverlordofdata.bing-wall --update --force --schedule=21600
+com.github.darkoverlordofdata.bing-wall --update --schedule=21600
+
+## Setting Up Cron
+To setup regular checks for new wallapers, edit crontab for the current user, using:
+
+    $ crontab -u $USER -e
+
+, and add this line:
+
+    0 */6 * * * com.github.darkoverlordofdata.bing-wall --update > /dev/null 2>&1
+
+This will run every 6 hours. You can use [this link](http://www.crontab-generator.org/) for reference.
+
