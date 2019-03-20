@@ -1,4 +1,6 @@
 {
     // https://github.com/prozum/meson-cmake-wrapper
-    "cmake.cmakePath": "mcw"
+    "cmake.cmakePath": "/home/darko/.local/bin/mcw",
+    "cmake.configureOnOpen": true,
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools"
 }

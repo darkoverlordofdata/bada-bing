@@ -30,9 +30,9 @@
 
 
         //Define style
-        //  var provider = new Gtk.CssProvider();
-        //  provider.load_from_resource("/com/github/darkoverlordofdata/bing-wall/application.css");
-        //  Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        var provider = new Gtk.CssProvider();
+        provider.load_from_resource("/com/github/darkoverlordofdata/bing-wall/application.css");
+        Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
         var setting = new Settings("com.github.darkoverlordofdata.bing-wall");
         setting.get_boolean("dark");
