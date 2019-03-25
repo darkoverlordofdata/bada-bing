@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.Widget.Refresh : Gtk.Box
- {
-    public Refresh(BingWall.MainWindow window, BingWall.Widget.Header header) {
-        orientation = Gtk.Orientation.HORIZONTAL;
 
-        var setting = new Settings("com.gitlab.bitseater.meteo");
-        header.custom_title = null;
-        header.set_title(setting.get_string("location") + ", " + setting.get_string("state") + " " + setting.get_string("country"));
-        header.change_visible(true);
-    }
-}
+ public interface ISerialize : Object 
+ { 
+     public abstract void serialize();
+     public abstract void deserialize();
+ }
+ 

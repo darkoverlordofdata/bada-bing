@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class Wallpaper.Widget.Location : Gtk.Box
+ public class BingWall.Widget.Location : Gtk.Box
  {
-    public Wallpaper.MainWindow window;
-    private Wallpaper.Widget.Header header;
+    public BingWall.MainWindow window;
+    private BingWall.Widget.Header header;
 
     /*
      * Active values will have their own localized version. 
@@ -30,7 +30,7 @@
     }
     
 
-    public Location(Wallpaper.MainWindow window, Wallpaper.Widget.Header header) {
+    public Location(BingWall.MainWindow window, BingWall.Widget.Header header) {
 
         Locale locale[] = {
             Locale() { code = "auto",  active = true,  name = "auto" },
@@ -154,7 +154,7 @@
         //      setting.set_string("country", city.country);
         //      setting.set_string("state", city.state);
         //      setting.set_string("location", city.town);
-        //      var current = new Wallpaper.Widgets.Current(window, header);
+        //      var current = new BingWall.Widgets.Current(window, header);
         //      window.change_view(current);
         //      window.show_all();
         //  }

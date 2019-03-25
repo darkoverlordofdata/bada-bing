@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
- public class Wallpaper.MainWindow : Gtk.Window 
+ public class BingWall.MainWindow : Gtk.Window 
  {
     public WallpaperApp app;
     public AppIndicator.Indicator indicator;

@@ -4,7 +4,7 @@
     <key name="dark" type="b">
       <default>false</default>
       <summary>Dark Theme</summary>
-      <description>Use dark theme in application</description>
+      <description>Use dark theme in application.</description>
     </key>
 
     <key name="indicator" type="b">
@@ -28,7 +28,13 @@
     <key name="start-on-boot" type="b">
       <default>false</default>
       <summary>Start on boot</summary>
-      <description>Start application when user log into the desktop</description>
+      <description>Start application when user log into the desktop.</description>
+    </key>
+
+    <key name="maximum" type="i">
+        <default>7</default>
+        <summary>Maximum count</summary>
+        <description>Maximum number of wallpapers to keep.</description>
     </key>
 
   </schema>

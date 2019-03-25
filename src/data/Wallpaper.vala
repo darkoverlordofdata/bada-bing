@@ -13,14 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.Widget.Refresh : Gtk.Box
- {
-    public Refresh(BingWall.MainWindow window, BingWall.Widget.Header header) {
-        orientation = Gtk.Orientation.HORIZONTAL;
-
-        var setting = new Settings("com.gitlab.bitseater.meteo");
-        header.custom_title = null;
-        header.set_title(setting.get_string("location") + ", " + setting.get_string("state") + " " + setting.get_string("country"));
-        header.change_visible(true);
+/**
+ * Wallpaper plain old vala object
+ */
+public class BingWall.Wallpaper : Object 
+{
+    public int recno;
+    public int timestamp;
+    public string path;
+    public string desc;
+    /**
+     * Construct wallpaper
+     * 
+     * @param recno - index in table
+     * @param timestep - YYYYMMDD
+     * @param path - file name
+     * @param desc - file desc
+     * 
+     */
+    public Wallpaper(int recno=0, int timestamp=0, string? path=null, string? desc=null) 
+    {
+        this.recno = recno;
+        this.timestamp = timestamp;
+        this.path = path;
+        this.desc = desc;
     }
 }

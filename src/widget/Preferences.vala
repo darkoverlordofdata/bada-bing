@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class Wallpaper.Widget.Preferences : Gtk.Dialog
+ public class BingWall.Widget.Preferences : Gtk.Dialog
  {
-    public Preferences(Wallpaper.MainWindow window, Wallpaper.Widget.Header header) {
+    public Preferences(BingWall.MainWindow window, BingWall.Widget.Header header) {
         resizable = false;
         deletable = true;
         transient_for = window;
@@ -126,10 +126,10 @@
         boot_sw.notify["active"].connect(() => {
             if (boot_sw.get_active()) {
                 setting.set_boolean("start-on-boot", true);
-                //  Wallpaper.Utils.set_start_on_boot();
+                //  BingWall.Utils.set_start_on_boot();
             } else {
                 setting.set_boolean("start-on-boot", false);
-                //  Wallpaper.Utils.reset_start_on_boot();
+                //  BingWall.Utils.reset_start_on_boot();
             }
         });
 
@@ -266,11 +266,11 @@
         add_button(_("Close"), Gtk.ResponseType.CANCEL);
         response.connect(() => {
             //  if (setting.get_boolean("auto")) {
-            //      //  Wallpaper.Utils.geolocate();
-            //      var current = new Wallpaper.Widget.Refresh(window, header);
+            //      //  BingWall.Utils.geolocate();
+            //      var current = new BingWall.Widget.Refresh(window, header);
             //      window.change_view(current);
             //  } else {
-                var current = new Wallpaper.Widget.Refresh(window, header);
+                var current = new BingWall.Widget.Refresh(window, header);
                 window.change_view(current);
             //  }
             window.show_all();

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class Wallpaper.Widget.About : Gtk.AboutDialog 
+ public class BingWall.Widget.About : Gtk.AboutDialog 
  {
-    public About (Wallpaper.MainWindow window) {
+    public About (BingWall.MainWindow window) {
         transient_for = window;
         modal = true;
         destroy_with_parent = true;
