@@ -19,9 +19,10 @@
 public class BingWall.Wallpaper : Object 
 {
     public int recno;
-    public int timestamp;
+    public string timestamp;
     public string path;
     public string desc;
+    public string headline;
     /**
      * Construct wallpaper
      * 
@@ -29,13 +30,14 @@ public class BingWall.Wallpaper : Object
      * @param timestep - YYYYMMDD
      * @param path - file name
      * @param desc - file desc
-     * 
+     * @param headline - headline
      */
-    public Wallpaper(int recno=0, int timestamp=0, string? path=null, string? desc=null) 
+    public Wallpaper(int recno=0, string? timestamp=null, string? path=null, string? desc=null, string? headline=null) 
     {
         this.recno = recno;
         this.timestamp = timestamp;
         this.path = path;
         this.desc = desc;
+        this.headline = headline;
     }
 }

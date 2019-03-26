@@ -28,12 +28,20 @@ errordomain Exception {
 public class BingWall.WallpaperApp : Gtk.Application 
 {
     public static int schedule;
-    public static int maximum;
-    public static bool update;
-    public static bool force;
-    public static bool gui;
-    public static GenericArray<string> files;
+    public static int maximum = 7;
+    public static int number =  1;
+    public static bool update = false;
+    public static bool force = false;
+    public static bool list = false;
+    public static bool gui = false;
+    public static bool xml = false;
+    public static string? locale = null;
 
+    public static GenericArray<string> files;
+    public static Soup.Session session;
+    public static Soup.Message message;
+    public static Settings settings;
+    
     /**
      * 
      *  Usage:
@@ -47,13 +55,18 @@ public class BingWall.WallpaperApp : Gtk.Application
      *  --display        Display the gui
      *  --update         Update the wallpaper
      *  --force          Force overwwrite
+     *  --list           List cache
      * 
      */
 	const OptionEntry[] options = {
 		{ "schedule", 0, 0, OptionArg.INT, ref schedule, "Run scheduled", "INT" },
+		{ "number", 0, 0, OptionArg.INT, ref number, "Number of days to get", "INT" },
 		{ "display", 0, 0, OptionArg.NONE, ref gui, "Display the gui", null },
 		{ "update", 0, 0, OptionArg.NONE, ref update, "Update the wallpaper", null },
 		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
+        { "list", 0, 0, OptionArg.NONE, ref list, "List cache content", null },
+        { "xml", 0, 0, OptionArg.NONE, ref xml, "Just the xml", null},
+        { "locale", 0, 0, OptionArg.STRING, ref locale, "Locale", "STRING" },
 		{ null }
     };
 
@@ -62,6 +75,7 @@ public class BingWall.WallpaperApp : Gtk.Application
     public static int main(string[] args)
     {
         bool done = false;
+        if (locale == null) locale = "EN-us";
 
 		try {
             var opt_context = new OptionContext();
@@ -73,15 +87,27 @@ public class BingWall.WallpaperApp : Gtk.Application
 			print("Run '%s --help' to see a full list of available command line options.\n", args[0]);
 			return 0;
         }
+
+        settings = new Settings("org.gnome.desktop.background");
+        session = new Soup.Session();
         
         var setting = new Settings("com.github.darkoverlordofdata.bing-wall");
         maximum = setting.get_int("maximum");
-        print("Setting max = %d\n", maximum);
+        //  print("Setting max = %d\n", maximum);
+        //  print("home %s\n", Environment.get_home_dir());
+        //  print("config %s\n", Environment.get_user_config_dir());
 
-        print("home %s\n", Environment.get_home_dir());
-        print("config %s\n", Environment.get_user_config_dir());
+        if (xml) {
+            print(@"$(getXml())");
+            return 0;
+        }
 
-
+        if (list) {
+            var w = new Wallpapers();
+            w.list();
+            return 0;
+        }
+        
         /** 
          * --update
          * 
@@ -126,18 +152,18 @@ public class BingWall.WallpaperApp : Gtk.Application
     }
 
     private static void limitCount(int maximum) {
-        if (maximum <= 0) return;
+        //  if (maximum <= 0) return;
 
-        File file = File.new_for_commandline_arg(@"$(Environment.get_home_dir())/Pictures/Bing");
-        try {
-            files = new GenericArray<string>();
-            list_children(file, "", new Cancellable());
-        } catch (GLib.Error e) {
-            print (@"Error: $(e.message)\n");
-        }
-        files.foreach((str) => {
-            print("File %s\n", str);
-        });
+        //  File file = File.new_for_commandline_arg(@"$(Environment.get_home_dir())/Pictures/Bing");
+        //  try {
+        //      files = new GenericArray<string>();
+        //      list_children(file, "", new Cancellable());
+        //  } catch (GLib.Error e) {
+        //      print (@"Error: $(e.message)\n");
+        //  }
+        //  files.foreach((str) => {
+        //      print("File %s\n", str);
+        //  });
 
     }
 
@@ -212,8 +238,20 @@ public class BingWall.WallpaperApp : Gtk.Application
         return text;
     }
 
+    public static string getXml() {
+        try {
+            message = new Soup.Message("GET", @"$(Constants.BING_API)&mkt=$(locale)&n=$(number)");
+            session.send_message(message);
+            return (string)message.response_body.data;
+    
+        } catch (GLib.Error e) {
+            print(@"Error: $(e.message)\n");
+            return "";
+        }        
+    }
+
     /**
-     * Get the bing schedule metadata
+     * Get the bing metadata
      * first, try to get the hi-res (1980x1200) jpg
      * if that is not found, retrieve the default jpg
      * save jpg and text info to ~/Pictures/Bing and 
@@ -224,45 +262,33 @@ public class BingWall.WallpaperApp : Gtk.Application
      */
     public static void updateWallpaper(bool force) {
         try {
-
-            // get the locale
-            //  uint8[] buff = new uint8[2048];
-            //  FileUtils.get_data(Environment.get_user_config_dir() + "/user-dirs.locale", out buff);
-            //  string locale = ((string)buff).replace("_", "-");
-            string locale = "EN-us";
-            
-            // get the wallpaper location
-            Settings settings = new Settings("org.gnome.desktop.background");
-            string pictureUri = settings.get_string("picture-uri");
-    
-            // get metadata
-            var session = new Soup.Session();
-            var message = new Soup.Message("GET", @"$(Constants.BING_API)&mkt=$(locale)");
-            session.send_message(message);
-            var doc = Xml.Parser.parse_doc((string)message.response_body.data);
+            var doc = Xml.Parser.parse_doc(getXml());
     
             var ctx = new XPath.Context(doc);
             if (ctx == null) 
                 throw new Exception.UnableToCreateContext("Failed to create the xpath context");
     
-            var dstUri = File.new_for_uri(pictureUri);
-            var bing = dstUri.get_parent();
-            if (!bing.query_exists()) 
-                bing.make_directory(); 
-
             var url = getNodeText(ctx, "//images/image/url");
             var urlBase = getNodeText(ctx, "//images/image/urlBase");
             var copyright = getNodeText(ctx, "//images/image/copyright");
+            var startdate = getNodeText(ctx, "//images/image/startdate");
+            var headline = getNodeText(ctx, "//images/image/headline");
+
             string filename;
             if (urlBase.index_of("=") > 0)
-                filename = urlBase.split("=")[1];
+                filename = urlBase.split("=")[1].replace("OHR.", "");
             else
-                filename = urlBase;
+                filename = urlBase.replace("OHR.", "");
 
-            string local_jpg = @"$(dstUri.get_parent().get_path())/$(filename).jpg";
-            string local_txt = @"$(dstUri.get_parent().get_path())/$(filename).txt";
-            string config_dir = @"$(Environment.get_user_config_dir())/bing-wall";
-            string config_idx = @"$(config_dir)/index";
+            string cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
+
+            if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
+                var cache = File.new_for_path(cache_dir);
+                cache.make_directory();
+            }
+            string local_jpg = @"$(cache_dir)/$(filename).jpg";
+            //  string local_txt = @"$(cache_dir)/$(filename).txt";
+    
 
             var srcUrl = @"$(Constants.BING_URL)$(urlBase)_1920x1200.jpg";
             var download = new Soup.Message("GET", srcUrl);
@@ -278,23 +304,9 @@ public class BingWall.WallpaperApp : Gtk.Application
             if (!FileUtils.test(local_jpg, FileTest.EXISTS) || force) {
                 FileUtils.set_data(local_jpg, download.response_body.data);
             }
-            if (!FileUtils.test(local_txt, FileTest.EXISTS) || force) {
-                FileUtils.set_data(local_txt, copyright.data);
-            }
-
             var w = new Wallpapers();
-            w.add(20190324, local_jpg, copyright);
+            w.add(startdate, local_jpg, copyright, headline);
             
-
-            //  var rec = new Wallpaper(0, 20190324, local_jpg, copyright);
-
-            //  var data = new GenericArray<Wallpaper?>();
-            //  data.add(rec);
-
-            //  var sb = new StringBuilder();
-            //  sb.printf("%d,%d,%s,%s", rec.recno, rec.timestamp, rec.path, rec.desc.escape());
-
-            //  FileUtils.set_data(config_idx, sb.str.data);
             settings.set_string("picture-uri", @"file://$local_jpg");
             delete doc;
 

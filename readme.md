@@ -1,4 +1,5 @@
-# Ba Da Bing - Hey Linux, we gotch yer wallpaper
+# Ba Da Bing
+## Hey Linux, we gotch yer wallpaper here
 
 This was started on ElementaryOS. I've moved on to antegros-deepin. 
 Requires Gtk3.
@@ -56,3 +57,16 @@ To setup regular checks for new wallapers, edit crontab for the current user, us
 
 This will run every 6 hours. You can use [this link](http://www.crontab-generator.org/) for reference.
 
+        CREATE TABLE source (
+			id		INT		PRIMARY KEY		NOT NULL,
+			url	    TEXT					NOT NULL,
+			desc	TEXT					NOT NULL,
+
+        );
+
+		CREATE TABLE wallpaper (
+			id		INT		PRIMARY KEY		NOT NULL,
+			name	TEXT					NOT NULL,
+			desc	TEXT					NOT NULL,
+            date    TEXT                    NOT NULL
+		);

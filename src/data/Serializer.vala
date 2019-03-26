@@ -20,6 +20,9 @@ public class BingWall.Serializer : Object, ISerialize
 {
     public Wallpaper object;
     FileIOStream stream;
+    DataOutputStream output;
+    DataInputStream input;
+
     string delim = "\0";
 
     /**
@@ -32,6 +35,9 @@ public class BingWall.Serializer : Object, ISerialize
     {
         this.object = object;
         this.stream = stream;
+        output = new DataOutputStream(this.stream.output_stream);
+        input = new DataInputStream(this.stream.input_stream);
+
     }
 
     /**
@@ -39,12 +45,14 @@ public class BingWall.Serializer : Object, ISerialize
      */
     public void serialize()
     {
-        var s = new DataOutputStream(stream.output_stream);
 
-        s.put_int32(object.recno);
-        s.put_int32(object.timestamp);
-        s.put_string(object.path);
-        s.put_string(object.desc);
+        output.put_int32(object.recno);
+        output.put_string(object.timestamp);
+        output.put_byte(0);
+        output.put_string(object.path);
+        output.put_byte(0);
+        output.put_string(object.desc);
+        output.put_byte(0);
     }
 
     /**
@@ -53,12 +61,14 @@ public class BingWall.Serializer : Object, ISerialize
     public void deserialize()
     {
         size_t l;
-        var s = new DataInputStream(stream.input_stream);
 
-        object.recno = s.read_int32();
-        object.timestamp = s.read_int32();
-        object.path = s.read_upto(delim, 1, out l);
-        object.desc = s.read_upto(delim, 1, out l);
+        object.recno = input.read_int32();
+        object.timestamp = input.read_upto(delim, 1, out l);
+        input.read_byte();
+        object.path = input.read_upto(delim, 1, out l);
+        input.read_byte();
+        object.desc = input.read_upto(delim, 1, out l);
+        input.read_byte();
     }
 }
 
