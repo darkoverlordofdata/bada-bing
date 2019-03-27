@@ -57,16 +57,10 @@ To setup regular checks for new wallapers, edit crontab for the current user, us
 
 This will run every 6 hours. You can use [this link](http://www.crontab-generator.org/) for reference.
 
-        CREATE TABLE source (
-			id		INT		PRIMARY KEY		NOT NULL,
-			url	    TEXT					NOT NULL,
-			desc	TEXT					NOT NULL,
+## whats it do?
 
-        );
-
-		CREATE TABLE wallpaper (
-			id		INT		PRIMARY KEY		NOT NULL,
-			name	TEXT					NOT NULL,
-			desc	TEXT					NOT NULL,
-            date    TEXT                    NOT NULL
-		);
+get the xml from bing, using maximum to determine the # of records to request.
+the 1st entry is the current wallpaper.
+Loop thru, make sure all are in cache, download any that are not.
+Loop thru cache, any that are not in xml should be deleted.
+save the xml as the local 'database'

@@ -23,7 +23,10 @@ errordomain Exception {
 	ValueNotSet,
     NoContent,
     InvalidDataFormat,
+    XmlParser,
+
 }
+
 
 public class BingWall.WallpaperApp : Gtk.Application 
 {
@@ -37,10 +40,12 @@ public class BingWall.WallpaperApp : Gtk.Application
     public static bool xml = false;
     public static string? locale = null;
 
-    public static GenericArray<string> files;
     public static Soup.Session session;
     public static Soup.Message message;
     public static Settings settings;
+    public static GenericArray<string> files;
+    public static GenericArray<ImageTag> images;
+    public static string source;
     
     /**
      * 
@@ -93,42 +98,41 @@ public class BingWall.WallpaperApp : Gtk.Application
         
         var setting = new Settings("com.github.darkoverlordofdata.bing-wall");
         maximum = setting.get_int("maximum");
-        //  print("Setting max = %d\n", maximum);
-        //  print("home %s\n", Environment.get_home_dir());
-        //  print("config %s\n", Environment.get_user_config_dir());
 
+
+        /** 
+         * --xml
+         * 
+         * just download and display the xml
+         */
         if (xml) {
-            print(@"$(getXml())");
+            source = getXml();
+            print(@"$source");
             return 0;
         }
 
-        if (list) {
-            var w = new Wallpapers();
-            w.list();
-            return 0;
-        }
-        
         /** 
          * --update
          * 
-         * get the current image and update the wallpaper
+         * download the xml and update current image
          */
         if (update) {
-            updateWallpaper(force);
-            limitCount(maximum);
+            source = getXml();
+            var images = parseXml();
+            updateWallpaper(images);
+            purgeWallpaper(images);
             done = true;
         }
 
-        if (schedule > 0) {
-            Timeout.add_seconds(schedule, () => {
-                updateWallpaper(force);
-                limitCount(maximum);
-                return true;
-            });
-            new MainLoop().run();    
-            done = true;
-            return 0;
-        }    
+        //  if (schedule > 0) {
+        //      Timeout.add_seconds(schedule, () => {
+        //          updateWallpaper(force);
+        //          return true;
+        //      });
+        //      new MainLoop().run();    
+        //      done = true;
+        //      return 0;
+        //  }    
 
         /**
          * --gui
@@ -141,33 +145,13 @@ public class BingWall.WallpaperApp : Gtk.Application
             return app.run(args);    
         }
 
-        if (maximum > 0) {
-            limitCount(maximum);
-            done = true;
-        }
-
         if (!done)
             print("Run '%s --help' to see a full list of available command line options.\n", args[0]);
         return 0;
     }
 
-    private static void limitCount(int maximum) {
-        //  if (maximum <= 0) return;
-
-        //  File file = File.new_for_commandline_arg(@"$(Environment.get_home_dir())/Pictures/Bing");
-        //  try {
-        //      files = new GenericArray<string>();
-        //      list_children(file, "", new Cancellable());
-        //  } catch (GLib.Error e) {
-        //      print (@"Error: $(e.message)\n");
-        //  }
-        //  files.foreach((str) => {
-        //      print("File %s\n", str);
-        //  });
-
-    }
-
-    private static void list_children(File file, string space = "", Cancellable? cancellable = null) throws GLib.Error {
+    private static void list_children(File file, string space = "", Cancellable? cancellable = null) throws GLib.Error 
+    {
         FileEnumerator enumerator = file.enumerate_children (
             "standard::*",
             FileQueryInfoFlags.NOFOLLOW_SYMLINKS, 
@@ -193,14 +177,16 @@ public class BingWall.WallpaperApp : Gtk.Application
     /**
      * Wallpaper Application
      */
-    public WallpaperApp() {
+    public WallpaperApp() 
+    {
         Object(
             application_id: "com.github.darkoverlordofdata.bing-wall",
             flags: ApplicationFlags.FLAGS_NONE
         );
     }
 
-    public override void activate() {
+    public override void activate() 
+    {
         if (get_windows() == null) {
             window = new MainWindow(this);
             window.show_all();
@@ -209,36 +195,12 @@ public class BingWall.WallpaperApp : Gtk.Application
         }
     }
 
+
     /**
-     * Gets the text from the named node
-     * 
-     * @param Context ctx
-     * @param string name
-     * returns string
-     * 
+     * Just get the xml
      */
-    private static string getNodeText(XPath.Context ctx, string name) throws Exception {
-        var obj = ctx.eval(name);
-        if (obj == null) 
-            throw new Exception.UnableToEvalXPath(@"Failed to evaluate xpath: $name");
-
-        if (obj->type != XPath.ObjectType.NODESET) 
-            throw new Exception.InvalidXPathObjectType("Expected NodeSet");
-
-        if (obj->nodesetval == null) 
-            throw new Exception.ValueNotSet("NodeSet is null");
-
-        if (obj->nodesetval->length() == 0) 
-            throw new Exception.NoContent("NodeSet has no content");
-
-
-        var node = obj->nodesetval->item(0);
-        var text = node->get_content();
-        delete obj;
-        return text;
-    }
-
-    public static string getXml() {
+    public static string getXml() 
+    {
         try {
             message = new Soup.Message("GET", @"$(Constants.BING_API)&mkt=$(locale)&n=$(number)");
             session.send_message(message);
@@ -248,6 +210,40 @@ public class BingWall.WallpaperApp : Gtk.Application
             print(@"Error: $(e.message)\n");
             return "";
         }        
+    }
+
+    public static GenericArray<ImageTag> parseXml()
+    {
+        var doc = Xml.Parser.parse_doc(source);
+        if (doc == null) {
+            throw new Exception.XmlParser("Invalid xml document");
+        }
+        var node = doc->get_root_element();
+        if (node == null) {
+            throw new Exception.XmlParser("Root mode not found in xml");
+        }
+        if (node->name != "images") {
+            throw new Exception.XmlParser(@"Images not found, $(node->name) found instead");
+        }
+
+        var images = new GenericArray<ImageTag>();
+        int recno = 0;
+        for (var iter = node->children; iter != null; iter = iter->next) {
+            if (iter->type == Xml.ElementType.ELEMENT_NODE) {
+                if (iter->name == "image") {
+                    images.add(new ImageTag(iter));
+                    recno++;
+                }
+            }
+        }
+        return images;
+    }
+
+    public static void purgeWallpaper(GenericArray<ImageTag> images)
+    {
+        var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
+        var cache = File.new_for_path(cache_dir);
+        list_children(cache);
     }
 
     /**
@@ -260,59 +256,47 @@ public class BingWall.WallpaperApp : Gtk.Application
      * @param force update
      * 
      */
-    public static void updateWallpaper(bool force) {
-        try {
-            var doc = Xml.Parser.parse_doc(getXml());
-    
-            var ctx = new XPath.Context(doc);
-            if (ctx == null) 
-                throw new Exception.UnableToCreateContext("Failed to create the xpath context");
-    
-            var url = getNodeText(ctx, "//images/image/url");
-            var urlBase = getNodeText(ctx, "//images/image/urlBase");
-            var copyright = getNodeText(ctx, "//images/image/copyright");
-            var startdate = getNodeText(ctx, "//images/image/startdate");
-            var headline = getNodeText(ctx, "//images/image/headline");
+    public static void updateWallpaper(GenericArray<ImageTag> images) 
+    {
+        var url = images[0].url;
+        var urlBase = images[0].urlBase;
+        var copyright = images[0].copyright;
+        var startdate = images[0].startdate;
+        var headline = images[0].headline;
 
-            string filename;
-            if (urlBase.index_of("=") > 0)
-                filename = urlBase.split("=")[1].replace("OHR.", "");
-            else
-                filename = urlBase.replace("OHR.", "");
+        string filename;
+        if (urlBase.index_of("=") > 0)
+            filename = urlBase.split("=")[1].replace("OHR.", "");
+        else
+            filename = urlBase.replace("OHR.", "");
 
-            string cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
+        var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
 
-            if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
-                var cache = File.new_for_path(cache_dir);
-                cache.make_directory();
-            }
-            string local_jpg = @"$(cache_dir)/$(filename).jpg";
-            //  string local_txt = @"$(cache_dir)/$(filename).txt";
-    
-
-            var srcUrl = @"$(Constants.BING_URL)$(urlBase)_1920x1200.jpg";
-            var download = new Soup.Message("GET", srcUrl);
-            session.send_message(download);
-            
-            if (download.response_body.length == 0) {
-                srcUrl = @"$(Constants.BING_URL)$(url)";
-                download = new Soup.Message("GET", srcUrl);
-                session.send_message(download);
-            }
-            
-
-            if (!FileUtils.test(local_jpg, FileTest.EXISTS) || force) {
-                FileUtils.set_data(local_jpg, download.response_body.data);
-            }
-            var w = new Wallpapers();
-            w.add(startdate, local_jpg, copyright, headline);
-            
-            settings.set_string("picture-uri", @"file://$local_jpg");
-            delete doc;
-
-        } catch (GLib.Error e) {
-            print(@"Error: $(e.message)\n");
+        if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
+            var cache = File.new_for_path(cache_dir);
+            cache.make_directory();
         }
+        var local_jpg = @"$(cache_dir)/$(filename).jpg";
+        var local_xml = @"$(cache_dir)/HPImageArchive.xml";
+
+
+        var srcUrl = @"$(Constants.BING_URL)$(urlBase)_1920x1200.jpg";
+        var download = new Soup.Message("GET", srcUrl);
+        session.send_message(download);
+        
+        if (download.response_body.length == 0) {
+            srcUrl = @"$(Constants.BING_URL)$(url)";
+            download = new Soup.Message("GET", srcUrl);
+            session.send_message(download);
+        }
+        
+
+        if (!FileUtils.test(local_jpg, FileTest.EXISTS) || force) {
+            FileUtils.set_data(local_jpg, download.response_body.data);
+        }
+        FileUtils.set_data(local_xml, source.data);
+        
+        settings.set_string("picture-uri", @"file://$local_jpg");
     }
 }
 
