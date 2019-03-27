@@ -12,8 +12,7 @@ namespace Constants
     public const string VERSION_INFO = "Stable";
     public const string RELEASE = "stable";
     public const string BING_URL = "https://www.bing.com";
-    public const string BING_API = "https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0";
-    //&n=1";
-    public const string BING_JSON = "https://www.bing.com/HPImageArchive.aspx?format=js&idx=0";
-    //&n=1&mkt=en-US
+    public const string BING_API = "https://www.bing.com/HPImageArchive.aspx";
+
+    //?format=xml&idx=0";
 }

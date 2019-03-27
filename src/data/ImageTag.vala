@@ -18,12 +18,12 @@
      public string url;
      public string urlBase;
      public string startdate;
-     public string headline;
+     public string title;
      public string copyright;
 
-     public ImageTag(Xml.Node* parent)
+     public ImageTag.from_xml(Xml.Node* parent) 
      {
-        for (Xml.Node* node = *xml->children; node != null; node = node->next) {
+        for (Xml.Node* node = parent->children; node != null; node = node->next) {
             if (node->type == Xml.ElementType.ELEMENT_NODE) {
                 switch (node->name) {
 
@@ -40,7 +40,7 @@
                         break;
 
                     case "headline":
-                        this.headline = node->get_content();
+                        this.title = node->get_content();
                         break;
 
                     case "copyright":
@@ -53,5 +53,15 @@
             }
         }
      }
+
+     public ImageTag.from_json(Json.Node node) 
+     {
+         this.url = node.get_object().get_string_member("url");
+         this.urlBase = node.get_object().get_string_member("urlbase");
+         this.startdate = node.get_object().get_string_member("startdate");
+         this.title = node.get_object().get_string_member("title");
+         this.copyright = node.get_object().get_string_member("copyright");
+     }
+
  }
  

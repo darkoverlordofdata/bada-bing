@@ -17,14 +17,8 @@ using Xml;
 using Soup;
 
 errordomain Exception {
-	UnableToCreateContext,
-	UnableToEvalXPath,
-	InvalidXPathObjectType,
-	ValueNotSet,
-    NoContent,
-    InvalidDataFormat,
     XmlParser,
-
+    JsonParser,
 }
 
 
@@ -38,6 +32,7 @@ public class BingWall.WallpaperApp : Gtk.Application
     public static bool list = false;
     public static bool gui = false;
     public static bool xml = false;
+    public static bool json = true;
     public static string? locale = null;
 
     public static Soup.Session session;
@@ -71,6 +66,7 @@ public class BingWall.WallpaperApp : Gtk.Application
 		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
         { "list", 0, 0, OptionArg.NONE, ref list, "List cache content", null },
         { "xml", 0, 0, OptionArg.NONE, ref xml, "Just the xml", null},
+        { "json", 0, 0, OptionArg.NONE, ref json, "Just the json", null},
         { "locale", 0, 0, OptionArg.STRING, ref locale, "Locale", "STRING" },
 		{ null }
     };
@@ -107,9 +103,13 @@ public class BingWall.WallpaperApp : Gtk.Application
          */
         if (xml) {
             source = getXml();
-            print(@"$source");
-            return 0;
+            done = true;
         }
+
+        if (json) {
+            source = getJson();
+            done = true;
+        }   
 
         /** 
          * --update
@@ -117,10 +117,12 @@ public class BingWall.WallpaperApp : Gtk.Application
          * download the xml and update current image
          */
         if (update) {
-            source = getXml();
-            var images = parseXml();
-            updateWallpaper(images);
-            purgeWallpaper(images);
+            var images = xml ? parseXml() : parseJson();
+            images.foreach((image) => {
+                print("%s|%s|%s\n", image.startdate, image.title, image.urlBase);
+            });
+            //  updateWallpaper(images);
+            //  purgeWallpaper(images);
             done = true;
         }
 
@@ -202,7 +204,7 @@ public class BingWall.WallpaperApp : Gtk.Application
     public static string getXml() 
     {
         try {
-            message = new Soup.Message("GET", @"$(Constants.BING_API)&mkt=$(locale)&n=$(number)");
+            message = new Soup.Message("GET", @"$(Constants.BING_API)?format=xml&idx=0&mkt=$(locale)&n=$(number)");
             session.send_message(message);
             return (string)message.response_body.data;
     
@@ -210,6 +212,35 @@ public class BingWall.WallpaperApp : Gtk.Application
             print(@"Error: $(e.message)\n");
             return "";
         }        
+    }
+
+    public static string getJson() 
+    {
+        try {
+            message = new Soup.Message("GET", @"$(Constants.BING_API)?format=js&idx=0&mkt=$(locale)&n=$(number)");
+            session.send_message(message);
+            return (string)message.response_body.data;
+    
+        } catch (GLib.Error e) {
+            print(@"Error: $(e.message)\n");
+            return "";
+        }        
+    }
+
+    public static GenericArray<ImageTag> parseJson()
+    {
+        var parser = new Json.Parser();
+        parser.load_from_data(source);
+        var root_object = parser.get_root().get_object();
+        var images = new GenericArray<ImageTag>();
+
+        var nodes = root_object.get_array_member("images");
+        if (nodes == null) {
+            throw new Exception.JsonParser("Invalid json document");            
+        }
+        nodes.foreach_element((array, index, node) => 
+                images.add(new ImageTag.from_json(node)));
+        return images;
     }
 
     public static GenericArray<ImageTag> parseXml()
@@ -231,7 +262,7 @@ public class BingWall.WallpaperApp : Gtk.Application
         for (var iter = node->children; iter != null; iter = iter->next) {
             if (iter->type == Xml.ElementType.ELEMENT_NODE) {
                 if (iter->name == "image") {
-                    images.add(new ImageTag(iter));
+                    images.add(new ImageTag.from_xml(iter));
                     recno++;
                 }
             }
@@ -262,7 +293,7 @@ public class BingWall.WallpaperApp : Gtk.Application
         var urlBase = images[0].urlBase;
         var copyright = images[0].copyright;
         var startdate = images[0].startdate;
-        var headline = images[0].headline;
+        var title = images[0].title;
 
         string filename;
         if (urlBase.index_of("=") > 0)
