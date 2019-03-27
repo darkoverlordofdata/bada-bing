@@ -32,7 +32,6 @@ public class BingWall.WallpaperApp : Gtk.Application
     public static bool list = false;
     public static bool gui = false;
     public static bool xml = false;
-    public static bool json = true;
     public static string? locale = null;
 
     public static Soup.Session session;
@@ -65,8 +64,6 @@ public class BingWall.WallpaperApp : Gtk.Application
 		{ "update", 0, 0, OptionArg.NONE, ref update, "Update the wallpaper", null },
 		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
         { "list", 0, 0, OptionArg.NONE, ref list, "List cache content", null },
-        { "xml", 0, 0, OptionArg.NONE, ref xml, "Just the xml", null},
-        { "json", 0, 0, OptionArg.NONE, ref json, "Just the json", null},
         { "locale", 0, 0, OptionArg.STRING, ref locale, "Locale", "STRING" },
 		{ null }
     };
@@ -92,25 +89,21 @@ public class BingWall.WallpaperApp : Gtk.Application
         settings = new Settings("org.gnome.desktop.background");
         session = new Soup.Session();
         
-        var setting = new Settings("com.github.darkoverlordofdata.bing-wall");
-        maximum = setting.get_int("maximum");
+        var config = new Settings("com.github.darkoverlordofdata.bing-wall");
 
+        xml = config.get_boolean("xml");
+        maximum = config.get_int("maximum");
+        source = xml ? getXml() : getJson();
 
-        /** 
-         * --xml
-         * 
-         * just download and display the xml
-         */
-        if (xml) {
-            source = getXml();
+        if (list) {
+            var images = xml ? parseXml() : parseJson();
+            images.foreach((image) => image.print());
+            //  images.foreach((image) => {
+            //      print("%s|%s|%s\n", image.startdate, image.title, image.urlBase);
+            //  });
             done = true;
+
         }
-
-        if (json) {
-            source = getJson();
-            done = true;
-        }   
-
         /** 
          * --update
          * 
@@ -118,11 +111,8 @@ public class BingWall.WallpaperApp : Gtk.Application
          */
         if (update) {
             var images = xml ? parseXml() : parseJson();
-            images.foreach((image) => {
-                print("%s|%s|%s\n", image.startdate, image.title, image.urlBase);
-            });
-            //  updateWallpaper(images);
-            //  purgeWallpaper(images);
+            updateWallpaper(images);
+            purgeWallpaper(images);
             done = true;
         }
 

@@ -56,11 +56,17 @@
 
      public ImageTag.from_json(Json.Node node) 
      {
-         this.url = node.get_object().get_string_member("url");
-         this.urlBase = node.get_object().get_string_member("urlbase");
-         this.startdate = node.get_object().get_string_member("startdate");
-         this.title = node.get_object().get_string_member("title");
-         this.copyright = node.get_object().get_string_member("copyright");
+         var object = node.get_object();
+          
+         this.url       = object.get_string_member("url");
+         this.urlBase   = object.get_string_member("urlbase");
+         this.startdate = object.get_string_member("startdate");
+         this.title     = object.get_string_member("title");
+         this.copyright = object.get_string_member("copyright");
+     }
+
+     public void print() {
+        stdout.printf("%s - %s - %s\n", startdate, title, urlBase);
      }
 
  }

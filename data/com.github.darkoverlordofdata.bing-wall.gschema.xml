@@ -37,5 +37,11 @@
         <description>Maximum number of wallpapers to keep.</description>
     </key>
 
+    <key name="xml" type="b">
+        <default>false</default>
+        <summary>Source format</summary>
+        <description>True for xml, false for json.</description>
+    </key>
+
   </schema>
 </schemalist>
