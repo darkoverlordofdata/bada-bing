@@ -31,10 +31,10 @@
 
         //Define style
         var provider = new Gtk.CssProvider();
-        provider.load_from_resource("/com/github/darkoverlordofdata/bing-wall/application.css");
+        provider.load_from_resource(@"$(APPLICATION_URI)/application.css");
         Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-        var setting = new Settings("com.github.darkoverlordofdata.bing-wall");
+        var setting = new Settings(APPLICATION_ID);
         setting.get_boolean("dark");
         if (setting.get_boolean("dark")) {
             Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", true);

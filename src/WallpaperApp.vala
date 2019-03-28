@@ -16,10 +16,18 @@
 using Xml;
 using Soup;
 
-errordomain Exception {
-    XmlParser,
-    JsonParser,
+
+namespace BingWall { 
+
+    errordomain Exception {
+        XmlParser,
+        JsonParser,
+    }
+        
+    public const string APPLICATION_ID = "com.github.darkoverlordofdata.bing-wall";
+    public const string APPLICATION_URI = "/com/github/darkoverlordofdata/bing-wall";
 }
+
 
 
 /**
@@ -33,14 +41,13 @@ public class BingWall.WallpaperApp : Gtk.Application
     public const string BING_API = "HPImageArchive";
     public const string DEFAULT_LOCALE = "EN-us";
     public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
-    public const string APPLICATION_URI = "com.github.darkoverlordofdata.bing-wall";
 
     public MainWindow window;
 
     public WallpaperApp() 
     {
         Object(
-            application_id: APPLICATION_URI,
+            application_id: APPLICATION_ID,
             flags: ApplicationFlags.FLAGS_NONE
         );
     }
@@ -113,7 +120,7 @@ public class BingWall.WallpaperApp : Gtk.Application
         }
 
         /** set globals */
-        var config = new Settings(APPLICATION_URI);
+        var config = new Settings(APPLICATION_ID);
         xml = config.get_boolean("xml");
         maximum = config.get_int("maximum");
         var done = false;
@@ -178,10 +185,10 @@ public class BingWall.WallpaperApp : Gtk.Application
     public static void listCache()
     {
         var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
-        var local_dat = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
+        var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
 
         uint8[] src;
-        if (FileUtils.get_data(local_dat, out src)) {
+        if (FileUtils.get_data(cache_api, out src)) {
             var images = xml ? parseXml((string)src) : parseJson((string)src);
             images.foreach((image) => print(image.to_string()));    
         }
@@ -203,47 +210,40 @@ public class BingWall.WallpaperApp : Gtk.Application
             session.send_message(message);
             var source = (string)message.response_body.data;
 
-
-            //  var source = getApi(session, xml);
             var images = xml ? parseXml(source) : parseJson(source);
-
             var url = images[0].url;
             var urlBase = images[0].urlBase;
             var copyright = images[0].copyright;
             var startdate = images[0].startdate;
             var title = images[0].title;
 
-            string filename;
-            if (urlBase.index_of("=") > 0)
-                filename = urlBase.split("=")[1].replace("OHR.", "");
-            else
-                filename = urlBase.replace("OHR.", "");
+            var filename = urlBase.replace("/th?id=OHR.", "");
 
             var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
-
             if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
                 var cache = File.new_for_path(cache_dir);
                 cache.make_directory();
             }
-            var local_jpg = @"$(cache_dir)/$(filename).jpg";
-            var local_dat = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
-            var srcUrl = @"$(BING_URL)$(urlBase)_1920x1200.jpg";
-            var download = new Soup.Message("GET", srcUrl);
+            var cache_jpg = @"$(cache_dir)/$(filename).jpg";
+            var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
+            var cache_url = @"$(BING_URL)$(urlBase)_1920x1200.jpg";
+            var download = new Soup.Message("GET", cache_url);
             session.send_message(download);
-            
+            // fallback to the default url?
             if (download.response_body.length == 0) {
-                srcUrl = @"$(BING_URL)$(url)";
-                download = new Soup.Message("GET", srcUrl);
+                cache_url = @"$(BING_URL)$(url)";
+                download = new Soup.Message("GET", cache_url);
                 session.send_message(download);
             }
             
-            if (!FileUtils.test(local_jpg, FileTest.EXISTS) || force) {
-                FileUtils.set_data(local_jpg, download.response_body.data);
+            if (!FileUtils.test(cache_jpg, FileTest.EXISTS) || force) {
+                FileUtils.set_data(cache_jpg, download.response_body.data);
             }
-            FileUtils.set_data(local_dat, source.data);
+            FileUtils.set_data(cache_api, source.data);
  
             var settings = new Settings(GNOME_WALLPAPER);
-            settings.set_string("picture-uri", @"file://$local_jpg");
+            settings.set_string("picture-uri", @"file://$cache_jpg");
+            purgeWallpaper(images);
 
         } catch (GLib.Error e) {
             print(@"Error: $(e.message)\n");
@@ -253,12 +253,26 @@ public class BingWall.WallpaperApp : Gtk.Application
     ////////////////////////////////////////////////////////////////////////////////
     // utils
     ////////////////////////////////////////////////////////////////////////////////
-    
+
     public static void purgeWallpaper(GenericArray<ImageTag> images)
     {
         var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
         var cache = File.new_for_path(cache_dir);
-        list_children(cache);
+        files = new GenericArray<string>();
+        listFiles(cache);
+        files.foreach((filename) => {
+            print("file: %s/%s\n", cache_dir, filename);
+            var found = false;
+            for (var i=0; i<images.length; i++) {
+                if (filename.replace(".jpg", "") == images[i].urlBase.replace("/th?id=OHR.", "")) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                print("purge %s\n", filename);
+            }
+        });
     }
 
     /**
@@ -274,7 +288,7 @@ public class BingWall.WallpaperApp : Gtk.Application
             : @"$(BING_URL)/$(BING_API).aspx?format=js&idx=0&mkt=$(locale)&n=$(number)";
     }
 
-    private static void list_children(File file, string space = "", Cancellable? cancellable = null) throws GLib.Error 
+    private static void listFiles(File file, string space = "", Cancellable? cancellable = null) throws GLib.Error 
     {
         var enumerator = file.enumerate_children (
             "standard::*",
@@ -285,7 +299,7 @@ public class BingWall.WallpaperApp : Gtk.Application
         while (cancellable.is_cancelled() == false && ((info = enumerator.next_file(cancellable)) != null)) {
             if (info.get_file_type() == FileType.DIRECTORY) {
                 File subdir = file.resolve_relative_path(info.get_name ());
-                list_children(subdir, space + " ", cancellable);
+                listFiles(subdir, space + " ", cancellable);
             } else {
                 if (info.get_name().index_of(".jpg") == -1) continue;
                 if (info.get_is_hidden()) continue;

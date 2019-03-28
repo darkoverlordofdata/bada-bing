@@ -21,7 +21,7 @@
         transient_for = window;
         modal = true;
 
-        var setting = new Settings("com.github.darkoverlordofdata.bing-wall");
+        var setting = new Settings(APPLICATION_ID);
 
         //Define sections
         var tit1_pref = new Gtk.Label(_("Interface"));
