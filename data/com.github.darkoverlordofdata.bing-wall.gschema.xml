@@ -40,7 +40,7 @@
     <key name="xml" type="b">
         <default>false</default>
         <summary>Source format</summary>
-        <description>True for xml, false for json.</description>
+        <description>Xml (true), or Json (false).</description>
     </key>
 
   </schema>

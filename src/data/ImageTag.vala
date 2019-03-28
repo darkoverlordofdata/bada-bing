@@ -21,6 +21,23 @@
      public string title;
      public string copyright;
 
+     /**
+      * Create image tag from JSON node
+      */
+      public ImageTag.from_json(Json.Node node) 
+     {
+         var object = node.get_object();
+          
+         this.url       = object.get_string_member("url");
+         this.urlBase   = object.get_string_member("urlbase");
+         this.startdate = object.get_string_member("startdate");
+         this.title     = object.get_string_member("title");
+         this.copyright = object.get_string_member("copyright");
+     }
+
+     /**
+      * Create image tag from Xml node
+      */
      public ImageTag.from_xml(Xml.Node* parent) 
      {
         for (Xml.Node* node = parent->children; node != null; node = node->next) {
@@ -54,20 +71,10 @@
         }
      }
 
-     public ImageTag.from_json(Json.Node node) 
-     {
-         var object = node.get_object();
-          
-         this.url       = object.get_string_member("url");
-         this.urlBase   = object.get_string_member("urlbase");
-         this.startdate = object.get_string_member("startdate");
-         this.title     = object.get_string_member("title");
-         this.copyright = object.get_string_member("copyright");
+     /**
+      * String representation of current node
+      */
+     public string to_string() {
+        return "%s - %s - %s\n".printf(startdate, title, urlBase);
      }
-
-     public void print() {
-        stdout.printf("%s - %s - %s\n", startdate, title, urlBase);
-     }
-
  }
- 

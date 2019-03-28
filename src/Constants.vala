@@ -11,8 +11,7 @@ namespace Constants
     public const string APP_NAME = "Bing Wallpaper";
     public const string VERSION_INFO = "Stable";
     public const string RELEASE = "stable";
-    public const string BING_URL = "https://www.bing.com";
-    public const string BING_API = "https://www.bing.com/HPImageArchive.aspx";
+    //  public const string BING_URL = "https://www.bing.com";
 
-    //?format=xml&idx=0";
+
 }
