@@ -68,6 +68,7 @@ executable(
         dependency('glib-2.0'),
         dependency('gtk+-3.0'),
         dependency('libsoup-2.4'),
+        dependency('libnotify'),
         dependency('json-glib-1.0'),
         dependency('libxml-2.0'),
         dependency('webkit2gtk-4.0'),

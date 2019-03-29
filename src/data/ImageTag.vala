@@ -75,6 +75,6 @@
       * String representation of current node
       */
      public string to_string() {
-        return "%s - %s - %s\n".printf(startdate, title, urlBase);
+        return "%s - %s - %s".printf(startdate, title, urlBase);
      }
  }

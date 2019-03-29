@@ -11,7 +11,16 @@ namespace Constants
     public const string APP_NAME = "Bing Wallpaper";
     public const string VERSION_INFO = "Stable";
     public const string RELEASE = "stable";
-    //  public const string BING_URL = "https://www.bing.com";
 
-
+    public const string AUTOSTART = """[Desktop Entry]
+Name=Ba Da Bing
+GenericName=Wallpaper
+Comment=Hey Linux, we gotch yer wallpaper
+Categories=Utility;
+Exec=com.github.darkoverlordofdata.bing-wall --update --force --schedule=21600
+Icon=/usr/share/icons/com.github.darkoverlordofdata.bing-wall.svg
+Terminal=false
+Type=Application
+Keywords=Wallpaper;
+""";
 }

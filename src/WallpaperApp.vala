@@ -15,7 +15,7 @@
  ******************************************************************************/
 using Xml;
 using Soup;
-
+using Notify;
 
 namespace BingWall { 
 
@@ -74,33 +74,33 @@ public class BingWall.WallpaperApp : Gtk.Application
      *
      *  Application Options:
      *  --schedule=INT      Run scheduled
-     *  --number=INT        Number of days to get
      *  --display           Display the gui
      *  --update            Update the wallpaper
      *  --force             Force overwwrite
      *  --list              List cache content
      *  --locale=STRING     Locale
+     *  --auto              Auto start
      * 
      */
 	const OptionEntry[] options = {
 		{ "schedule", 0, 0, OptionArg.INT, ref schedule, "Run scheduled", "INT" },
-		{ "number", 0, 0, OptionArg.INT, ref number, "Number of days to get", "INT" },
 		{ "display", 0, 0, OptionArg.NONE, ref gui, "Display the gui", null },
 		{ "update", 0, 0, OptionArg.NONE, ref update, "Update the wallpaper", null },
 		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
         { "list", 0, 0, OptionArg.NONE, ref list, "List cache content", null },
         { "locale", 0, 0, OptionArg.STRING, ref locale, "Locale", "STRING" },
+		{ "auto", 0, 0, OptionArg.NONE, ref auto, "Auto start", null },
 		{ null }
     };
 
     public static int schedule;
-    public static int maximum = 7;
-    public static int number =  1;
+    public static int number = 7;
     public static bool update = false;
     public static bool force = false;
     public static bool list = false;
-    public static bool gui = false;
+    public static bool gui = true;
     public static bool xml = false;
+    public static bool auto = false;
     public static string? locale = null;
     
     private static GenericArray<string> files;
@@ -122,9 +122,21 @@ public class BingWall.WallpaperApp : Gtk.Application
         /** set globals */
         var config = new Settings(APPLICATION_ID);
         xml = config.get_boolean("xml");
-        maximum = config.get_int("maximum");
-        var done = false;
+        number = config.get_int("maximum");
+        gui = !config.get_boolean("minimized");
+        schedule = config.get_int("interval");
         if (locale == null) locale = DEFAULT_LOCALE;
+
+        /**
+         * --auto
+         * 
+         * add to autostart menu
+         */
+        if (auto) {
+            var autostart = @"$(Environment.get_user_config_dir())/autostart/bing-wall.desktop";
+            FileUtils.set_data(autostart, Constants.AUTOSTART.data);
+			return 0;
+        }
 
         /** 
          * --list
@@ -133,7 +145,7 @@ public class BingWall.WallpaperApp : Gtk.Application
          */
         if (list) {
             listCache();
-            done = true;
+            return 0;
         }
 
         /** 
@@ -143,7 +155,15 @@ public class BingWall.WallpaperApp : Gtk.Application
          */
         if (update) {
             updateWallpaper();
-            done = true;
+            if (schedule > 0) {
+                Timeout.add_seconds(schedule, () => {
+                    updateWallpaper();
+                    return true;
+                });
+                new MainLoop().run();    
+                return 0;
+            }    
+            return 0;
         }
 
         /**
@@ -153,7 +173,6 @@ public class BingWall.WallpaperApp : Gtk.Application
          */
         if (gui) {
             var app = new WallpaperApp();
-            done = true;
             return app.run(args);    
         }
 
@@ -171,8 +190,7 @@ public class BingWall.WallpaperApp : Gtk.Application
             return 0;
         }    
 
-        if (!done)
-            print("Run '%s --help' to see a full list of available command line options.\n", args[0]);
+        print("Run '%s --help' to see a full list of available command line options.\n", args[0]);
         return 0;
     }
 
@@ -190,7 +208,7 @@ public class BingWall.WallpaperApp : Gtk.Application
         uint8[] src;
         if (FileUtils.get_data(cache_api, out src)) {
             var images = xml ? parseXml((string)src) : parseJson((string)src);
-            images.foreach((image) => print(image.to_string()));    
+            images.foreach((image) => print(@"$image\n"));    
         }
     }
 
@@ -243,6 +261,11 @@ public class BingWall.WallpaperApp : Gtk.Application
  
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");
+
+            Notify.init("Ba Da Bing!");
+            var yo = new Notify.Notification(title, copyright, "dialog-information");
+            yo.show();
+            
             purgeWallpaper(images);
 
         } catch (GLib.Error e) {
