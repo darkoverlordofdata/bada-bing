@@ -14,16 +14,16 @@
  * limitations under the License.
  ******************************************************************************/
 
- public class BingWall.MainWindow : Gtk.Window 
+ public class BaDaBing.MainWindow : Gtk.Window 
  {
-    public WallpaperApp app;
+    public WallpaperApplication app;
     public AppIndicator.Indicator indicator;
-    private Gtk.Grid view;
+    private Gtk.TreeView view;
 
     public MainWindow(WallpaperApp app) {
         this.app = app;
         this.set_application(app);
-        this.set_size_request(950, 650);
+        this.set_size_request(720, 480);
         window_position = Gtk.WindowPosition.CENTER;
         var header = new Widget.Header(this, false);
         this.set_titlebar(header);
@@ -51,8 +51,7 @@
         view.attach(new Gtk.Label("Loading ..."), 0, 0, 1, 1);
         overlay.add_overlay(view);
 
-        add(overlay);
-        this.show_all();
+        //  return view;
     }
 
     public void change_view(Gtk.Widget widget) {

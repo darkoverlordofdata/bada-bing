@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.Widget.Location : Gtk.Box
+ public class BaDaBing.Widget.Location : Gtk.Box
  {
-    public BingWall.MainWindow window;
-    private BingWall.Widget.Header header;
+    public BaDaBing.MainWindow window;
+    private BaDaBing.Widget.Header header;
 
     /*
      * Active values will have their own localized version. 
@@ -30,7 +30,7 @@
     }
     
 
-    public Location(BingWall.MainWindow window, BingWall.Widget.Header header) {
+    public Location(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
 
         Locale locale[] = {
             Locale() { code = "auto",  active = true,  name = "auto" },
@@ -147,14 +147,14 @@
         //  if (location_view.model.get_iter(out iter, path)) {
         //      Mycity city = get_selection(location_view.model, iter);
         //      var setting = new Settings("com.gitlab.bitseater.meteo");
-        //      var uri1 = Constants.OWM_API_ADDR + "weather?lat=";
+        //      var uri1 = OWM_API_ADDR + "weather?lat=";
         //      var uri2 = "&type=like&APPID=" + setting.get_string("apiid");
         //      var uri = uri1 + city.lat.to_string() + "&lon=" + city.lon.to_string() + uri2;
         //      setting.set_string("idplace", update_id(uri));
         //      setting.set_string("country", city.country);
         //      setting.set_string("state", city.state);
         //      setting.set_string("location", city.town);
-        //      var current = new BingWall.Widgets.Current(window, header);
+        //      var current = new BaDaBing.Widgets.Current(window, header);
         //      window.change_view(current);
         //      window.show_all();
         //  }

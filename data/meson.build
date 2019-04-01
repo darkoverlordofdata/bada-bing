@@ -1,8 +1,14 @@
 
 install_data(
+    join_paths(meson.project_name() + '.png'),
+    install_dir: join_paths(get_option('datadir'), 'icons')
+)
+
+install_data(
     join_paths(meson.project_name() + '.svg'),
     install_dir: join_paths(get_option('datadir'), 'icons')
 )
+
 
 install_data(
     meson.project_name() + '.gschema.xml',

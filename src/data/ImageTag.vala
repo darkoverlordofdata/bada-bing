@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.ImageTag : Object
+ public class BaDaBing.ImageTag : Object
  {
      public string url;
      public string urlBase;

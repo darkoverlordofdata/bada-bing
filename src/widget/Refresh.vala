@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.Widget.Refresh : Gtk.Box
+ public class BaDaBing.Widget.Refresh : Gtk.Box
  {
-    public Refresh(BingWall.MainWindow window, BingWall.Widget.Header header) {
+    public Refresh(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
         orientation = Gtk.Orientation.HORIZONTAL;
 
         var setting = new Settings(APPLICATION_ID);

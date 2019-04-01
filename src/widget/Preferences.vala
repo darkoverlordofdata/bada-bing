@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.Widget.Preferences : Gtk.Dialog
+ public class BaDaBing.Widget.Preferences : Gtk.Dialog
  {
-    public Preferences(BingWall.MainWindow window, BingWall.Widget.Header header) {
+    public Preferences(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
         resizable = false;
         deletable = true;
         transient_for = window;
@@ -126,10 +126,10 @@
         boot_sw.notify["active"].connect(() => {
             if (boot_sw.get_active()) {
                 setting.set_boolean("start-on-boot", true);
-                //  BingWall.Utils.set_start_on_boot();
+                //  BaDaBing.Utils.set_start_on_boot();
             } else {
                 setting.set_boolean("start-on-boot", false);
-                //  BingWall.Utils.reset_start_on_boot();
+                //  BaDaBing.Utils.reset_start_on_boot();
             }
         });
 
@@ -266,11 +266,11 @@
         add_button(_("Close"), Gtk.ResponseType.CANCEL);
         response.connect(() => {
             //  if (setting.get_boolean("auto")) {
-            //      //  BingWall.Utils.geolocate();
-            //      var current = new BingWall.Widget.Refresh(window, header);
+            //      //  BaDaBing.Utils.geolocate();
+            //      var current = new BaDaBing.Widget.Refresh(window, header);
             //      window.change_view(current);
             //  } else {
-                var current = new BingWall.Widget.Refresh(window, header);
+                var current = new BaDaBing.Widget.Refresh(window, header);
                 window.change_view(current);
             //  }
             window.show_all();

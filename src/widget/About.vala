@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BingWall.Widget.About : Gtk.AboutDialog 
+ public class BaDaBing.Widget.About : Gtk.AboutDialog 
  {
-    public About (BingWall.MainWindow window) {
+    public About (BaDaBing.MainWindow window) {
         transient_for = window;
         modal = true;
         destroy_with_parent = true;
@@ -26,10 +26,10 @@
         copyright = "Copyright \xc2\xa9 darkoverlordofdata 2019";
         documenters = authors;
         //  license_type = Gtk.License.Custom;
-        logo_icon_name = Constants.ICON_NAME;
-        program_name = Constants.APP_NAME;
+        logo_icon_name = ICON_NAME;
+        program_name = APP_NAME;
         translator_credits = "";
-        version = Constants.VERSION;
+        version = VERSION;
         website = "https://github.com/darkoverlordofdata/bing-wall";
         website_label = _("website");
 

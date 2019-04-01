@@ -35,14 +35,10 @@ subdir('po')
 # Create a new executable
 executable(
     meson.project_name(),
-    'src/Constants.vala',
-    'src/WallpaperApp.vala',
+    'src/BaDaBing.vala',
+    'src/WallpaperApplication.vala',
     'src/MainWindow.vala',
     'src/data/ImageTag.vala',
-    # 'src/data/ISerialize.vala',
-    # 'src/data/Serializer.vala',
-    # 'src/data/Wallpaper.vala',
-    # 'src/data/Wallpapers.vala',
     'src/widget/About.vala',
     'src/widget/Header.vala',
     'src/widget/Location.vala',

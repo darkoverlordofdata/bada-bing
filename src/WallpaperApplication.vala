@@ -17,23 +17,10 @@ using Xml;
 using Soup;
 using Notify;
 
-namespace BingWall { 
-
-    errordomain Exception {
-        XmlParser,
-        JsonParser,
-    }
-        
-    public const string APPLICATION_ID = "com.github.darkoverlordofdata.bing-wall";
-    public const string APPLICATION_URI = "/com/github/darkoverlordofdata/bing-wall";
-}
-
-
-
 /**
- * Wallpaper Gui Application
+ * Wallpaper Application
  */
-public class BingWall.WallpaperApp : Gtk.Application 
+public class BaDaBing.WallpaperApplication : Gtk.Application 
 {
     public const string XML = "xml";
     public const string JSON = "json";
@@ -44,7 +31,7 @@ public class BingWall.WallpaperApp : Gtk.Application
 
     public MainWindow window;
 
-    public WallpaperApp() 
+    public WallpaperApplication() 
     {
         Object(
             application_id: APPLICATION_ID,
@@ -52,7 +39,7 @@ public class BingWall.WallpaperApp : Gtk.Application
         );
     }
 
-    public override void activate() 
+    protected override void activate() 
     {
         if (get_windows() == null) {
             window = new MainWindow(this);
@@ -62,6 +49,23 @@ public class BingWall.WallpaperApp : Gtk.Application
         }
     }
 
+    protected override void startup()
+    {
+        base.startup();
+        var builder = new Gtk.Builder();
+        try {
+            builder.add_from_resource(@"$(APPLICATION_URI)/treeview-list.ui");
+        }
+        catch (GLib.Error e) {
+            stderr.printf(@"$(e.message)\n");
+			error("Unable to load file: %s", e.message);
+            //  Posix.exit(1);
+            return;
+        }
+        builder.connect_signals(this);
+        var window = builder.get_object("window") as Gtk.Window;
+        window.show_all();
+    }
 
     /**
      * Command line
@@ -134,7 +138,7 @@ public class BingWall.WallpaperApp : Gtk.Application
          */
         if (auto) {
             var autostart = @"$(Environment.get_user_config_dir())/autostart/bing-wall.desktop";
-            FileUtils.set_data(autostart, Constants.AUTOSTART.data);
+            FileUtils.set_data(autostart, AUTOSTART.data);
 			return 0;
         }
 
@@ -172,7 +176,7 @@ public class BingWall.WallpaperApp : Gtk.Application
          * open the gui
          */
         if (gui) {
-            var app = new WallpaperApp();
+            var app = new WallpaperApplication();
             return app.run(args);    
         }
 
@@ -247,8 +251,8 @@ public class BingWall.WallpaperApp : Gtk.Application
             var cache_url = @"$(BING_URL)$(urlBase)_1920x1200.jpg";
             var download = new Soup.Message("GET", cache_url);
             session.send_message(download);
-            // fallback to the default url?
-            if (download.response_body.length == 0) {
+            if (download.response_body.length < 2048) {
+                // we got a blank placeholder image - fallback to the default url:
                 cache_url = @"$(BING_URL)$(url)";
                 download = new Soup.Message("GET", cache_url);
                 session.send_message(download);
@@ -263,8 +267,11 @@ public class BingWall.WallpaperApp : Gtk.Application
             settings.set_string("picture-uri", @"file://$cache_jpg");
 
             Notify.init("Ba Da Bing!");
-            var yo = new Notify.Notification(title, copyright, "dialog-information");
-            yo.show();
+            var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.bing-wall.png";
+            //  var notify = new Notify.Notification(title, copyright, icon);
+            //  notify.show();
+
+            new Notify.Notification(title, copyright, icon).show();
             
             purgeWallpaper(images);
 
