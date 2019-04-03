@@ -26,8 +26,7 @@
 
 ### work in progress
 
-    I'm writng this because I like bing wallpaer. So this works on my desktop,
-    antergos-deepin, which is based on gnome. It should work on most gnome based DE's.
+    tested on antergos-deepin, deepin-manjaro, deepin, elementary
 
     todo:
     manage cache

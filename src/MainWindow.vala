@@ -18,9 +18,9 @@
  {
     public WallpaperApplication app;
     public AppIndicator.Indicator indicator;
-    private Gtk.TreeView view;
+    private Gtk.Grid view;
 
-    public MainWindow(WallpaperApp app) {
+    public MainWindow(WallpaperApplication app) {
         this.app = app;
         this.set_application(app);
         this.set_size_request(720, 480);
