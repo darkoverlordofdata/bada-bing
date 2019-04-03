@@ -1,4 +1,4 @@
-Source: com.github.darkoverlordofdata.bing-wall
+Source: com.github.darkoverlordofdata.bada-bing
 Section: x11
 Priority: optional
 Maintainer: bruce davidson <brucedavidson@darkoverlordofdata.com> 
@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 10.5.1),
                valac (>= 0.28.0)
 Standards-Version: 4.1.1
 
-Package: com.github.darkoverlordofdata.bing-wall
+Package: com.github.darkoverlordofdata.bada-bing
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Description: Bing Wallpaper Daily Changer

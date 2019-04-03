@@ -8,7 +8,7 @@
     This application is not affiliated with Bing or its services in any way.
 
     Usage:
-    com.github.darkoverlordofdata.bing-wall [OPTION?]
+    com.github.darkoverlordofdata.bada-bing [OPTION?]
 
     Help Options:
     -h, --help          Show help options
@@ -42,8 +42,8 @@
 
 ### translation
 
-    ninja com.github.darkoverlordofdata.bing-wall-pot
-    ninja com.github.darkoverlordofdata.bing-wall-update-po
+    ninja com.github.darkoverlordofdata.bada-bing-pot
+    ninja com.github.darkoverlordofdata.bada-bing-update-po
 
 ### run with cron
 To setup regular checks for new wallapers, edit crontab for the current user, using:
@@ -52,7 +52,7 @@ To setup regular checks for new wallapers, edit crontab for the current user, us
 
 , and add this line:
 
-    0 */6 * * * com.github.darkoverlordofdata.bing-wall --update > /dev/null 2>&1
+    0 */6 * * * com.github.darkoverlordofdata.bada-bing --update > /dev/null 2>&1
 
 This will run every 6 hours. You can use [this link](http://www.crontab-generator.org/) for reference.
 

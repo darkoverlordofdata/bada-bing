@@ -49,29 +49,29 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
         }
     }
 
-    protected override void startup()
-    {
-        base.startup();
-        var builder = new Gtk.Builder();
-        try {
-            builder.add_from_resource(@"$(APPLICATION_URI)/treeview-list.ui");
-        }
-        catch (GLib.Error e) {
-            stderr.printf(@"$(e.message)\n");
-			error("Unable to load file: %s", e.message);
-            //  Posix.exit(1);
-            return;
-        }
-        builder.connect_signals(this);
-        var window = builder.get_object("window") as Gtk.Window;
-        window.show_all();
-    }
+    //  protected override void startup()
+    //  {
+    //      base.startup();
+    //      var builder = new Gtk.Builder();
+    //      try {
+    //          builder.add_from_resource(@"$(APPLICATION_URI)/treeview-list.ui");
+    //      }
+    //      catch (GLib.Error e) {
+    //          stderr.printf(@"$(e.message)\n");
+	//  		error("Unable to load file: %s", e.message);
+    //          //  Posix.exit(1);
+    //          return;
+    //      }
+    //      builder.connect_signals(this);
+    //      var window = builder.get_object("window") as Gtk.Window;
+    //      window.show_all();
+    //  }
 
     /**
      * Command line
      * 
      *  Usage:
-     *  com.github.darkoverlordofdata.bing-wall [OPTION?]
+     *  com.github.darkoverlordofdata.bada-bing [OPTION?]
      *
      *  Help Options:
      *  -h, --help       Show help options
@@ -137,7 +137,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
          * add to autostart menu
          */
         if (auto) {
-            var autostart = @"$(Environment.get_user_config_dir())/autostart/bing-wall.desktop";
+            var autostart = @"$(Environment.get_user_config_dir())/autostart/bada-bing.desktop";
             FileUtils.set_data(autostart, AUTOSTART.data);
 			return 0;
         }
@@ -206,7 +206,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
      */
     public static void listCache()
     {
-        var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
+        var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
         var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
 
         uint8[] src;
@@ -241,7 +241,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
 
             var filename = urlBase.replace("/th?id=OHR.", "");
 
-            var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
+            var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
             if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
                 var cache = File.new_for_path(cache_dir);
                 cache.make_directory();
@@ -267,7 +267,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
             settings.set_string("picture-uri", @"file://$cache_jpg");
 
             Notify.init("Ba Da Bing!");
-            var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.bing-wall.png";
+            var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.bada-bing.png";
             //  var notify = new Notify.Notification(title, copyright, icon);
             //  notify.show();
 
@@ -286,7 +286,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
 
     public static void purgeWallpaper(GenericArray<ImageTag> images)
     {
-        var cache_dir = @"$(Environment.get_user_cache_dir())/bing-wall";
+        var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
         var cache = File.new_for_path(cache_dir);
         files = new GenericArray<string>();
         listFiles(cache);

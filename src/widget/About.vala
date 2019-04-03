@@ -30,7 +30,7 @@
         program_name = APP_NAME;
         translator_credits = "";
         version = VERSION;
-        website = "https://github.com/darkoverlordofdata/bing-wall";
+        website = "https://github.com/darkoverlordofdata/bada-bing";
         website_label = _("website");
 
         response.connect (() => {

@@ -1,11 +1,11 @@
-# Spanish translations for com.github.darkoverlordofdata.bing-wall package.
-# Copyright (C) 2019 THE com.github.darkoverlordofdata.bing-wall'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.darkoverlordofdata.bing-wall package.
+# Spanish translations for com.github.darkoverlordofdata.bada-bing package.
+# Copyright (C) 2019 THE com.github.darkoverlordofdata.bada-bing'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.darkoverlordofdata.bada-bing package.
 # Automatically generated, 2019.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.darkoverlordofdata.bing-wall\n"
+"Project-Id-Version: com.github.darkoverlordofdata.bada-bing\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-01 16:28-0800\n"
 "PO-Revision-Date: 2019-03-01 15:40-0800\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/com.github.darkoverlordofdata.bing-wall.desktop.in:3
-#: data/com.github.darkoverlordofdata.bing-wall.desktop.in:4
-#: data/com.github.darkoverlordofdata.bing-wall.appdata.xml.in:6
+#: data/com.github.darkoverlordofdata.bada-bing.desktop.in:3
+#: data/com.github.darkoverlordofdata.bada-bing.desktop.in:4
+#: data/com.github.darkoverlordofdata.bada-bing.appdata.xml.in:6
 msgid "Bing Wallpaper"
 msgstr ""
 
-#: data/com.github.darkoverlordofdata.bing-wall.desktop.in:5
-#: data/com.github.darkoverlordofdata.bing-wall.appdata.xml.in:7
-#: data/com.github.darkoverlordofdata.bing-wall.appdata.xml.in:9
+#: data/com.github.darkoverlordofdata.bada-bing.desktop.in:5
+#: data/com.github.darkoverlordofdata.bada-bing.appdata.xml.in:7
+#: data/com.github.darkoverlordofdata.bada-bing.appdata.xml.in:9
 msgid "Bing Wallpaper Daily Changer"
 msgstr ""
 
-#: data/com.github.darkoverlordofdata.bing-wall.desktop.in:8
+#: data/com.github.darkoverlordofdata.bada-bing.desktop.in:8
 msgid "application-default-icon"
 msgstr ""
 
-#: data/com.github.darkoverlordofdata.bing-wall.desktop.in:10
+#: data/com.github.darkoverlordofdata.bada-bing.desktop.in:10
 msgid "Bing;Wallpaper;"
 msgstr ""
 
-#: data/com.github.darkoverlordofdata.bing-wall.appdata.xml.in:10
+#: data/com.github.darkoverlordofdata.bada-bing.appdata.xml.in:10
 msgid ""
 "Images are copyright to their respective owners. Bing is a trademark of "
 "Microsoft. This application is not affiliated with Bing or its services in "

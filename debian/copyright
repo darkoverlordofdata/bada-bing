@@ -1,6 +1,6 @@
 Format: https://dep.debian.net/deps/dep5
-Upstream-Name: bing-wall-packaging
-Source: https://github.com/darkoverlordofdata/bing-wall
+Upstream-Name: bada-bing-packaging
+Source: https://github.com/darkoverlordofdata/bada-bing
 
 Files: src/* data/* debian/*
 Copyright: 2019 bruce davidson <darkoverlordofdata@gmail.com>

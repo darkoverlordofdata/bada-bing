@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/com.github.darkoverlordofdata.bing-wall",
+            "program": "${workspaceFolder}/build/com.github.darkoverlordofdata.bada-bing",
             "args": ["--display"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

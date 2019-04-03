@@ -6,8 +6,8 @@ namespace BaDaBing {
         JsonParser,
     }
         
-    public const string APPLICATION_ID = "com.github.darkoverlordofdata.bing-wall";
-    public const string APPLICATION_URI = "/com/github/darkoverlordofdata/bing-wall";
+    public const string APPLICATION_ID =   "com.github.darkoverlordofdata.bada-bing";
+    public const string APPLICATION_URI = "/com/github/darkoverlordofdata/bada-bing";
     public const string DATADIR = Config.DATADIR;
     public const string PKGDATADIR = Config.PKG_DATADIR;
     public const string GETTEXT_PACKAGE = Config.GETTEXT_PACKAGE;
@@ -24,8 +24,8 @@ Name=Ba Da Bing
 GenericName=Wallpaper
 Comment=Hey Linux, we gotch yer wallpaper
 Categories=Utility;
-Exec=com.github.darkoverlordofdata.bing-wall --update --force --schedule=21600
-Icon=/usr/local/share/icons/com.github.darkoverlordofdata.bing-wall.svg
+Exec=com.github.darkoverlordofdata.bada-bing --update --force --schedule=21600
+Icon=/usr/local/share/icons/com.github.darkoverlordofdata.bada-bing.svg
 Terminal=false
 Type=Application
 Keywords=Wallpaper;
