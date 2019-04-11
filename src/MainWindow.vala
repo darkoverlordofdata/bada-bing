@@ -16,58 +16,48 @@
 
  public class BaDaBing.MainWindow : Gtk.Window 
  {
-    public WallpaperApplication app;
-    public AppIndicator.Indicator indicator;
-    private Gtk.Grid view;
+    //  public WallpaperApplication app;
+    //  public AppIndicator.Indicator indicator;
+    //  private Gtk.Grid view;
+
+    public static MainWindow instance;
 
     public MainWindow(WallpaperApplication app) {
-        this.app = app;
-        this.set_application(app);
+
+        instance = this;
         this.set_size_request(720, 480);
         window_position = Gtk.WindowPosition.CENTER;
-        var header = new Widget.Header(this, false);
-        this.set_titlebar(header);
 
+        var rightPanel = new Gtk.Stack();
+        rightPanel.add_titled(new WelcomeView(), "welcome", "Welcome");
+        rightPanel.add_titled(new SettingsView(), "preferences", "Preferences");
+        //  rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
+        //  rightPanel.add_titled(new SettingsView(), "settings", "Settings");
+        //  rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
+        rightPanel.add_titled(new GaleryView(), "galery", "Galery");
 
-        //Define style
-        var provider = new Gtk.CssProvider();
-        provider.load_from_resource(@"$(APPLICATION_URI)/application.css");
-        Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        var leftPanel = new Gtk.StackSidebar();
+        leftPanel.stack = rightPanel;
 
-        var setting = new Settings(APPLICATION_ID);
-        setting.get_boolean("dark");
-        if (setting.get_boolean("dark")) {
-            Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", true);
-        } else {
-            Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", false);
-        }
+        var paned = new Gtk.Paned(Gtk.Orientation.HORIZONTAL);
+        paned.add1(leftPanel);
+        paned.add2(rightPanel);
 
-        //create main view
-        var overlay = new Gtk.Overlay();
-        view = new Gtk.Grid();
-        view.expand = true;
-        view.halign = Gtk.Align.FILL;
-        view.valign = Gtk.Align.FILL;
-        view.attach(new Gtk.Label("Loading ..."), 0, 0, 1, 1);
-        overlay.add_overlay(view);
+        var gtk_settings = Gtk.Settings.get_default();
 
-        //  return view;
+        var headerbar = new Gtk.HeaderBar();
+        headerbar.get_style_context().add_class("default-decoration");
+        headerbar.show_close_button = true;
+
+        this.add(paned);
+        this.set_default_size(900, 600);
+        this.set_size_request(750, 500);
+        this.set_titlebar(headerbar);
+        this.title = APP_NAME;
+        this.show_all();
+
+        app.add_window(this);
     }
 
-    public void change_view(Gtk.Widget widget) {
-        this.view.get_child_at(0,0).destroy();
-        widget.expand = true;
-        this.view.attach(widget, 0, 0, 1, 1);
-        widget.show_all();
-    }
-
-    public void create_indicator() {
-    }
-
-    public void show_indicator() {
-    }
-
-    public void hide_indicator() {
-    }
 
 }

@@ -20,7 +20,7 @@
     </key>
 
     <key name="interval" type="i">
-        <default>86400</default>
+        <default>21600</default>
         <summary>Update interval</summary>
         <description>Time in seconds to update wallpaper.</description>
     </key>

@@ -13,14 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BaDaBing.Widget.Preferences : Gtk.Dialog
+ public class BaDaBing.PreferencesView : Gtk.Paned
  {
-    public Preferences(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
-        resizable = false;
-        deletable = true;
-        transient_for = window;
-        modal = true;
+    construct 
+    {
 
+        //  MainWindow window = MainWindow.instance;
         var setting = new Settings(APPLICATION_ID);
 
         //Define sections
@@ -50,25 +48,6 @@
                setting.set_boolean("dark", false);
            }
         });
-
-        //  //Select type of icons:symbolic or realistic
-        //  var icon_label = new Gtk.Label(_("Symbolic icons:"));
-        //  icon_label.halign = Gtk.Align.END;
-        //  var icon = new Gtk.Switch();
-        //  icon.halign = Gtk.Align.START;
-        //  if (setting.get_boolean("symbolic")) {
-        //      icon.active = true;
-        //  } else {
-        //      icon.active = false;
-        //  }
-        //  icon.notify["active"].connect(() => {
-        //      if (icon.get_active()) {
-        //          setting.set_boolean("symbolic", true);
-        //      } else {
-        //          setting.set_boolean("symbolic", false);
-        //      }
-        //  });
-        
 
         //Select minimized on start
         var minz_label = new Gtk.Label(_("Start minimized:"));
@@ -105,12 +84,12 @@
                 setting.set_boolean("indicator", true);
                 minz.sensitive = true;
                 minz.active = true;
-                window.show_indicator();
+                //  window.show_indicator();
             } else {
                 setting.set_boolean("indicator", false);
                 minz.active = false;
                 minz.sensitive = false;
-                window.hide_indicator();
+                //  window.hide_indicator();
             }
         });
 
@@ -189,31 +168,8 @@
             setting.set_int("interval", interval);
         });
 
-        //System units
-        //  var unit_lab = new Gtk.Label(_("Units") + ":");
-        //  unit_lab.halign = Gtk.Align.END;
-        //  var unit_box = new Gtk.ComboBoxText();
-        //  unit_box.append_text(_("Metric System") + " (\u00B0" + "C - kph)");
-        //  unit_box.append_text(_("Imperial System") + " (\u00B0" + "F - mph)");
-        //  unit_box.append_text(_("UK System") + " (\u00B0" + "C - mph)");
-        //  if (setting.get_string("units") == "metric") {
-        //      unit_box.active = 0;
-        //  } else if (setting.get_string("units") == "imperial") {
-        //      unit_box.active = 1;
-        //  } else  {
-        //      unit_box.active = 2;
-        //  }
-        //  unit_box.changed.connect(() => {
-        //      if (unit_box.active == 0) {
-        //          setting.set_string("units", "metric");
-        //      } else if (unit_box.active == 1) {
-        //          setting.set_string("units", "imperial");
-        //      } else {
-        //          setting.set_string("units", "british");
-        //      }
-        //  });
 
-        //Automatic location
+        //Automatic location - modify to  accept string: EN-us
         //  var loc_label = new Gtk.Label(_("Find my location automatically:"));
         //  loc_label.halign = Gtk.Align.END;
         //  var loc = new Gtk.Switch();
@@ -240,44 +196,25 @@
         layout.margin_top = 0;
 
         layout.attach(tit1_pref, 0, 0, 2, 1);
+
         layout.attach(theme_lab, 2, 1, 1, 1);
         layout.attach(theme, 3, 1, 1, 1);
-        //  layout.attach(icon_label, 2, 2, 1, 1);
-        //  layout.attach(icon, 3, 2, 1, 1);
         layout.attach(ind_label, 2, 3, 1, 1);
         layout.attach(ind, 3, 3, 1, 1);
-        layout.attach(minz_label, 2, 4, 1, 1);
-        layout.attach(minz, 3, 4, 1, 1);
-        layout.attach(boot_label, 2, 5, 1, 1);
-        layout.attach(boot_sw, 3, 5, 1, 1);
-        layout.attach(tit2_pref, 0, 6, 2, 1);
-        //  layout.attach(unit_lab, 2, 7, 1, 1);
-        //  layout.attach(unit_box, 3, 7, 2, 1);
-        layout.attach(update_lab, 2, 8, 1, 1);
-        layout.attach(update_box, 3, 8, 2, 1);
+
+        layout.attach(tit2_pref, 0, 5, 2, 1);
+
+        layout.attach(minz_label, 2, 7, 1, 1);
+        layout.attach(minz, 3, 7, 1, 1);
+
+        layout.attach(boot_label, 2, 8, 1, 1);
+        layout.attach(boot_sw, 3, 8, 1, 1);
+
+        layout.attach(update_lab, 2, 9, 1, 1);
+        layout.attach(update_box, 3, 9, 2, 1);
         //  layout.attach(loc_label, 2, 9, 1, 1);
         //  layout.attach(loc, 3, 9, 1, 1);
 
-        Gtk.Box content = this.get_content_area() as Gtk.Box;
-        content.valign = Gtk.Align.START;
-        content.border_width = 6;
-        content.add(layout);
-
-        //Actions
-        add_button(_("Close"), Gtk.ResponseType.CANCEL);
-        response.connect(() => {
-            //  if (setting.get_boolean("auto")) {
-            //      //  BaDaBing.Utils.geolocate();
-            //      var current = new BaDaBing.Widget.Refresh(window, header);
-            //      window.change_view(current);
-            //  } else {
-                var current = new BaDaBing.Widget.Refresh(window, header);
-                window.change_view(current);
-            //  }
-            window.show_all();
-            header.restart_switcher();
-            destroy();
-        });
-        show_all();
+            add(layout);
     }
 }

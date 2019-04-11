@@ -30,4 +30,11 @@ Terminal=false
 Type=Application
 Keywords=Wallpaper;
 """;
+    public const string XML = "xml";
+    public const string JSON = "json";
+    public const string BING_URL = "https://www.bing.com";
+    public const string BING_API = "HPImageArchive";
+    public const string DEFAULT_LOCALE = "EN-us";
+    public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
+
 }

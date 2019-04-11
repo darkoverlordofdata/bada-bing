@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Bada Bing
+Comment=Hey Linux, I got yer wallpaper
+Exec=com.github.darkoverlordofdata.bada-bing --display
+Icon=/usr/local/share/icons/com.github.darkoverlordofdata.bada-bing.svg
+Terminal=false
+Categories=Utility;

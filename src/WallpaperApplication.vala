@@ -22,15 +22,19 @@ using Notify;
  */
 public class BaDaBing.WallpaperApplication : Gtk.Application 
 {
-    public const string XML = "xml";
-    public const string JSON = "json";
-    public const string BING_URL = "https://www.bing.com";
-    public const string BING_API = "HPImageArchive";
-    public const string DEFAULT_LOCALE = "EN-us";
-    public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
+    //  public const string XML = "xml";
+    //  public const string JSON = "json";
+    //  public const string BING_URL = "https://www.bing.com";
+    //  public const string BING_API = "HPImageArchive";
+    //  public const string DEFAULT_LOCALE = "EN-us";
+    //  public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
 
-    public MainWindow window;
 
+    /**
+     * Run the gui
+     * 
+     * com.github.darkoverlordofdata.bada-bing --display
+     */
     public WallpaperApplication() 
     {
         Object(
@@ -49,24 +53,8 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
         }
     }
 
-    //  protected override void startup()
-    //  {
-    //      base.startup();
-    //      var builder = new Gtk.Builder();
-    //      try {
-    //          builder.add_from_resource(@"$(APPLICATION_URI)/treeview-list.ui");
-    //      }
-    //      catch (GLib.Error e) {
-    //          stderr.printf(@"$(e.message)\n");
-	//  		error("Unable to load file: %s", e.message);
-    //          //  Posix.exit(1);
-    //          return;
-    //      }
-    //      builder.connect_signals(this);
-    //      var window = builder.get_object("window") as Gtk.Window;
-    //      window.show_all();
-    //  }
-
+    private MainWindow window;
+    
     /**
      * Command line
      * 
@@ -123,12 +111,13 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
 			return 0;
         }
 
+        
         /** set globals */
         var config = new Settings(APPLICATION_ID);
         xml = config.get_boolean("xml");
         number = config.get_int("maximum");
         gui = !config.get_boolean("minimized");
-        schedule = config.get_int("interval");
+        if (schedule == 0) schedule = config.get_int("interval");
         if (locale == null) locale = DEFAULT_LOCALE;
 
         /**

@@ -22,7 +22,7 @@
 
         artists = { "bruce davidson <darkoverlordofdata@gmail.com>" };
         authors = { "bruce davidson <darkoverlordofdata@gmail.com>" };
-        comments = _("Daily Wallaper Changer");
+        comments = _("Hey Linux, I got yer wallpaper here.");
         copyright = "Copyright \xc2\xa9 darkoverlordofdata 2019";
         documenters = authors;
         //  license_type = Gtk.License.Custom;

@@ -28,7 +28,7 @@
         //Create menu
         var menu = new Gtk.Menu();
         var pref_item = new Gtk.MenuItem.with_label(_("Preferences"));
-        var about_item = new Gtk.MenuItem.with_label(_("About Wallpaper"));
+        var about_item = new Gtk.MenuItem.with_label(_("About Ba Da Bing"));
         menu.add(pref_item);
         menu.add(new Gtk.SeparatorMenuItem());
         menu.add(about_item);

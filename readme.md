@@ -45,16 +45,6 @@
     ninja com.github.darkoverlordofdata.bada-bing-pot
     ninja com.github.darkoverlordofdata.bada-bing-update-po
 
-### run with cron
-To setup regular checks for new wallapers, edit crontab for the current user, using:
-
-    $ crontab -u $USER -e
-
-, and add this line:
-
-    0 */6 * * * com.github.darkoverlordofdata.bada-bing --update > /dev/null 2>&1
-
-This will run every 6 hours. You can use [this link](http://www.crontab-generator.org/) for reference.
 
 ### what's it (supposed to) do?
 
@@ -66,4 +56,11 @@ This will run every 6 hours. You can use [this link](http://www.crontab-generato
 
     use gui (--display) to edit preferences, view cache list
 
+    Originally intended to be cross-platform, but in Windows10 this is now a native option, so it's not needed.
 
+
+com.github.darkoverlordofdata.bada-bing --update --schedule=21600
+
+build/com.github.darkoverlordofdata.bada-bing --update --schedule=60
+
+com.github.darkoverlordofdata.bada-bing --update --schedule=60 &
