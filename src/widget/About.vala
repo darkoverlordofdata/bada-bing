@@ -15,8 +15,7 @@
  ******************************************************************************/
  public class BaDaBing.Widget.About : Gtk.AboutDialog 
  {
-    public About (BaDaBing.MainWindow window) {
-        transient_for = window;
+    public About() {
         modal = true;
         destroy_with_parent = true;
 

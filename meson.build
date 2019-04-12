@@ -40,24 +40,11 @@ executable(
     'src/MainWindow.vala',
     'src/data/ImageTag.vala',
     'src/widget/About.vala',
-    # 'src/widget/Header.vala',
-    # 'src/widget/Location.vala',
-    # 'src/widget/Preferences.vala',
-    # 'src/widget/Refresh.vala',
-
     'src/Views/WelcomeView.vala',
     'src/Views/GaleryView.vala',
-    # 'src/Views/PreferencesView.vala',
+    'src/Views/PreferencesView.vala',
     'src/Views/PreferencesView/PreferencesInterface.vala',
     'src/Views/PreferencesView/PreferencesGeneral.vala',
-    'src/Views/SettingsView.vala',
-    # 'src/Views/SettingsView/SettingsMinimized.vala',
-    # 'src/Views/SettingsView/SettingsIndicator.vala',
-    # 'src/Views/SettingsView/SettingsAutoStart.vala',
-    # 'src/Views/SettingsView/SettingsInterval.vala',
-
-    # 'src/Views/SettingsView/SettingsPage.vala',
-    # 'src/Views/SettingsView/SimpleSettingsPage.vala',
 
     import('gnome').compile_resources(
         'as-resources', join_paths('data', meson.project_name() + '.gresource.xml'),

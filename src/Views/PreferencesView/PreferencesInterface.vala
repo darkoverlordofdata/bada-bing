@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
- public class BaDaBing.PreferencesInterface : Granite.SimpleSettingsPage
+public class BaDaBing.PreferencesInterface : Granite.SimpleSettingsPage
 {
     public PreferencesInterface() 
     {

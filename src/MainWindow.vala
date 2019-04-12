@@ -16,24 +16,14 @@
 
  public class BaDaBing.MainWindow : Gtk.Window 
  {
-    //  public WallpaperApplication app;
-    //  public AppIndicator.Indicator indicator;
-    //  private Gtk.Grid view;
-
-    public static MainWindow instance;
-
     public MainWindow(WallpaperApplication app) {
 
-        instance = this;
         this.set_size_request(720, 480);
         window_position = Gtk.WindowPosition.CENTER;
 
         var rightPanel = new Gtk.Stack();
         rightPanel.add_titled(new WelcomeView(), "welcome", "Welcome");
-        rightPanel.add_titled(new SettingsView(), "preferences", "Preferences");
-        //  rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
-        //  rightPanel.add_titled(new SettingsView(), "settings", "Settings");
-        //  rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
+        rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
         rightPanel.add_titled(new GaleryView(), "galery", "Galery");
 
         var leftPanel = new Gtk.StackSidebar();

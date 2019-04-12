@@ -30,7 +30,7 @@
             switch(index) {
                 case 0:
                     try {
-                        new BaDaBing.Widget.About(MainWindow.instance).show();
+                        new BaDaBing.Widget.About().show();
                     } catch(Error e) {
                         warning(e.message);
                     }
