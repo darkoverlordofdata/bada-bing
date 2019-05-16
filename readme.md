@@ -32,6 +32,12 @@
     manage cache
     finish gui
 
+### dependancies
+
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup-2.4-dev libnotify-dev
+
+
+
 
 ### build
 
