@@ -2,16 +2,25 @@ Source: com.github.darkoverlordofdata.bada-bing
 Section: x11
 Priority: optional
 Maintainer: bruce davidson <brucedavidson@darkoverlordofdata.com> 
-Build-Depends: debhelper (>= 10.5.1),
-               gettext,
+Build-Depends: cmake (>= 3.10.2)
+               debhelper (>= 10.5.1),
+               libgranite-dev,
                libgtk-3-dev (>= 3.10),
-               meson,
-               valac (>= 0.28.0)
+               libglib2.0-dev,
+               libgee-0.8-dev,
+               libjson-glib-dev,
+               libappindicator3-dev,
+               libsoup2.4-dev,
+               libnotify-dev,
+               valac (>= 0.30)
 Standards-Version: 4.1.1
+Homepage: https://github.com/darkoverlordofdata/bada-bing
 
 Package: com.github.darkoverlordofdata.bada-bing
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Recomends: indicator-notifications
 Description: Bing Wallpaper Daily Changer
  Images are copyright to their respective owners. Bing is a trademark of Microsoft. 
+ .
  This application is not affiliated with Bing or its services in any way.

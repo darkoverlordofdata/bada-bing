@@ -7,6 +7,8 @@ Exec=com.github.darkoverlordofdata.bada-bing --update --force --schedule=21600
 Icon=/usr/share/icons/com.github.darkoverlordofdata.bada-bing.svg
 Terminal=false
 Categories=Utility;
+StartupNotify=false
+X-GNOME-Autostart-enabled=false
 #
 # put this file in ~/.config/autostart
 #

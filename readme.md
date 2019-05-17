@@ -22,21 +22,29 @@
     --locale=STRING     Locale
     --auto              Auto start
 
+### notifications
 
+    this app pops up a notification when a new wallpaper is installed. You missed it and want to review it later? Install the indicator-notifications GTK3 applet:
+
+    sudo add-apt-repository ppa:jconti/recent-notifications
+    sudo apt-get update 
+    sudo apt-get install indicator-notifications
 
 ### work in progress
 
-    tested on antergos-deepin, deepin-manjaro, deepin, elementary
+    tested on elementary, antergos-deepin, deepin-manjaro, deepin, peppermint
 
     todo:
-    manage cache
+    clean cache so it only keeps the last N days
     finish gui
+
+    Why is CMakeLists.txt empty? I use https://github.com/prozum/meson-cmake-wrapper/tree/master/mcw for compatability with VSCode+CMakeTools.
+
+    I'm a complete noob when it comes to the po folder. It may be set up wrong.
 
 ### dependancies
 
-    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup-2.4-dev libnotify-dev
-
-
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev
 
 
 ### build
@@ -45,11 +53,6 @@
     cd build
     ninja
     sudo ninja install
-
-### translation
-
-    ninja com.github.darkoverlordofdata.bada-bing-pot
-    ninja com.github.darkoverlordofdata.bada-bing-update-po
 
 
 ### what's it (supposed to) do?
@@ -65,8 +68,8 @@
     Originally intended to be cross-platform, but in Windows10 this is now a native option, so it's not needed.
 
 
-com.github.darkoverlordofdata.bada-bing --update --schedule=21600
+### icon
 
-build/com.github.darkoverlordofdata.bada-bing --update --schedule=60
+    The icon is from [icons8](https://icons8.com/icon/pack/user%20interface/small)
 
-com.github.darkoverlordofdata.bada-bing --update --schedule=60 &
+    [terms](https://community.icons8.com/t/can-i-use-icons8-for-free/30)

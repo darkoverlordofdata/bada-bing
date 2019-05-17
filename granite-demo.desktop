@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Granite Demo
-Comment=A demo of the Granite toolkit
-Exec=/home/darko/Documents/GitHub/bada-bing/build/granite-demo
-Icon=applications-interfacedesign
-Type=Application
-NoDisplay=true
