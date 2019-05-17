@@ -2,7 +2,6 @@
 ## Hey Linux, we gotch yer wallpaper here
 
 
-
     Images are copyright to their respective owners. 
     Bing is a trademark of Microsoft. 
     This application is not affiliated with Bing or its services in any way.
@@ -30,23 +29,6 @@
     sudo apt-get update 
     sudo apt-get install indicator-notifications
 
-### work in progress
-
-    tested on elementary, antergos-deepin, deepin-manjaro, deepin, peppermint
-
-    todo:
-    clean cache so it only keeps the last N days
-    finish gui
-
-    Why is CMakeLists.txt empty? I use https://github.com/prozum/meson-cmake-wrapper/tree/master/mcw for compatability with VSCode+CMakeTools.
-
-    I'm a complete noob when it comes to the po folder. It may be set up wrong.
-
-### dependancies
-
-    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev
-
-
 ### build
 
     meson build --prefix=/usr
@@ -54,6 +36,9 @@
     ninja
     sudo ninja install
 
+### dependancies
+
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev
 
 ### what's it (supposed to) do?
 
@@ -67,6 +52,15 @@
 
     Originally intended to be cross-platform, but in Windows10 this is now a native option, so it's not needed.
 
+### work in progress
+
+    todo:
+    clean cache so it only keeps the last N days
+    finish gui
+
+    Why is CMakeLists.txt empty? I use https://github.com/prozum/meson-cmake-wrapper for compatability with VSCode using the CMakeTools extension.
+
+    I'm a complete noob when it comes to the po & debian folders. They may be set up wrong.
 
 ### icon
 
