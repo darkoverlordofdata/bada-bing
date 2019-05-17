@@ -6,9 +6,7 @@
             "type": "lldb",
             "request": "launch",
             "cwd": "${workspaceRoot}",
-            // "program": "${workspaceFolder}/build/granite-demo",
-            // "args": [],
-            "program": "${workspaceFolder}/build/com.github.darkoverlordofdata.bada-bing",
+            "program": "${workspaceFolder}/build/com.github.darkoverlordofdata.badabing",
             "args": ["--display"],
         }
     ]

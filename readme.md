@@ -7,7 +7,7 @@
     This application is not affiliated with Bing or its services in any way.
 
     Usage:
-    com.github.darkoverlordofdata.bada-bing [OPTION?]
+    com.github.darkoverlordofdata.badabing [OPTION?]
 
     Help Options:
     -h, --help          Show help options
@@ -30,6 +30,8 @@
     sudo apt-get install indicator-notifications
 
 ### build
+
+    Why is CMakeLists.txt empty? I use https://github.com/prozum/meson-cmake-wrapper for compatability with VSCode using the CMakeTools extension.
 
     meson build --prefix=/usr
     cd build
@@ -55,11 +57,8 @@
 ### work in progress
 
     todo:
-    clean cache so it only keeps the last N days
+    clean cache so it only keeps the last (1-7) days
     finish gui
-
-    Why is CMakeLists.txt empty? I use https://github.com/prozum/meson-cmake-wrapper for compatability with VSCode using the CMakeTools extension.
-
     I'm a complete noob when it comes to the po & debian folders. They may be set up wrong.
 
 ### icon

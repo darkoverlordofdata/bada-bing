@@ -39,7 +39,7 @@
 
     private async void load_images() {
         var xml = false;
-        var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
+        var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
         var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
 
         uint8[] src;

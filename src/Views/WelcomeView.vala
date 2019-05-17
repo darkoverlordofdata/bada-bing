@@ -40,7 +40,7 @@
                     break;
                 case 1:
                     try {
-                        AppInfo.launch_default_for_uri("https://github.com/darkoverlordofdata/bada-bing", null);
+                        AppInfo.launch_default_for_uri("https://github.com/darkoverlordofdata/badabing", null);
                     } catch(Error e) {
                         warning(e.message);
                     }

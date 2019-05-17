@@ -1,5 +1,4 @@
 {
-    // https://github.com/prozum/meson-cmake-wrapper
     "cmake.cmakePath": "/home/darko/.local/bin/mcw",
     "cmake.configureOnOpen": true
 }

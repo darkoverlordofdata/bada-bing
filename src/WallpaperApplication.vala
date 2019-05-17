@@ -35,7 +35,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
     /**
      * Run the gui
      * 
-     * com.github.darkoverlordofdata.bada-bing --display
+     * com.github.darkoverlordofdata.badabing --display
      */
     public WallpaperApplication() 
     {
@@ -61,7 +61,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
      * Command line
      * 
      *  Usage:
-     *  com.github.darkoverlordofdata.bada-bing [OPTION?]
+     *  com.github.darkoverlordofdata.badabing [OPTION?]
      *
      *  Help Options:
      *  -h, --help       Show help options
@@ -128,7 +128,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
          * add to autostart menu
          */
         if (auto) {
-            var autostart = @"$(Environment.get_user_config_dir())/autostart/bada-bing.desktop";
+            var autostart = @"$(Environment.get_user_config_dir())/autostart/badabing.desktop";
             FileUtils.set_data(autostart, AUTOSTART.data);
 			return 0;
         }
@@ -197,7 +197,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
      */
     public static void listCache()
     {
-        var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
+        var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
         var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
 
         uint8[] src;
@@ -232,7 +232,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
 
             var filename = urlBase.replace("/th?id=OHR.", "");
 
-            var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
+            var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
             if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
                 var cache = File.new_for_path(cache_dir);
                 cache.make_directory();
@@ -258,7 +258,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
             settings.set_string("picture-uri", @"file://$cache_jpg");
 
             Notify.init("Ba Da Bing!");
-            var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.bada-bing.png";
+            var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.png";
             //  var notify = new Notify.Notification(title, copyright, icon);
             //  notify.show();
 
@@ -277,7 +277,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
 
     public static void purgeWallpaper(GenericArray<ImageTag> images)
     {
-        var cache_dir = @"$(Environment.get_user_cache_dir())/bada-bing";
+        var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
         var cache = File.new_for_path(cache_dir);
         files = new GenericArray<string>();
         listFiles(cache);

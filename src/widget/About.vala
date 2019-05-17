@@ -31,7 +31,7 @@
         program_name = APP_NAME;
         translator_credits = "";
         version = VERSION;
-        website = "https://github.com/darkoverlordofdata/bada-bing";
+        website = "https://github.com/darkoverlordofdata/badabing";
         website_label = _("website");
 
         response.connect (() => {

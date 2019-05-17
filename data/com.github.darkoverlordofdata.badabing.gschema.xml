@@ -1,5 +1,5 @@
 <schemalist>
-  <schema id="com.github.darkoverlordofdata.bada-bing" path="/com/github/darkoverlordofdata/bada-bing/" gettext-domain="com.github.darkoverlordofdata.bada-bing">
+  <schema id="com.github.darkoverlordofdata.badabing" path="/com/github/darkoverlordofdata/badabing/" gettext-domain="com.github.darkoverlordofdata.badabing">
 
     <key name="dark" type="b">
       <default>false</default>
