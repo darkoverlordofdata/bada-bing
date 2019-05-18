@@ -1,5 +1,5 @@
 # Ba Da Bing
-## Hey Linux, we gotch yer wallpaper here
+## Hey Linux, we gotcha wallpaper here
 
 
     Images are copyright to their respective owners. 
@@ -66,3 +66,19 @@
     The icon is from [icons8](https://icons8.com/icon/pack/user%20interface/small)
 
     [terms](https://community.icons8.com/t/can-i-use-icons8-for-free/30)
+
+
+
+git remote set-url origin https://darkoverlordofdata:Underm!Thumb@github.com/darkoverlordofdata/badabing.git
+
+$ git config credential.helper store
+$ git push http://example.com/repo.git
+Username: < type your username >
+Password: < type your password >
+
+
+
+need  
+icon 14x14  
+logo 64x64
+brand 192x192
