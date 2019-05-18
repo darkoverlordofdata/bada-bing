@@ -20,7 +20,7 @@ Package: com.github.darkoverlordofdata.badabing
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Recommends: indicator-notifications
-Description: Bing Wallpaper Daily Changer
+Description: Daily Wallpaper Changer
  Images are copyright to their respective owners. Bing is a trademark of Microsoft. 
  .
  This application is not affiliated with Bing or its services in any way.
