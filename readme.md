@@ -21,13 +21,12 @@
     --locale=STRING     Locale
     --auto              Auto start
 
-### notifications
+### install
 
-    this app pops up a notification when a new wallpaper is installed. You missed it and want to review it later? Install the indicator-notifications GTK3 applet:
+    sudo add-repository ppa:darkoverlordofdata/badabing
+    sudo apt update 
+    sudo apt install com.github.darkoverlordofdata.badabing
 
-    sudo add-apt-repository ppa:jconti/recent-notifications
-    sudo apt-get update 
-    sudo apt-get install indicator-notifications
 
 ### build
 
@@ -41,6 +40,13 @@
 ### dependancies
 
     sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev
+
+    this app pops up a notification when a new wallpaper is installed. You missed it and want to review it later? Install the indicator-notifications GTK3 applet:
+
+    sudo add-repository ppa:jconti/recent-notifications
+    sudo apt update 
+    sudo apt install recent-notifications
+
 
 ### what's it (supposed to) do?
 
@@ -58,8 +64,11 @@
 
     todo:
     clean cache so it only keeps the last (1-7) days
-    finish gui
-    I'm a complete noob when it comes to the po & debian folders. They may be set up wrong.
+    gui
+        * run now
+        * run scheduled, add .desktop file to autostart
+        * display gallery of current pics
+
 
 ### icon
 
@@ -68,8 +77,6 @@
     [terms](https://community.icons8.com/t/can-i-use-icons8-for-free/30)
 
 
-
-git remote set-url origin https://darkoverlordofdata:Underm!Thumb@github.com/darkoverlordofdata/badabing.git
 
 $ git config credential.helper store
 $ git push http://example.com/repo.git
