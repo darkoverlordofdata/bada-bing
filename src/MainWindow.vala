@@ -20,11 +20,11 @@
  {
     public MainWindow(WallpaperApplication app) {
 
-        this.set_size_request(720, 480);
+        //  this.set_size_request(512, 480);
         window_position = Gtk.WindowPosition.CENTER;
 
         var rightPanel = new Gtk.Stack();
-        rightPanel.add_titled(new WelcomeView(), "welcome", "Welcome");
+        rightPanel.add_titled(new WelcomeView(rightPanel), "welcome", "Welcome");
         rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
         rightPanel.add_titled(new GaleryView(), "galery", "Galery");
 
@@ -42,8 +42,8 @@
         headerbar.show_close_button = true;
 
         this.add(paned);
-        this.set_default_size(900, 600);
-        this.set_size_request(750, 500);
+        this.set_default_size(720, 480);
+        this.set_size_request(720, 480);
         this.set_titlebar(headerbar);
         this.title = APP_NAME;
         this.show_all();

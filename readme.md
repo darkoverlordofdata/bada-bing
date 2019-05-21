@@ -30,8 +30,6 @@
 
 ### build
 
-    Why is CMakeLists.txt empty? I use https://github.com/prozum/meson-cmake-wrapper for compatability with VSCode using the CMakeTools extension.
-
     meson build --prefix=/usr
     cd build
     ninja
@@ -39,11 +37,11 @@
 
 ### dependancies
 
-    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
 
     this app pops up a notification when a new wallpaper is installed. You missed it and want to review it later? Install the indicator-notifications GTK3 applet:
 
-    sudo add-repository ppa:jconti/recent-notifications
+    sudo apt-add-repository ppa:jconti/recent-notifications
     sudo apt update 
     sudo apt install recent-notifications
 

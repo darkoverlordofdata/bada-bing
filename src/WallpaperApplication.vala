@@ -215,7 +215,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
      * update dconf picture-uri setting.
      * 
      */
-    public static void updateWallpaper() 
+    public static void updateWallpaper(int index=0, bool uodate=true) 
     {
         try {
             var session = new Soup.Session();
@@ -224,11 +224,11 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
             var source = (string)message.response_body.data;
 
             var images = xml ? parseXml(source) : parseJson(source);
-            var url = images[0].url;
-            var urlBase = images[0].urlBase;
-            var copyright = images[0].copyright;
-            var startdate = images[0].startdate;
-            var title = images[0].title;
+            var url = images[index].url;
+            var urlBase = images[index].urlBase;
+            var copyright = images[index].copyright;
+            var startdate = images[index].startdate;
+            var title = images[index].title;
 
             var filename = urlBase.replace("/th?id=OHR.", "");
 
@@ -253,6 +253,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                 FileUtils.set_data(cache_jpg, download.response_body.data);
             }
             FileUtils.set_data(cache_api, source.data);
+            if (!update) return;
  
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");

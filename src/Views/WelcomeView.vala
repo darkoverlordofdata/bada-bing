@@ -17,14 +17,19 @@
  ******************************************************************************/
  public class BaDaBing.WelcomeView : Gtk.Grid 
 {
-    construct 
-    {
+    public WelcomeView(Gtk.Stack panel) {
+        
         var welcome = new Granite.Widgets.Welcome("Ba Da Bing", 
             "Hey, Linux. We got yer wallpaper here.");
+
         welcome.append("help-about", 
             "About", "About Ba Da Bing");
-        welcome.append("preferences-desktop-wallpaper", //"text-x-source", 
-            "Get Source", "Ba Da Bing's source code is hosted on GitHub.");
+
+        welcome.append("preferences-desktop",
+            "Preferences", "Set preferences");
+
+        welcome.append("preferences-desktop-wallpaper", 
+            "Galery", "View Galery");
 
         add(welcome);
 
@@ -36,15 +41,22 @@
                     } catch(Error e) {
                         warning(e.message);
                     }
-
                     break;
+
                 case 1:
                     try {
-                        AppInfo.launch_default_for_uri("https://github.com/darkoverlordofdata/badabing", null);
+                        panel.set_visible_child_name("preferences");
                     } catch(Error e) {
                         warning(e.message);
                     }
+                    break;
 
+                case 2:
+                    try {
+                        panel.set_visible_child_name("galery");
+                    } catch(Error e) {
+                        warning(e.message);
+                    }
                     break;
             }
         });
