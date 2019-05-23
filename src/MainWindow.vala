@@ -16,40 +16,64 @@
  *
  ******************************************************************************/
 
- public class BaDaBing.MainWindow : Gtk.Window 
+ public class BaDaBing.MainWindow : Gtk.ApplicationWindow 
  {
+     
+    private Gtk.Stack panel;
+    private Gtk.Button button;
+
     public MainWindow(WallpaperApplication app) {
+        Object (application: app);
 
-        //  this.set_size_request(512, 480);
-        window_position = Gtk.WindowPosition.CENTER;
+        button = new Gtk.Button.with_label("Back");
+        button.get_style_context().add_class ("back-button");
 
-        var rightPanel = new Gtk.Stack();
-        rightPanel.add_titled(new WelcomeView(rightPanel), "welcome", "Welcome");
-        rightPanel.add_titled(new PreferencesView(), "preferences", "Preferences");
-        rightPanel.add_titled(new GaleryView(), "galery", "Galery");
+        button.clicked.connect( () =>{
+            panel.set_visible_child_name("welcome"); 
+            hideBackButton();
+        });
+        hideBackButton();
 
-        var leftPanel = new Gtk.StackSidebar();
-        leftPanel.stack = rightPanel;
+        var go_back = new SimpleAction ("go-back", null);
+        go_back.activate.connect( () => {
+            panel.set_visible_child_name("welcome");
+            hideBackButton();
+        });
+        add_action(go_back);
+        app.set_accels_for_action("win.go-back", {"<Alt>Left", "Back"});
 
-        var paned = new Gtk.Paned(Gtk.Orientation.HORIZONTAL);
-        paned.add1(leftPanel);
-        paned.add2(rightPanel);
+        panel = new Gtk.Stack();
+        panel.add_titled(new WelcomeView(this, panel), "welcome", "");
+        panel.add_titled(new PreferencesView(), "preferences", "");
+        panel.add_titled(new GaleryView(), "galery", "");
+
+        var paned = new Gtk.Paned(Gtk.Orientation.VERTICAL);
+        paned.add1(panel);
 
         var gtk_settings = Gtk.Settings.get_default();
 
         var headerbar = new Gtk.HeaderBar();
         headerbar.get_style_context().add_class("default-decoration");
         headerbar.show_close_button = true;
+        headerbar.pack_start(button);
 
-        this.add(paned);
-        this.set_default_size(720, 480);
-        this.set_size_request(720, 480);
-        this.set_titlebar(headerbar);
-        this.title = APP_NAME;
-        this.show_all();
+        add(paned);
+        set_default_size(720, 480);
+        set_size_request(720, 480);
+        set_titlebar(headerbar);
+        title = APP_NAME;
+        show_all();
 
         app.add_window(this);
     }
+    
+    public void hideBackButton() {
+        button.visible = false;
+        button.no_show_all = true;
+    }
 
-
+    public void showBackButton() {
+        button.visible = true;
+        button.no_show_all = false;
+    }
 }

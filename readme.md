@@ -21,7 +21,7 @@
     --locale=STRING     Locale
     --auto              Auto start
 
-![alt text](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot.png "Screenshot")
+![Screenshot](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot.png "Screenshot")
 
 
 ### install

@@ -20,8 +20,9 @@ public class BaDaBing.GaleryView : Gtk.Grid
 {
     private Gtk.Grid grid;
 
-    construct 
+    public GaleryView() 
     {
+
         grid = new Gtk.Grid();
 
         var scrolled = new Gtk.ScrolledWindow(null, null);

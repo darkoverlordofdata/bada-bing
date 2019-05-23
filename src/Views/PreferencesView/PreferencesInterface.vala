@@ -23,7 +23,7 @@
             activatable: false,
             description: "Select Interface Elements",
             header: "Interface",
-            icon_name: "dashboard-show",
+            icon_name: "preferences-desktop-personal",
             title: "Show Interface"
         );
     }

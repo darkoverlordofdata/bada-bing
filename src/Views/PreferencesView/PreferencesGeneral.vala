@@ -17,13 +17,15 @@
  ******************************************************************************/
  public class BaDaBing.PreferencesGeneral : Granite.SimpleSettingsPage
 {
+    const string AUTOSTART_PATH = "~/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+
     public PreferencesGeneral() 
     {
         Object(
             activatable: false,
             description: "general preferences",
             header: "General",
-            icon_name: "view-history",
+            icon_name: "system-run", //"view-history",
             title: "General Preferences"
         );
     }
@@ -62,11 +64,11 @@
         }
         boot_sw.notify["active"].connect(() => {
             if (boot_sw.get_active()) {
+                set_autostart_on();
                 setting.set_boolean("start-on-boot", true);
-                //  BaDaBing.Utils.set_start_on_boot();
             } else {
+                set_autostart_off();
                 setting.set_boolean("start-on-boot", false);
-                //  BaDaBing.Utils.reset_start_on_boot();
             }
         });
 
@@ -164,5 +166,32 @@
 
     }
 
+    private void set_autostart_on() {
+        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+        var autostart = File.new_for_path(path);
+        var fs = autostart.create(FileCreateFlags.NONE);
+        var ds = new DataOutputStream(fs);
+        ds.put_string("""[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Bada Bing
+Comment=Hey Linux, I got yer wallpaper
+Exec=com.github.darkoverlordofdata.badabing --update --force --schedule=21600
+Icon=/usr/share/icons/com.github.darkoverlordofdata.badabing.svg
+Terminal=false
+Categories=Utility;
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
+""");
+        //  FileUtils.chmod(path, 0775);
+    }
+    
+    private void set_autostart_off() {
+        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+        var autostart = File.new_for_path(path);
+        if (autostart.query_exists()) {
+            autostart.delete();
+        }    
+    }
 }
 

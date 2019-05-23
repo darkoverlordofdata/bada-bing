@@ -17,8 +17,8 @@
  ******************************************************************************/
  public class BaDaBing.WelcomeView : Gtk.Grid 
 {
-    public WelcomeView(Gtk.Stack panel) {
-        
+    public WelcomeView(MainWindow parent, Gtk.Stack panel) {
+
         var welcome = new Granite.Widgets.Welcome("Ba Da Bing", 
             "Hey, Linux. We got yer wallpaper here.");
 
@@ -44,6 +44,7 @@
                     break;
 
                 case 1:
+                    parent.showBackButton();                        
                     try {
                         panel.set_visible_child_name("preferences");
                     } catch(Error e) {
@@ -52,12 +53,18 @@
                     break;
 
                 case 2:
+                    parent.showBackButton();                        
                     try {
                         panel.set_visible_child_name("galery");
                     } catch(Error e) {
                         warning(e.message);
                     }
                     break;
+
+                default:
+                    parent.hideBackButton();
+                    break;
+
             }
         });
     }

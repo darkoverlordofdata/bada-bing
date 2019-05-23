@@ -17,8 +17,9 @@
  ******************************************************************************/
  public class BaDaBing.PreferencesView : Gtk.Paned 
 {
-    construct 
+    public PreferencesView() 
     {
+ 
         var stack = new Gtk.Stack();
         stack.add_named(new PreferencesInterface(), "preferences_interface");
         stack.add_named(new PreferencesGeneral(), "preferences_general");
