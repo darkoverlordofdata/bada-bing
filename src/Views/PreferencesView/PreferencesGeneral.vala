@@ -19,6 +19,8 @@
 {
     const string AUTOSTART_PATH = "~/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
 
+    const string AUTOSTART_URI = "com.github.darkoverlordofdata.badabing";
+
     public PreferencesGeneral() 
     {
         Object(
@@ -167,7 +169,14 @@
     }
 
     private void set_autostart_on() {
-        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+
+        print("'%s'/n", @"$(GLib.Environment.get_home_dir())/.config/autostart");
+        var file = File.new_for_path(@"$(GLib.Environment.get_home_dir())/.config/autostart");
+        if (!file.query_exists())
+            file.make_directory();
+
+        //  var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$(AUTOSTART_URI).desktop";
         var autostart = File.new_for_path(path);
         var fs = autostart.create(FileCreateFlags.NONE);
         var ds = new DataOutputStream(fs);
@@ -187,7 +196,8 @@ X-GNOME-Autostart-enabled=true
     }
     
     private void set_autostart_off() {
-        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+        //  var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$(AUTOSTART_URI).desktop";
         var autostart = File.new_for_path(path);
         if (autostart.query_exists()) {
             autostart.delete();

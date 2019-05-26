@@ -19,6 +19,7 @@
 public class BaDaBing.GaleryView : Gtk.Grid 
 {
     private Gtk.Grid grid;
+    private Gtk.Button load_button;
 
     public GaleryView() 
     {
@@ -30,18 +31,24 @@ public class BaDaBing.GaleryView : Gtk.Grid
         scrolled.get_style_context().add_class(Gtk.STYLE_CLASS_VIEW);
         scrolled.add(grid);
 
-        var load_button = new Gtk.Button.with_label("");
+        load_button = new Gtk.Button.with_label("");
         load_button.clicked.connect(() => load_images.begin());
 
         attach(scrolled, 0, 0, 1, 1);
-        attach(load_button, 0, 2, 0, 0);
+        attach(load_button, 0, 2, 1, 1);
+        load_button.hide();
         load_button.clicked();
     }
 
     private async void load_images() {
+        load_button.destroy();
         var xml = false;
         var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
+        var data = File.new_for_path(cache_dir);
+        if (!data.query_exists())
+            data.make_directory();
         var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
+        if (!FileUtils.test(cache_api, FileTest.EXISTS)) return;
 
         uint8[] src;
         var index = 0;

@@ -31,6 +31,9 @@
         welcome.append("preferences-desktop-wallpaper", 
             "Galery", "View Galery");
 
+        welcome.append("emblem-downloads", 
+            "Download", "Download today's wallpaper");
+
         add(welcome);
 
         welcome.activated.connect((index) => {
@@ -60,6 +63,14 @@
                         warning(e.message);
                     }
                     break;
+
+                case 3:
+                try {
+                    WallpaperApplication.updateWallpaper();
+                } catch(Error e) {
+                    warning(e.message);
+                }
+                break;
 
                 default:
                     parent.hideBackButton();

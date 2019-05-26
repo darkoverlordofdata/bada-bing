@@ -215,7 +215,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
      * update dconf picture-uri setting.
      * 
      */
-    public static void updateWallpaper(int index=0, bool uodate=true) 
+    public static void updateWallpaper(int index=0, bool update=true) 
     {
         try {
             var session = new Soup.Session();
