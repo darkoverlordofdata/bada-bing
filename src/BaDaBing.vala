@@ -52,6 +52,25 @@ Keywords=Wallpaper;
     public const string BING_URL = "https://www.bing.com";
     public const string BING_API = "HPImageArchive";
     public const string DEFAULT_LOCALE = "EN-us";
+    public const string LOCALE_US = "EN-us";
+    public const string LOCALE_UK = "EN-gb";
+    public const string LOCALE_DE = "DE-de";
+    public const string LOCALE_CA = "EN-ca";
+    public const string LOCALE_AU = "EN-au";
+    public const string LOCALE_FR = "FR-fr";
+    public const string LOCALE_CH = "ZH-ch";
+    public const string LOCALE_JP = "JA-jp";
+
+    public const string DEFAULT_RESOLUTION = "1920x1200";
+    public const string RESOLUTION_1366_768 = "1366x768";
+    public const string RESOLUTION_1920_1200 = "1920x1200";
+    public const string RESOLUTION_1920_1280 = "1920x1280";
+
+        //  1366x768
+        //  1920x1280
+        //  1920x1200
+
     public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
+            //  US, UK, DE, CA, AU, FR, CH, JP
 
 }

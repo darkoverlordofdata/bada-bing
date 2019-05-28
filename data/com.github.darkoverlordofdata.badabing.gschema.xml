@@ -43,5 +43,17 @@
         <description>Xml (true), or Json (false).</description>
     </key>
 
+    <key name="locale" type="s">
+      <default>"US-en"</default>
+      <summary>Image Locale</summary>
+      <description>Source of images</description>
+    </key>
+
+    <key name="resolution" type="s">
+      <default>"1900x1200"</default>
+      <summary>Sceen Resolution</summary>
+      <description>Target resolution</description>
+    </key>
+
   </schema>
 </schemalist>

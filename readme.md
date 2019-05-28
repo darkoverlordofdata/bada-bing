@@ -21,8 +21,9 @@
     --locale=STRING     Locale
     --auto              Auto start
 
-![Screenshot](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot.png "Screenshot")
+![Screenshot](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot1.png "Screenshot")
 
+![Screenshot](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot2.png "Screenshot")
 
 ### install
 
@@ -64,11 +65,9 @@
 ### work in progress
 
     todo:
-    clean cache so it only keeps the last (1-7) days
-    gui
-        * run now
-        * run scheduled, add .desktop file to autostart
-        * display gallery of current pics
+    * clean cache so it only keeps the last (1-7) days
+    * select locale - currently just US. Add preferences: US, UK, DE, CA, AU, FR, CH, JP
+    * select size - currently favors watermarked version
 
 
 ### icon

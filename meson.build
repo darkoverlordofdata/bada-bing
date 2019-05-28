@@ -38,12 +38,12 @@ executable(
     'src/BaDaBing.vala',
     'src/WallpaperApplication.vala',
     'src/MainWindow.vala',
-    'src/data/ImageTag.vala',
-    'src/widget/About.vala',
+    'src/Data/ImageTag.vala',
+    'src/Widgets/About.vala',
     'src/Views/WelcomeView.vala',
-    'src/Views/GaleryView.vala',
+    'src/Views/GalleryView.vala',
     'src/Views/PreferencesView.vala',
-    'src/Views/PreferencesView/PreferencesInterface.vala',
+    'src/Views/PreferencesView/PreferencesAppearance.vala',
     'src/Views/PreferencesView/PreferencesGeneral.vala',
 
     import('gnome').compile_resources(

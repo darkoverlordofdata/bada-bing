@@ -45,7 +45,7 @@
         panel = new Gtk.Stack();
         panel.add_titled(new WelcomeView(this, panel), "welcome", "");
         panel.add_titled(new PreferencesView(), "preferences", "");
-        panel.add_titled(new GaleryView(), "galery", "");
+        panel.add_titled(new GalleryView(), "galery", "");
 
         var paned = new Gtk.Paned(Gtk.Orientation.VERTICAL);
         paned.add1(panel);

@@ -148,6 +148,33 @@
         //      }
         //  });
 
+        //Select indicator
+        var ind_label = new Gtk.Label(_("Use System Tray Indicator:"));
+        ind_label.halign = Gtk.Align.END;
+        var ind = new Gtk.Switch();
+        ind.halign = Gtk.Align.START;
+        if (setting.get_boolean("indicator")) {
+            ind.active = true;
+            //  minz.sensitive = true;
+        } else {
+            ind.active = false;
+            //  minz.sensitive = false;
+        }
+        ind.notify["active"].connect(() => {
+            if (ind.active) {
+                setting.set_boolean("indicator", true);
+                //  minz.sensitive = true;
+                //  minz.active = true;
+                //  window.show_indicator();
+            } else {
+                setting.set_boolean("indicator", false);
+                //  minz.active = false;
+                //  minz.sensitive = false;
+                //  window.hide_indicator();
+            }
+        });
+
+
         //Create UI
         content_area.valign = Gtk.Align.START;
         content_area.column_spacing = 12;
@@ -165,6 +192,8 @@
         content_area.attach(update_box, 3, 9, 2, 1);
         //  content_area.attach(loc_label, 2, 9, 1, 1);
         //  content_area.attach(loc, 3, 9, 1, 1);
+        content_area.attach(ind_label, 2, 11, 1, 1);
+        content_area.attach(ind, 3, 11, 1, 1);
 
     }
 

@@ -21,7 +21,7 @@
     {
  
         var stack = new Gtk.Stack();
-        stack.add_named(new PreferencesInterface(), "preferences_interface");
+        stack.add_named(new PreferencesAppearance(), "preferences_interface");
         stack.add_named(new PreferencesGeneral(), "preferences_general");
 
         var settings_sidebar = new Granite.SettingsSidebar(stack);

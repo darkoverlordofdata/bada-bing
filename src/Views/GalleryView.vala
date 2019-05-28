@@ -16,12 +16,12 @@
  *
  ******************************************************************************/
 
-public class BaDaBing.GaleryView : Gtk.Grid 
+public class BaDaBing.GalleryView : Gtk.Grid 
 {
     private Gtk.Grid grid;
     private Gtk.Button load_button;
 
-    public GaleryView() 
+    public GalleryView() 
     {
 
         grid = new Gtk.Grid();

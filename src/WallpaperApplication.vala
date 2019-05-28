@@ -218,6 +218,8 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
     public static void updateWallpaper(int index=0, bool update=true) 
     {
         try {
+            var setting = new Settings(APPLICATION_ID);
+            var locale = setting.get_string("locale");
             var session = new Soup.Session();
             var message = new Soup.Message("GET", getApi(xml, locale, number));
             session.send_message(message);
@@ -229,6 +231,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
             var copyright = images[index].copyright;
             var startdate = images[index].startdate;
             var title = images[index].title;
+            var resolution = setting.get_string("resolution");
 
             var filename = urlBase.replace("/th?id=OHR.", "");
 
@@ -239,7 +242,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
             }
             var cache_jpg = @"$(cache_dir)/$(filename).jpg";
             var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
-            var cache_url = @"$(BING_URL)$(urlBase)_1920x1200.jpg";
+            var cache_url = @"$(BING_URL)$(urlBase)_$(resolution).jpg";
             var download = new Soup.Message("GET", cache_url);
             session.send_message(download);
             if (download.response_body.length < 2048) {

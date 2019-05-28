@@ -29,7 +29,7 @@
             "Preferences", "Set preferences");
 
         welcome.append("preferences-desktop-wallpaper", 
-            "Galery", "View Galery");
+            "Gallery", "View cached images");
 
         welcome.append("emblem-downloads", 
             "Download", "Download today's wallpaper");
