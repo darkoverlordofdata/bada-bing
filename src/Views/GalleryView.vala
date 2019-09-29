@@ -98,7 +98,17 @@ public class BaDaBing.GalleryView : Gtk.Grid
         image.get_property("name", ref filename);
 
         var cache_jpg = filename.get_string();
+        print(@"Hey, you clicked $cache_jpg \n");
+
         var settings = new Settings(GNOME_WALLPAPER);
         settings.set_string("picture-uri", @"file://$cache_jpg");
+        var desktop = Environment.get_variable("DESKTOP_SESSION");
+        if (desktop == "LXDE-pi") {
+            try {
+                Process.spawn_command_line_async (@"pcmanfm --set-wallpaper $cache_jpg");
+            } catch (GLib.Error e) {
+                print(@"Error: $(e.message)\n");
+            }                
+        }
     }
 }

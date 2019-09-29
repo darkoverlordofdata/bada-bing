@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- using Xml;
+using Xml;
 using Soup;
 using Notify;
 
@@ -260,13 +260,23 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
  
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");
-
+            var desktop = Environment.get_variable("DESKTOP_SESSION");
+            if (desktop == "LXDE-pi") {
+                try {
+                    Process.spawn_command_line_async (@"pcmanfm --set-wallpaper $cache_jpg");
+                } catch (GLib.Error e) {
+                    print(@"Error: $(e.message)\n");
+                }                
+            }
+    
             Notify.init("Ba Da Bing!");
             var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.png";
-            //  var notify = new Notify.Notification(title, copyright, icon);
-            //  notify.show();
 
-            new Notify.Notification(title, copyright, icon).show();
+            try {
+                new Notify.Notification(title, copyright, icon).show();
+            } catch (GLib.Error e) {
+                print("Notifications not available on this system\n");
+            }                
             
             purgeWallpaper(images);
 

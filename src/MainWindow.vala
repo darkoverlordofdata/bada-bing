@@ -50,7 +50,14 @@
         var paned = new Gtk.Paned(Gtk.Orientation.VERTICAL);
         paned.add1(panel);
 
-        var gtk_settings = Gtk.Settings.get_default();
+
+        var settings = new Settings(APPLICATION_ID);
+        var dark = settings.get_boolean("dark");
+        if (dark) {
+            Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", true);
+        } else {
+            Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", false);
+        }
 
         var headerbar = new Gtk.HeaderBar();
         headerbar.get_style_context().add_class("default-decoration");

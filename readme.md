@@ -27,9 +27,25 @@
 
 ### install
 
+    might still work on elementaryos / ubuntu:
+
     sudo add-repository ppa:darkoverlordofdata/badabing
     sudo apt update 
     sudo apt install com.github.darkoverlordofdata.badabing
+
+    otherwise, build from source
+
+### dependancies
+
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
+
+    this app pops up a notification when a new wallpaper is installed. 
+    You missed it and want to review it later? 
+    Install the indicator-notifications GTK3 applet:
+
+    sudo apt-add-repository ppa:jconti/recent-notifications
+    sudo apt update 
+    sudo apt install recent-notifications
 
 
 ### build
@@ -38,17 +54,6 @@
     cd build
     ninja
     sudo ninja install
-
-### dependancies
-
-    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
-
-    this app pops up a notification when a new wallpaper is installed. You missed it and want to review it later? Install the indicator-notifications GTK3 applet:
-
-    sudo apt-add-repository ppa:jconti/recent-notifications
-    sudo apt update 
-    sudo apt install recent-notifications
-
 
 ### what's it (supposed to) do?
 
@@ -78,14 +83,11 @@
 
 
 
-$ git config credential.helper store
-$ git push http://example.com/repo.git
-Username: < type your username >
-Password: < type your password >
 
+### todo
 
+    click to download prior pics from gallery
+    icon 14x14  
+    logo 64x64
+    brand 192x192
 
-need  
-icon 14x14  
-logo 64x64
-brand 192x192
