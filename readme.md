@@ -27,16 +27,17 @@
 
 ### install
 
-    might still work on elementaryos / ubuntu:
+    for ubuntu/elementaryos (https://launchpad.net/~darkoverlordofdata/+archive/ubuntu/badabing)
 
     sudo add-repository ppa:darkoverlordofdata/badabing
     sudo apt update 
     sudo apt install com.github.darkoverlordofdata.badabing
 
-    otherwise, build from source
+    otherwise, build from source. Updated to work on Raspbian Buster (rpi3)
 
 ### dependancies
 
+    sudo apt install valac -y
     sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
 
     this app pops up a notification when a new wallpaper is installed. 
@@ -91,3 +92,11 @@
     logo 64x64
     brand 192x192
 
+
+### rpi - after building:
+
+    mkdir -p /home/pi/.config/autostart
+
+    cp /home/pi/Documents/GitHub/badabing/data/com.github.darkoverlordofdata.badabing.desktop /home/pi/.config/autostart
+
+    sudo reboot
