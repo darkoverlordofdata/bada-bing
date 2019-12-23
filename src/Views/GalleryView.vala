@@ -40,7 +40,7 @@ public class BaDaBing.GalleryView : Gtk.Grid
         load_button.clicked();
     }
 
-    private async void load_images() {
+    private async void load_images(string? default_jpg=null) {
         load_button.destroy();
         var xml = false;
         var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
@@ -54,6 +54,7 @@ public class BaDaBing.GalleryView : Gtk.Grid
         var index = 0;
         var row = 0;
         var col = 0;
+        var done = false;
         if (FileUtils.get_data(cache_api, out src)) {
             var images = xml ? WallpaperApplication.parseXml((string)src) : WallpaperApplication.parseJson((string)src);
             images.foreach((tag) => {
@@ -67,7 +68,13 @@ public class BaDaBing.GalleryView : Gtk.Grid
 
                 var file = File.new_for_path (cache_jpg);
 
-                if (!FileUtils.test(cache_jpg, FileTest.EXISTS)) {
+                if (default_jpg != null) {
+                    if (default_jpg == cache_jpg) {
+                        if (!done) WallpaperApplication.updateWallpaper(index, false);
+                        done = true;
+                    }
+                } 
+                else if (!FileUtils.test(cache_jpg, FileTest.EXISTS)) {
                     WallpaperApplication.updateWallpaper(index, false);
                 }
                 index += 1;
@@ -100,15 +107,20 @@ public class BaDaBing.GalleryView : Gtk.Grid
         var cache_jpg = filename.get_string();
         print(@"Hey, you clicked $cache_jpg \n");
 
-        var settings = new Settings(GNOME_WALLPAPER);
-        settings.set_string("picture-uri", @"file://$cache_jpg");
-        var desktop = Environment.get_variable("DESKTOP_SESSION");
-        if (desktop == "LXDE-pi") {
-            try {
-                Process.spawn_command_line_async (@"pcmanfm --set-wallpaper $cache_jpg");
-            } catch (GLib.Error e) {
-                print(@"Error: $(e.message)\n");
-            }                
-        }
+        load_images(cache_jpg);
+        // BaDaBing.WallpaperApplication.updateWallpaper();
+        // var settings = new Settings(GNOME_WALLPAPER);
+        // settings.set_string("picture-uri", @"file://$cache_jpg");
+        // var desktop = Environment.get_variable("DESKTOP_SESSION");
+        // if (desktop == "LXDE-pi") {
+        //     try {
+        //         Process.spawn_command_line_async (@"pcmanfm --set-wallpaper $cache_jpg");
+        //     } catch (GLib.Error e) {
+        //         print(@"Error: $(e.message)\n");
+        //     }                
+        // }
+
+
+
     }
 }

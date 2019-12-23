@@ -101,6 +101,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
 
     public static int main(string[] args)
     {
+
         /** get flags & options */
 		try {
             var opt_context = new OptionContext();
@@ -256,7 +257,9 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                 FileUtils.set_data(cache_jpg, download.response_body.data);
             }
             FileUtils.set_data(cache_api, source.data);
-            if (!update) return;
+            // if (!update) return;
+
+            
  
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");
@@ -268,7 +271,21 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                     print(@"Error: $(e.message)\n");
                 }                
             }
-    
+            else if (desktop == "mate") {
+                try {
+                    Process.spawn_command_line_async (@"gsettings set org.mate.background picture-filename $cache_jpg");
+                } catch (GLib.Error e) {
+                    print(@"Error: $(e.message)\n");
+                }                
+            }
+            else if (desktop == "gnome") {//"org.gnome.desktop.background"
+                try {
+                    Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$cache_jpg");
+                } catch (GLib.Error e) {
+                    print(@"Error: $(e.message)\n");
+                }                
+            }
+
             Notify.init("Ba Da Bing!");
             var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.png";
 
@@ -278,7 +295,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                 print("Notifications not available on this system\n");
             }                
             
-            purgeWallpaper(images);
+            if (update) purgeWallpaper(images);
 
         } catch (GLib.Error e) {
             print(@"Error: $(e.message)\n");
