@@ -21,9 +21,32 @@
      
     private Gtk.Stack panel;
     private Gtk.Button button;
+    public int width;
+    public int height;
+
+     private void monitors_changed_cb (Gdk.Screen screen)
+     {
+
+        Gdk.Display display;
+        display = screen.get_display();
+
+        Gdk.Rectangle geometry;
+        Gdk.Monitor primary = display.get_primary_monitor();
+        geometry = primary.get_geometry();
+        // print("SIZE = %d, %d\n", geometry.width, geometry.height);
+
+        width =  geometry.width;
+        height = geometry.height;
+
+     }
 
     public MainWindow(WallpaperApplication app) {
         Object (application: app);
+
+
+        var screen = get_screen();
+        screen.monitors_changed.connect (monitors_changed_cb);
+        monitors_changed_cb (screen);
 
         button = new Gtk.Button.with_label("Back");
         button.get_style_context().add_class ("back-button");

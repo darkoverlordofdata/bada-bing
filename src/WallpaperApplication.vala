@@ -53,9 +53,14 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
         } else {
             window.present();
         }
+        screen_width = window.width;
+        screen_height = window.height;
     }
 
     private MainWindow window;
+    private static int screen_width;
+    private static int screen_height;
+
     
     /**
      * Command line
@@ -285,6 +290,20 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                     print(@"Error: $(e.message)\n");
                 }                
             }
+
+            print("SIZE = %d, %d\n", screen_width, screen_height);
+
+            /*
+             * Copy to metalock background, resizing to screen dimensions
+             */
+            try {
+                var lock_jpg =@"$(Environment.get_user_cache_dir())/metalock/themes/badabing/bg.jpg";
+                var cmd = @"convert $cache_jpg -resize $(screen_width)x$(screen_height) $lock_jpg";
+                print("%s\n", cmd);
+                Process.spawn_command_line_async (cmd);
+            } catch (GLib.Error e) {
+                print(@"Error: $(e.message)\n");
+            }                
 
             Notify.init("Ba Da Bing!");
             var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.png";
