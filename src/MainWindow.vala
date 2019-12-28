@@ -16,7 +16,7 @@
  *
  ******************************************************************************/
 
- public class BaDaBing.MainWindow : Gtk.ApplicationWindow 
+ public class BadaBing.MainWindow : Gtk.ApplicationWindow 
  {
      
     private Gtk.Stack panel;

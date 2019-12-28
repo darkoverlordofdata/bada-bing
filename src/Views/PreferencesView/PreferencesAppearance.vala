@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.PreferencesAppearance : Granite.SimpleSettingsPage
+ public class BadaBing.PreferencesAppearance : Granite.SimpleSettingsPage
 {
     public PreferencesAppearance() 
     {

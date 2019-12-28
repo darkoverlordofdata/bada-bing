@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.PreferencesView : Gtk.Paned 
+ public class BadaBing.PreferencesView : Gtk.Paned 
 {
     public PreferencesView() 
     {

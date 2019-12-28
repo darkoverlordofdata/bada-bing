@@ -15,10 +15,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.Widget.Location : Gtk.Box
+ public class BadaBing.Widget.Location : Gtk.Box
  {
-    public BaDaBing.MainWindow window;
-    private BaDaBing.Widget.Header header;
+    public BadaBing.MainWindow window;
+    private BadaBing.Widget.Header header;
 
     /*
      * Active values will have their own localized version. 
@@ -32,7 +32,7 @@
     }
     
 
-    public Location(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
+    public Location(BadaBing.MainWindow window, BadaBing.Widget.Header header) {
 
         Locale locale[] = {
             Locale() { code = "auto",  active = true,  name = "auto" },
@@ -156,7 +156,7 @@
         //      setting.set_string("country", city.country);
         //      setting.set_string("state", city.state);
         //      setting.set_string("location", city.town);
-        //      var current = new BaDaBing.Widgets.Current(window, header);
+        //      var current = new BadaBing.Widgets.Current(window, header);
         //      window.change_view(current);
         //      window.show_all();
         //  }

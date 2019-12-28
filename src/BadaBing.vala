@@ -16,7 +16,7 @@
  *
  ******************************************************************************/
 
-namespace BaDaBing { 
+namespace BadaBing { 
 
     errordomain Exception {
         XmlParser,
@@ -33,11 +33,11 @@ namespace BaDaBing {
     public const string ICON_NAME = Config.PACKAGE;
     public const string LOCALE_DIR = Config.LOCALE_DIR;
     public const string VERSION = Config.VERSION;
-    public const string APP_NAME = "Ba Da Bing";
+    public const string APP_NAME = "Bada Bing";
     public const string VERSION_INFO = "Dev";
     public const string RELEASE = "dev";
     public const string AUTOSTART = """[Desktop Entry]
-Name=Ba Da Bing
+Name=Bada Bing
 GenericName=Wallpaper
 Comment=Hey Linux, we gotch yer wallpaper
 Categories=Utility;

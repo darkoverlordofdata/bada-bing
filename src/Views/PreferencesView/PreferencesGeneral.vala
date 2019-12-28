@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.PreferencesGeneral : Granite.SimpleSettingsPage
+ public class BadaBing.PreferencesGeneral : Granite.SimpleSettingsPage
 {
     const string AUTOSTART_PATH = "~/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
 

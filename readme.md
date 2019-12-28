@@ -100,3 +100,6 @@
     cp /home/pi/Documents/GitHub/badabing/data/com.github.darkoverlordofdata.badabing.desktop /home/pi/.config/autostart
 
     sudo reboot
+
+
+    sudo ln -s ~/.cache/metalock/themes/badabing /usr/local/share/metalock/themes/badabing

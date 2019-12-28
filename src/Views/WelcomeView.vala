@@ -15,15 +15,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.WelcomeView : Gtk.Grid 
+ public class BadaBing.WelcomeView : Gtk.Grid 
 {
     public WelcomeView(MainWindow parent, Gtk.Stack panel) {
 
-        var welcome = new Granite.Widgets.Welcome("Ba Da Bing", 
+        var welcome = new Granite.Widgets.Welcome("Bada Bing", 
             "Hey, Linux. We got yer wallpaper here.");
 
         welcome.append("help-about", 
-            "About", "About Ba Da Bing");
+            "About", "About Bada Bing");
 
         welcome.append("preferences-desktop",
             "Preferences", "Set preferences");
@@ -40,7 +40,7 @@
             switch(index) {
                 case 0:
                     try {
-                        new BaDaBing.Widget.About().show();
+                        new BadaBing.Widget.About().show();
                     } catch(Error e) {
                         warning(e.message);
                     }

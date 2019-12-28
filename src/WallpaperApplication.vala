@@ -22,7 +22,7 @@ using Notify;
 /**
  * Wallpaper Application
  */
-public class BaDaBing.WallpaperApplication : Gtk.Application 
+public class BadaBing.WallpaperApplication : Gtk.Application 
 {
     //  public const string XML = "xml";
     //  public const string JSON = "json";
@@ -276,7 +276,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                     print(@"Error: $(e.message)\n");
                 }                
             }
-            else if (desktop == "mate") {
+            else if (desktop == "mate" || desktop.index_of("/mate") > 0) {
                 try {
                     Process.spawn_command_line_async (@"gsettings set org.mate.background picture-filename $cache_jpg");
                 } catch (GLib.Error e) {
@@ -305,7 +305,7 @@ public class BaDaBing.WallpaperApplication : Gtk.Application
                 print(@"Error: $(e.message)\n");
             }                
 
-            Notify.init("Ba Da Bing!");
+            Notify.init("Bada Bing!");
             var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.png";
 
             try {

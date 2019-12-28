@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.ImageTag : Object
+ public class BadaBing.ImageTag : Object
  {
      public string url;
      public string urlBase;

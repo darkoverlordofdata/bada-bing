@@ -16,7 +16,7 @@
  *
  ******************************************************************************/
 
-public class BaDaBing.GalleryView : Gtk.Grid 
+public class BadaBing.GalleryView : Gtk.Grid 
 {
     private Gtk.Grid grid;
     private Gtk.Button load_button;
@@ -39,9 +39,11 @@ public class BaDaBing.GalleryView : Gtk.Grid
         load_button.hide();
         load_button.clicked();
     }
-
     private async void load_images(string? default_jpg=null) {
         load_button.destroy();
+        load_images1(default_jpg);
+    }
+    private void load_images1(string? default_jpg=null) {
         var xml = false;
         var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
         var data = File.new_for_path(cache_dir);
@@ -107,8 +109,8 @@ public class BaDaBing.GalleryView : Gtk.Grid
         var cache_jpg = filename.get_string();
         print(@"Hey, you clicked $cache_jpg \n");
 
-        load_images(cache_jpg);
-        // BaDaBing.WallpaperApplication.updateWallpaper();
+        load_images1(cache_jpg);
+        // BadaBing.WallpaperApplication.updateWallpaper();
         // var settings = new Settings(GNOME_WALLPAPER);
         // settings.set_string("picture-uri", @"file://$cache_jpg");
         // var desktop = Environment.get_variable("DESKTOP_SESSION");

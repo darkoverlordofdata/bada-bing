@@ -15,9 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.Widget.Preferences : Gtk.Dialog
+ public class BadaBing.Widget.Preferences : Gtk.Dialog
  {
-    public Preferences(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
+    public Preferences(BadaBing.MainWindow window, BadaBing.Widget.Header header) {
         resizable = false;
         deletable = true;
         transient_for = window;
@@ -129,10 +129,10 @@
         boot_sw.notify["active"].connect(() => {
             if (boot_sw.get_active()) {
                 setting.set_boolean("start-on-boot", true);
-                //  BaDaBing.Utils.set_start_on_boot();
+                //  BadaBing.Utils.set_start_on_boot();
             } else {
                 setting.set_boolean("start-on-boot", false);
-                //  BaDaBing.Utils.reset_start_on_boot();
+                //  BadaBing.Utils.reset_start_on_boot();
             }
         });
 
@@ -269,11 +269,11 @@
         add_button(_("Close"), Gtk.ResponseType.CANCEL);
         response.connect(() => {
             //  if (setting.get_boolean("auto")) {
-            //      //  BaDaBing.Utils.geolocate();
-            //      var current = new BaDaBing.Widget.Refresh(window, header);
+            //      //  BadaBing.Utils.geolocate();
+            //      var current = new BadaBing.Widget.Refresh(window, header);
             //      window.change_view(current);
             //  } else {
-                var current = new BaDaBing.Widget.Refresh(window, header);
+                var current = new BadaBing.Widget.Refresh(window, header);
                 window.change_view(current);
             //  }
             window.show_all();

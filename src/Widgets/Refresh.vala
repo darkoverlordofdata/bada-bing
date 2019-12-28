@@ -15,9 +15,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.Widget.Refresh : Gtk.Box
+ public class BadaBing.Widget.Refresh : Gtk.Box
  {
-    public Refresh(BaDaBing.MainWindow window, BaDaBing.Widget.Header header) {
+    public Refresh(BadaBing.MainWindow window, BadaBing.Widget.Header header) {
         orientation = Gtk.Orientation.HORIZONTAL;
 
         var setting = new Settings(APPLICATION_ID);

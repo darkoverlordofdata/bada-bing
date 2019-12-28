@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  ******************************************************************************/
- public class BaDaBing.Widget.Header : Gtk.HeaderBar 
+ public class BadaBing.Widget.Header : Gtk.HeaderBar 
  {
     public Gtk.Button loc_button;
     public Gtk.Button ref_button;
@@ -23,23 +23,23 @@
     public Gtk.RadioButton history_but;
     public signal void show_mapwindow();
 
-    public Header(BaDaBing.MainWindow window, bool view) {
+    public Header(BadaBing.MainWindow window, bool view) {
         show_close_button = true;
         has_subtitle = false;
 
         //Create menu
         var menu = new Gtk.Menu();
         var pref_item = new Gtk.MenuItem.with_label(_("Preferences"));
-        var about_item = new Gtk.MenuItem.with_label(_("About Ba Da Bing"));
+        var about_item = new Gtk.MenuItem.with_label(_("About Bada Bing"));
         menu.add(pref_item);
         menu.add(new Gtk.SeparatorMenuItem());
         menu.add(about_item);
         pref_item.activate.connect(() => {
-            var preferences = new BaDaBing.Widget.Preferences(window, this);
+            var preferences = new BadaBing.Widget.Preferences(window, this);
             preferences.run();
         });
         about_item.activate.connect(() => {
-            var about = new BaDaBing.Widget.About(window);
+            var about = new BadaBing.Widget.About(window);
             about.show();
         });
 
@@ -57,12 +57,12 @@
         ref_button.sensitive = false;
 
         loc_button.clicked.connect(() => {
-            window.change_view(new BaDaBing.Widget.Location(window, this));
+            window.change_view(new BadaBing.Widget.Location(window, this));
             window.show_all();
         });
         ref_button.clicked.connect(() => {
             ref_button.sensitive = false;
-            window.change_view(new BaDaBing.Widget.Refresh(window, this));
+            window.change_view(new BadaBing.Widget.Refresh(window, this));
             window.show_all();
         });
         pack_end(app_button);
@@ -84,7 +84,7 @@
             butbox.pack_start(button, false, true, 0);
         }
         current_but.toggled.connect(() => {
-            window.change_view(new BaDaBing.Widget.Refresh(window, this));
+            window.change_view(new BadaBing.Widget.Refresh(window, this));
             window.show_all();
         });
         history_but.toggled.connect(() => {
