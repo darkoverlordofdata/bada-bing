@@ -203,7 +203,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
      */
     public static void listCache()
     {
-        var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
+        var cache_dir = @"$(Environment.get_user_data_dir())/badabing";
         var cache_api = @"$(cache_dir)/$(BING_API).$(xml ? XML : JSON)";
 
         uint8[] src;
@@ -241,7 +241,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
 
             var filename = urlBase.replace("/th?id=OHR.", "");
 
-            var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
+            var cache_dir = @"$(Environment.get_user_data_dir())/badabing";
             if (!FileUtils.test(cache_dir, FileTest.EXISTS)) {
                 var cache = File.new_for_path(cache_dir);
                 cache.make_directory();
@@ -265,7 +265,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             // if (!update) return;
 
             
- 
+ //feh --bg-scale /home/darko/.local/share/badabing/NYEBacknang_EN-US4252840326.jpg
+
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");
             var desktop = Environment.get_variable("DESKTOP_SESSION");
@@ -288,8 +289,19 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                     Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$cache_jpg");
                 } catch (GLib.Error e) {
                     print(@"Error: $(e.message)\n");
-                }                
+                }
             }
+	    else {
+		var file = File.new_for_path ("/usr/local/bin/feh");
+		if (file.query_exists()) {
+                    try {
+                    	Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
+                    } catch (GLib.Error e) {
+                    	print(@"Error: $(e.message)\n");
+                    }                
+			
+		}
+	    }                
 
             print("SIZE = %d, %d\n", screen_width, screen_height);
 
@@ -297,7 +309,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
              * Copy to metalock background, resizing to screen dimensions
              */
             try {
-                var lock_jpg =@"$(Environment.get_user_cache_dir())/metalock/themes/badabing/bg.jpg";
+                var lock_jpg =@"$(Environment.get_user_data_dir())/metalock/themes/badabing/bg.jpg";
                 var cmd = @"convert $cache_jpg -resize $(screen_width)x$(screen_height) $lock_jpg";
                 print("%s\n", cmd);
                 Process.spawn_command_line_async (cmd);
@@ -327,7 +339,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
 
     public static void purgeWallpaper(GenericArray<ImageTag> images)
     {
-        var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
+        var cache_dir = @"$(Environment.get_user_data_dir())/badabing";
         var cache = File.new_for_path(cache_dir);
         files = new GenericArray<string>();
         listFiles(cache);

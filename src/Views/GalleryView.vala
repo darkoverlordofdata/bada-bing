@@ -45,7 +45,7 @@ public class BadaBing.GalleryView : Gtk.Grid
     }
     private void load_images1(string? default_jpg=null) {
         var xml = false;
-        var cache_dir = @"$(Environment.get_user_cache_dir())/badabing";
+        var cache_dir = @"$(Environment.get_user_data_dir())/badabing";
         var data = File.new_for_path(cache_dir);
         if (!data.query_exists())
             data.make_directory();

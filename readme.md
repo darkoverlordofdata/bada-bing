@@ -88,7 +88,7 @@
 ### todo
 
     click to download prior pics from gallery
-    icon 14x14  
+    icon 14x14
     logo 64x64
     brand 192x192
 
@@ -102,4 +102,8 @@
     sudo reboot
 
 
-    sudo ln -s ~/.cache/metalock/themes/badabing /usr/local/share/metalock/themes/badabing
+    sudo ln -s /home/darko/.local/share/metalock/themes/badabing /usr/local/share/metalock/themes/badabing
+
+
+
+
