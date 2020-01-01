@@ -101,9 +101,15 @@
 
     sudo reboot
 
+### metalock - after building:
 
-    sudo ln -s /home/darko/.local/share/metalock/themes/badabing /usr/local/share/metalock/themes/badabing
+    # cp -r /home/{{ user }}/{{ projects }}/badabing/themes/badabing /home/{{ user }}/.local/share/metalock/themes/badabing
+    # ln -s /home/{{ user }}/.local/share/metalock/themes/badabing /usr/local/share/metalock/themes/badabing
 
+	
+    Add to .xbindkeysrc:
+	"exec metalock -t badabing"
+		Control+Alt+l
 
 
 

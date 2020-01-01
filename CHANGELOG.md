@@ -12,7 +12,7 @@
 
 * 0.3 - 12/31/2019 - bsd
 
-    * GhostBSD using mate
-    * NomadBSD using openbox/feh
+    * GhostBSD (using mate)
+    * NomadBSD (using openbox/feh)
     * add templates for metalock to use same pic as background for screen lock.
     * change get_user_cache_dir to get_user_data_dir, the cache dir is not persistent on all os/distro.
