@@ -101,7 +101,7 @@
 
     sudo reboot
 
-### metalock - after building:
+### metalock - after building: 
 
     # cp -r /home/{{ user }}/{{ projects }}/badabing/themes/badabing /home/{{ user }}/.local/share/metalock/themes/badabing
     # ln -s /home/{{ user }}/.local/share/metalock/themes/badabing /usr/local/share/metalock/themes/badabing

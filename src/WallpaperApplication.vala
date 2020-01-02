@@ -265,8 +265,6 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             // if (!update) return;
 
             
- //feh --bg-scale /home/darko/.local/share/badabing/NYEBacknang_EN-US4252840326.jpg
-
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");
             var desktop = Environment.get_variable("DESKTOP_SESSION");
@@ -292,15 +290,15 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 }
             }
 	    else {
-		var file = File.new_for_path ("/usr/local/bin/feh");
-		if (file.query_exists()) {
-                    try {
-                    	Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
-                    } catch (GLib.Error e) {
-                    	print(@"Error: $(e.message)\n");
-                    }                
-			
-		}
+			var file = File.new_for_path ("/usr/local/bin/feh");
+			if (file.query_exists()) {
+                try {
+                	Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
+                } catch (GLib.Error e) {
+                	print(@"Error: $(e.message)\n");
+                }                
+		
+			}
 	    }                
 
             print("SIZE = %d, %d\n", screen_width, screen_height);
@@ -309,10 +307,17 @@ public class BadaBing.WallpaperApplication : Gtk.Application
              * Copy to metalock background, resizing to screen dimensions
              */
             try {
-                var lock_jpg =@"$(Environment.get_user_data_dir())/metalock/themes/badabing/bg.jpg";
-                var cmd = @"convert $cache_jpg -resize $(screen_width)x$(screen_height) $lock_jpg";
-                print("%s\n", cmd);
-                Process.spawn_command_line_async (cmd);
+                var bg_jpg =@"$(Environment.get_user_data_dir())/metalock/themes/badabing/bg.jpg";
+                var box_png =@"$(Environment.get_user_data_dir())/metalock/themes/badabing/box.png";
+
+				var block_width = 430;
+				var block_height = 170;
+				var gw = screen_width / 2 - 0.5*block_width;
+				var gh = screen_height / 2 - 0.5*block_height;
+
+				var shell_copy = @"$(Environment.get_user_data_dir())/metalock/themes/badabing/copy.sh $(cache_jpg) $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
+
+               	Process.spawn_command_line_async (shell_copy);
             } catch (GLib.Error e) {
                 print(@"Error: $(e.message)\n");
             }                
