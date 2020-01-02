@@ -2,10 +2,10 @@
 #
 #	Copy & resize the wallpaper to fit on the device
 #
-convert $1 -resize $2x$3 /home/darko/.local/share/metalock/themes/badabing/bg.jpg
+convert $2 -resize $3x$4 $1/metalock/themes/badabing/bg.jpg
 #
 #	Crop out the dialog box
 #
-convert /home/darko/.local/share/metalock/themes/badabing/bg.jpg +clone -crop $4x$5+$6+$7  -geometry +$6+$7 -composite /home/darko/.local/share/metalock/themes/badabing/box.png
+convert $1/metalock/themes/badabing/bg.jpg +clone -crop $5x$6+$7+$8  -geometry +$7+$8 -composite $1/metalock/themes/badabing/box.png
 
 

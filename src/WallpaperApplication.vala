@@ -307,15 +307,12 @@ public class BadaBing.WallpaperApplication : Gtk.Application
              * Copy to metalock background, resizing to screen dimensions
              */
             try {
-                var bg_jpg =@"$(Environment.get_user_data_dir())/metalock/themes/badabing/bg.jpg";
-                var box_png =@"$(Environment.get_user_data_dir())/metalock/themes/badabing/box.png";
-
 				var block_width = 430;
 				var block_height = 170;
 				var gw = screen_width / 2 - 0.5*block_width;
 				var gh = screen_height / 2 - 0.5*block_height;
-
-				var shell_copy = @"$(Environment.get_user_data_dir())/metalock/themes/badabing/copy.sh $(cache_jpg) $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
+				var data_dir = Environment.get_user_data_dir();
+				var shell_copy = @"$(data_dir)/metalock/themes/badabing/copy.sh $(data_dir) $(cache_jpg) $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
 
                	Process.spawn_command_line_async (shell_copy);
             } catch (GLib.Error e) {
