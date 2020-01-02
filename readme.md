@@ -103,9 +103,7 @@
 
 ### metalock - after building: 
 
-    # cp -r /home/{{ user }}/{{ projects }}/badabing/themes/badabing /home/{{ user }}/.local/share/metalock/themes/badabing
-    # ln -s /home/{{ user }}/.local/share/metalock/themes/badabing /usr/local/share/metalock/themes/badabing
-
+	./install_metalock.py
 	
     Add to .xbindkeysrc:
 	"exec metalock -t badabing"

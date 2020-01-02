@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+from os.path import expanduser
 
 prefix = os.environ.get('MESON_INSTALL_PREFIX', '/usr')
 datadir = os.path.join(prefix, 'share')
@@ -21,4 +22,5 @@ if 'DESTDIR' not in os.environ:
     print('Updating desktop database...')
     desktop_database_dir = os.path.join(datadir, 'applications')
     subprocess.call(['update-desktop-database', '-q', desktop_database_dir])
+
 
