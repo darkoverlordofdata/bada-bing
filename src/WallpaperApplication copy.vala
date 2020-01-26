@@ -24,6 +24,14 @@ using Notify;
  */
 public class BadaBing.WallpaperApplication : Gtk.Application 
 {
+    //  public const string XML = "xml";
+    //  public const string JSON = "json";
+    //  public const string BING_URL = "https://www.bing.com";
+    //  public const string BING_API = "HPImageArchive";
+    //  public const string DEFAULT_LOCALE = "EN-us";
+    //  public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
+
+
     /**
      * Run the gui
      * 
@@ -71,7 +79,6 @@ public class BadaBing.WallpaperApplication : Gtk.Application
      *  --list              List cache content
      *  --locale=STRING     Locale
      *  --auto              Auto start
-     *  --desktop=<pcmanfm, feh, gnome, mate>
      * 
      */
 	const OptionEntry[] options = {
@@ -261,13 +268,13 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             var settings = new Settings(GNOME_WALLPAPER);
             settings.set_string("picture-uri", @"file://$cache_jpg");
             var desktop = Environment.get_variable("DESKTOP_SESSION");
-            if (desktop == "gnome") {//"org.gnome.desktop.background"
-                print("gnome\n");
+            if (desktop == "LXDE-pi") {
+                print("using LXDE-pi\n");
                 try {
-                    Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$cache_jpg");
+                    Process.spawn_command_line_async (@"pcmanfm --set-wallpaper $cache_jpg");
                 } catch (GLib.Error e) {
                     print(@"Error: $(e.message)\n");
-                }
+                }                
             }
             else if (desktop == "mate" || desktop.index_of("/mate") > 0) {
                 print("mate\n");
@@ -277,31 +284,43 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                     print(@"Error: $(e.message)\n");
                 }                
             }
-            else {  
-                // is pcmanfm installed? (LXDE, OpenBox, ...)
-                if (FileUtils.test("/usr/local/bin/pcmanfm", FileTest.EXISTS) 
-                 || FileUtils.test("/usr/bin/pcmanfm", FileTest.EXISTS)) {
-                    // is it configured??
-                    var config = @"$(Environment.get_user_config_dir())/pcmanfm/default/desktop-items-0.conf";
-                    if (FileUtils.test(config, FileTest.EXISTS)) {
+            else if (desktop == "gnome") {//"org.gnome.desktop.background"
+                print("gnome\n");
+                try {
+                    Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$cache_jpg");
+                } catch (GLib.Error e) {
+                    print(@"Error: $(e.message)\n");
+                }
+            }
+            //pcmanfm --wallpaper-mode=screen --set-walllpaper=HighlandsSquirrel_EN-US7983501314.jpg
+            else { // feh or pcmanfm ?
+                ///home/darko/.config/pcmanfm/default/desktop-items-0.conf
+                var config = @"$(Environment.get_user_config_dir())/pcmanfm/default/desktop-items-0.conf";
+                print(@"config = $config\n");
+                if (FileUtils.test(config, FileTest.EXISTS)) {
+                    //  print("using pcmanfm\n ");
+                    var file = File.new_for_path ("/usr/local/bin/pcmanfm");
+                    if (file.query_exists()) {
                         try {
+                            //  print(@"pcmanfm --wallpaper-mode=screen --set-wallpaper=$cache_jpg\n");
                             Process.spawn_command_line_async (@"pcmanfm --wallpaper-mode=screen --set-wallpaper=$cache_jpg");
                         } catch (GLib.Error e) {
                             print(@"Error: $(e.message)\n");
                         }                
                     }
-                // is feh installed?
-                } else if (FileUtils.test("/usr/local/bin/feh", FileTest.EXISTS)
-                        || FileUtils.test("/usr/bin/feh", FileTest.EXISTS)) {
-                    try {
-                        Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
-                    } catch (GLib.Error e) {
-                        print(@"Error: $(e.message)\n");
-                    }                
                 } else {
-                    print("unable to determine which desktop manager to use\n");
-                }            
-            }
+                    //  print("use feh\n");
+                    var file = File.new_for_path ("/usr/local/bin/feh");
+                    if (file.query_exists()) {
+                        try {
+                            Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
+                        } catch (GLib.Error e) {
+                            print(@"Error: $(e.message)\n");
+                        }                
+                    }
+                }
+            }                
+
             print("SIZE = %d, %d\n", screen_width, screen_height);
 
             /*
