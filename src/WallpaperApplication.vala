@@ -41,6 +41,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
     {
         if (get_windows() == null) {
             window = new MainWindow(this);
+            //  window.set_decorated(false);
             window.show_all();
         } else {
             window.present();
@@ -50,8 +51,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
     }
 
     private MainWindow window;
-    private static int screen_width;
-    private static int screen_height;
+    private static int screen_width = 1366;
+    private static int screen_height = 768;
 
     
     /**
@@ -109,6 +110,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
 		} catch (OptionError e) {
 			print("error: %s\n", e.message);
 			print("Run '%s --help' to see a full list of available command line options.\n", args[0]);
+            critical (e.message);
 			return 0;
         }
 
@@ -149,14 +151,14 @@ public class BadaBing.WallpaperApplication : Gtk.Application
          */
         if (update) {
             updateWallpaper();
-            if (schedule > 0) {
-                Timeout.add_seconds(schedule, () => {
-                    updateWallpaper();
-                    return true;
-                });
-                new MainLoop().run();    
-                return 0;
-            }    
+            //  if (schedule > 0) {
+            //      Timeout.add_seconds(schedule, () => {
+            //          updateWallpaper();
+            //          return true;
+            //      });
+            //      new MainLoop().run();    
+            //      return 0;
+            //  }    
             return 0;
         }
 
@@ -255,26 +257,28 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 FileUtils.set_data(cache_jpg, download.response_body.data);
             }
             FileUtils.set_data(cache_api, source.data);
-            // if (!update) return;
 
-            
-            var settings = new Settings(GNOME_WALLPAPER);
-            settings.set_string("picture-uri", @"file://$cache_jpg");
             var desktop = Environment.get_variable("DESKTOP_SESSION");
             if (desktop == "gnome") {//"org.gnome.desktop.background"
                 print("gnome\n");
+                var settings = new Settings(GNOME_WALLPAPER);
+                settings.set_string("picture-uri", @"file://$cache_jpg");
                 try {
                     Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$cache_jpg");
                 } catch (GLib.Error e) {
                     print(@"Error: $(e.message)\n");
+                    critical (e.message);
                 }
             }
             else if (desktop == "mate" || desktop.index_of("/mate") > 0) {
                 print("mate\n");
+                var settings = new Settings(GNOME_WALLPAPER);
+                settings.set_string("picture-uri", @"file://$cache_jpg");
                 try {
                     Process.spawn_command_line_async (@"gsettings set org.mate.background picture-filename $cache_jpg");
                 } catch (GLib.Error e) {
                     print(@"Error: $(e.message)\n");
+                    critical (e.message);
                 }                
             }
             else {  
@@ -282,21 +286,27 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 if (FileUtils.test("/usr/local/bin/pcmanfm", FileTest.EXISTS) 
                  || FileUtils.test("/usr/bin/pcmanfm", FileTest.EXISTS)) {
                     // is it configured??
+                    print("pcfmanfm\n");
                     var config = @"$(Environment.get_user_config_dir())/pcmanfm/default/desktop-items-0.conf";
                     if (FileUtils.test(config, FileTest.EXISTS)) {
                         try {
+                            print(@"pcmanfm --wallpaper-mode=screen --set-wallpaper=$cache_jpg\n");
                             Process.spawn_command_line_async (@"pcmanfm --wallpaper-mode=screen --set-wallpaper=$cache_jpg");
                         } catch (GLib.Error e) {
                             print(@"Error: $(e.message)\n");
+                            critical (e.message);
                         }                
                     }
                 // is feh installed?
                 } else if (FileUtils.test("/usr/local/bin/feh", FileTest.EXISTS)
                         || FileUtils.test("/usr/bin/feh", FileTest.EXISTS)) {
+                    print("pcfmanfm\n");
                     try {
+                        print(@"feh --bg-scale $cache_jpg\n");
                         Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
                     } catch (GLib.Error e) {
                         print(@"Error: $(e.message)\n");
+                        critical (e.message);
                     }                
                 } else {
                     print("unable to determine which desktop manager to use\n");
@@ -318,6 +328,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                	Process.spawn_command_line_async (shell_copy);
             } catch (GLib.Error e) {
                 print(@"Error: $(e.message)\n");
+                critical (e.message);
             }                
 
             Notify.init("Bada Bing!");
@@ -327,12 +338,14 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 new Notify.Notification(title, copyright, icon).show();
             } catch (GLib.Error e) {
                 print("Notifications not available on this system\n");
+                critical (e.message);
             }                
             
-            if (update) purgeWallpaper(images);
+            //  if (update) purgeWallpaper(images);
 
         } catch (GLib.Error e) {
             print(@"Error: $(e.message)\n");
+            critical (e.message);
         }                
     }
 
