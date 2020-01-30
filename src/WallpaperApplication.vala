@@ -51,8 +51,6 @@ public class BadaBing.WallpaperApplication : Gtk.Application
     }
 
     private MainWindow window;
-    private static int screen_width = 1366;
-    private static int screen_height = 768;
 
     
     /**
@@ -72,11 +70,15 @@ public class BadaBing.WallpaperApplication : Gtk.Application
      *  --list              List cache content
      *  --locale=STRING     Locale
      *  --auto              Auto start
+     *  --height            Screen height
+     *  --width             Screen width
      *  --desktop=<pcmanfm, feh, gnome, mate>
      * 
      */
 	const OptionEntry[] options = {
 		{ "schedule", 0, 0, OptionArg.INT, ref schedule, "Run scheduled", "INT" },
+		{ "width", 0, 0, OptionArg.INT, ref screen_width, "Screen width", "INT" },
+		{ "height", 0, 0, OptionArg.INT, ref screen_height, "Screen height", "INT" },
 		{ "display", 0, 0, OptionArg.NONE, ref gui, "Display the gui", null },
 		{ "update", 0, 0, OptionArg.NONE, ref update, "Update the wallpaper", null },
 		{ "force", 0, 0, OptionArg.NONE, ref force, "Force overwwrite", null },
@@ -86,6 +88,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
 		{ null }
     };
 
+    public static int screen_width;
+    public static int screen_height;
     public static int schedule;
     public static int number = 7;
     public static bool update = false;
@@ -318,6 +322,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
              * Copy to catlock background, resizing to screen dimensions
              */
             try {
+                assert(screen_width != 0);
+                assert(screen_height != 0);
 				var block_width = 430;
 				var block_height = 170;
 				var gw = screen_width / 2 - 0.5*block_width;

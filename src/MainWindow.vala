@@ -33,7 +33,6 @@
         Gdk.Rectangle geometry;
         Gdk.Monitor primary = display.get_primary_monitor();
         geometry = primary.get_geometry();
-        // print("SIZE = %d, %d\n", geometry.width, geometry.height);
 
         width =  geometry.width;
         height = geometry.height;

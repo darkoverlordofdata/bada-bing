@@ -73,7 +73,6 @@
     todo:
     * clean cache so it only keeps the last (1-7) days
     * select locale - currently just US. Add preferences: US, UK, DE, CA, AU, FR, CH, JP
-    * select size - currently favors watermarked version
 
 
 ### icon
@@ -87,11 +86,12 @@
 
 ### todo
 
-    click to download prior pics from gallery
     icon 14x14
     logo 64x64
     brand 192x192
 
+### after building (adds to crontab, installs catlock interface)
+    ./install.sh
 
 ### rpi - after building:
 
@@ -100,14 +100,6 @@
     cp /home/pi/Documents/GitHub/badabing/data/com.github.darkoverlordofdata.badabing.desktop /home/pi/.config/autostart
 
     sudo reboot
-
-### metalock - after building: 
-
-	./install_metalock.py
-	
-    Add to .xbindkeysrc:
-	"exec metalock -t badabing"
-		Control+Alt+l
 
 
 
