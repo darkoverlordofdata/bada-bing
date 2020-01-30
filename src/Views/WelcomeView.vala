@@ -20,7 +20,8 @@
     public WelcomeView(MainWindow parent, Gtk.Stack panel) {
 
         var welcome = new Granite.Widgets.Welcome("Bada Bing", 
-            "Hey, Linux. We got yer wallpaper here.");
+            "Daily Wallpaper from https://bing.wallpaper.pics/");
+            //  "Hey, Linux. We got yer wallpaper here.");
 
         welcome.append("help-about", 
             "About", "About Bada Bing");

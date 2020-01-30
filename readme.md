@@ -1,6 +1,5 @@
-# Ba Da Bing
-## Hey Linux, we gotcha wallpaper here
-
+# Bada Bing
+## Daily Wallpaper from https://bing.wallpaper.pics/ for Linux & NomadBSD
 
     Images are copyright to their respective owners. 
     Bing is a trademark of Microsoft. 
@@ -58,6 +57,7 @@
 
 ### post build
 
+    On bsd, you must run ./freebsd_schema.py to add required preferences keys to dconf.
 
     Integrates with catlock (https://github.com/darkoverlordofdata/kitty-cat-lock.git), my screen lock application.
     use ./enable_catlock.sh to copy theme to catlock.
@@ -81,6 +81,8 @@
     save the xml as the local 'database'
 
     use gui (--display) to edit preferences, view cache list
+
+    when used with catlock, the current wallpaper will be used when locking screen.
 
 
 ### icon
