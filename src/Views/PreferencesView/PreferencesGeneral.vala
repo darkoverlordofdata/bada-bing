@@ -43,13 +43,15 @@
         minz.halign = Gtk.Align.START;
         if (setting.get_boolean("minimized")) {
             minz.active = true;
-        } else {
+        } 
+        else {
             minz.active = false;
         }
         minz.notify["active"].connect(() => {
             if (minz.get_active()) {
                 setting.set_boolean("minimized", true);
-            } else {
+            } 
+            else {
                 setting.set_boolean("minimized", false);
             }
         });
@@ -61,14 +63,16 @@
         boot_sw.halign = Gtk.Align.START;
         if (setting.get_boolean("start-on-boot")) {
             boot_sw.active = true;
-        } else {
+        } 
+        else {
             boot_sw.active = false;
         }
         boot_sw.notify["active"].connect(() => {
             if (boot_sw.get_active()) {
                 set_autostart_on();
                 setting.set_boolean("start-on-boot", true);
-            } else {
+            } 
+            else {
                 set_autostart_off();
                 setting.set_boolean("start-on-boot", false);
             }
@@ -130,24 +134,6 @@
         });
 
 
-        //Automatic location - modify to  accept string: EN-us
-        //  var loc_label = new Gtk.Label(_("Find my location automatically:"));
-        //  loc_label.halign = Gtk.Align.END;
-        //  var loc = new Gtk.Switch();
-        //  loc.halign = Gtk.Align.START;
-        //  if (setting.get_boolean("auto")) {
-        //      loc.active = true;
-        //  } else {
-        //      loc.active = false;
-        //  }
-        //  loc.notify["active"].connect(() => {
-        //      if (loc.get_active()) {
-        //          setting.set_boolean("auto", true);
-        //      } else {
-        //          setting.set_boolean("auto", false);
-        //      }
-        //  });
-
         //Select indicator
         var ind_label = new Gtk.Label(_("Use System Tray Indicator:"));
         ind_label.halign = Gtk.Align.END;
@@ -156,7 +142,8 @@
         if (setting.get_boolean("indicator")) {
             ind.active = true;
             //  minz.sensitive = true;
-        } else {
+        } 
+        else {
             ind.active = false;
             //  minz.sensitive = false;
         }
@@ -166,7 +153,8 @@
                 //  minz.sensitive = true;
                 //  minz.active = true;
                 //  window.show_indicator();
-            } else {
+            } 
+            else {
                 setting.set_boolean("indicator", false);
                 //  minz.active = false;
                 //  minz.sensitive = false;
@@ -214,7 +202,7 @@ Type=Application
 Version=1.0
 Name=Bada Bing
 Comment=Hey Linux, I got yer wallpaper
-Exec=com.github.darkoverlordofdata.badabing --update --force --schedule=21600
+Exec=com.github.darkoverlordofdata.badabing --update
 Icon=/usr/share/icons/com.github.darkoverlordofdata.badabing.svg
 Terminal=false
 Categories=Utility;
@@ -225,7 +213,6 @@ X-GNOME-Autostart-enabled=true
     }
     
     private void set_autostart_off() {
-        //  var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
         var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$(AUTOSTART_URI).desktop";
         var autostart = File.new_for_path(path);
         if (autostart.query_exists()) {

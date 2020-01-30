@@ -77,7 +77,8 @@
         var dark = settings.get_boolean("dark");
         if (dark) {
             Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", true);
-        } else {
+        } 
+        else {
             Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", false);
         }
 

@@ -138,43 +138,7 @@
 
     }
 
-    //  private static Mycity get_selection(Gtk.TreeModel model, Gtk.TreeIter iter) {
-    //      var city = Mycity();
-    //      model.get(iter, 0, out city.lat, 1, out city.lon, 2, out city.country, 3, out city.state, 4, out city.town);
-    //      return city;
-    //  }
-
     private void on_row_activated(Gtk.TreeView location_view , Gtk.TreePath path, Gtk.TreeViewColumn column) {
-        //  Gtk.TreeIter iter;
-        //  if (location_view.model.get_iter(out iter, path)) {
-        //      Mycity city = get_selection(location_view.model, iter);
-        //      var setting = new Settings("com.gitlab.bitseater.meteo");
-        //      var uri1 = OWM_API_ADDR + "weather?lat=";
-        //      var uri2 = "&type=like&APPID=" + setting.get_string("apiid");
-        //      var uri = uri1 + city.lat.to_string() + "&lon=" + city.lon.to_string() + uri2;
-        //      setting.set_string("idplace", update_id(uri));
-        //      setting.set_string("country", city.country);
-        //      setting.set_string("state", city.state);
-        //      setting.set_string("location", city.town);
-        //      var current = new BadaBing.Widgets.Current(window, header);
-        //      window.change_view(current);
-        //      window.show_all();
-        //  }
     }
 
-    //  private static string update_id(string uri) {
-    //      var session = new Soup.Session();
-    //      var message = new Soup.Message("GET", uri);
-    //      session.send_message(message);
-    //      string id = "";
-    //      try {
-    //          var parser = new Json.Parser();
-    //          parser.load_from_data((string) message.response_body.flatten().data, -1);
-    //          var root = parser.get_root().get_object();
-    //          id = root.get_int_member("id").to_string();
-    //      } catch (Error e) {
-    //          debug(e.message);
-    //      }
-    //      return id;
-    //  }
 }

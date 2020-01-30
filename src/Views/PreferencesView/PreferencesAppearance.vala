@@ -39,14 +39,16 @@
         theme.halign = Gtk.Align.START;
         if (setting.get_boolean("dark")) {
             theme.active = true;
-        } else {
+        } 
+        else {
             theme.active = false;
         }
         theme.notify["active"].connect(() => {
            if (theme.get_active()) {
                Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", true);
                setting.set_boolean("dark", true);
-           } else {
+           } 
+           else {
                Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", false);
                setting.set_boolean("dark", false);
            }

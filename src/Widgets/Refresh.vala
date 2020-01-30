@@ -22,7 +22,6 @@
 
         var setting = new Settings(APPLICATION_ID);
         header.custom_title = null;
-        //  header.set_title(setting.get_string("location") + ", " + setting.get_string("state") + " " + setting.get_string("country"));
         header.change_visible(true);
     }
 }

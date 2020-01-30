@@ -20,6 +20,8 @@
     --list              List cache content
     --locale=STRING     Locale
     --auto              Auto start
+    --height            Screen height
+    --width             Screen width
 
 ![Screenshot](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot1.png "Screenshot")
 
@@ -48,13 +50,27 @@
     sudo apt update 
     sudo apt install recent-notifications
 
-
 ### build
 
     meson build --prefix=/usr
-    cd build
-    ninja
-    sudo ninja install
+    ninja -C build
+    sudo ninja -C build install
+
+### post build
+
+
+    Integrates with catlock (https://github.com/darkoverlordofdata/kitty-cat-lock.git), my screen lock application.
+    use ./enable_catlock.sh to copy theme to catlock.
+
+    Preferences:
+
+    On linux 
+        enabling autostart will create a desktop file in the .config/autostart folder. 
+        enabling refesh will run every 1-24 hrs based on selection.
+    
+    On bsd
+        use ./install.sh to create bin/badabing.sh, and add as daily job to crontab.
+        manually add bin/badabing.sh to autostart tool.
 
 ### what's it (supposed to) do?
 
@@ -66,14 +82,6 @@
 
     use gui (--display) to edit preferences, view cache list
 
-    Originally intended to be cross-platform, but in Windows10 this is now a native option, so it's not needed.
-
-### work in progress
-
-    todo:
-    * clean cache so it only keeps the last (1-7) days
-    * select locale - currently just US. Add preferences: US, UK, DE, CA, AU, FR, CH, JP
-
 
 ### icon
 
@@ -83,23 +91,6 @@
 
 
 
-
-### todo
-
-    icon 14x14
-    logo 64x64
-    brand 192x192
-
-### after building (adds to crontab, installs catlock interface)
-    ./install.sh
-
-### rpi - after building:
-
-    mkdir -p /home/pi/.config/autostart
-
-    cp /home/pi/Documents/GitHub/badabing/data/com.github.darkoverlordofdata.badabing.desktop /home/pi/.config/autostart
-
-    sudo reboot
 
 
 

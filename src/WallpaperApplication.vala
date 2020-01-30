@@ -43,7 +43,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             window = new MainWindow(this);
             //  window.set_decorated(false);
             window.show_all();
-        } else {
+        } 
+        else {
             window.present();
         }
         screen_width = window.width;
@@ -72,7 +73,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
      *  --auto              Auto start
      *  --height            Screen height
      *  --width             Screen width
-     *  --desktop=<pcmanfm, feh, gnome, mate>
+     *  ?--desktop=<pcmanfm, feh, gnome, mate>
      * 
      */
 	const OptionEntry[] options = {
@@ -302,8 +303,9 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                         }                
                     }
                 // is feh installed?
-                } else if (FileUtils.test("/usr/local/bin/feh", FileTest.EXISTS)
-                        || FileUtils.test("/usr/bin/feh", FileTest.EXISTS)) {
+                } 
+                else if (FileUtils.test("/usr/local/bin/feh", FileTest.EXISTS)
+                      || FileUtils.test("/usr/bin/feh", FileTest.EXISTS)) {
                     print("pcfmanfm\n");
                     try {
                         print(@"feh --bg-scale $cache_jpg\n");
@@ -312,7 +314,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                         print(@"Error: $(e.message)\n");
                         critical (e.message);
                     }                
-                } else {
+                } 
+                else {
                     print("unable to determine which desktop manager to use\n");
                 }            
             }
@@ -405,7 +408,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             if (info.get_file_type() == FileType.DIRECTORY) {
                 File subdir = file.resolve_relative_path(info.get_name ());
                 listFiles(subdir, space + " ", cancellable);
-            } else {
+            } 
+            else {
                 if (info.get_name().index_of(".jpg") == -1) continue;
                 if (info.get_is_hidden()) continue;
                 files.add(info.get_name());

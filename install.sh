@@ -28,10 +28,4 @@ cronjob="1 0  * * * $croncmd"
 ( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
 
 
-#
-#   create catlock theme interface
-#
-mkdir -p $  ~/.local/share/catlock/themes/badabing
-cp -f ./themes/badabing/avatar.png ~/.local/share/catlock/themes/badabing/avatar.png
-cp -f ./themes/badabing/copy.sh ~/.local/share/catlock/themes/badabing/copy.sh
 
