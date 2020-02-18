@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "gdb",
             "request": "launch",
-            "target": "${workspaceFolder}/build/com.github.darkoverlordofdata.badabing",
+            "target": "${workspaceFolder}/build/meson-out/com.github.darkoverlordofdata.badabing",
             "arguments": "--display",
             "cwd": "${workspaceRoot}",
             "valuesFormatting": "parseText"

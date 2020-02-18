@@ -1,5 +1,5 @@
 # Bada Bing
-## Daily Wallpaper from https://bing.wallpaper.pics/ for Linux & NomadBSD
+## Daily Wallpaper from https://bing.wallpaper.pics/ for Linux & Unix
 
     Images are copyright to their respective owners. 
     Bing is a trademark of Microsoft. 
@@ -26,29 +26,6 @@
 
 ![Screenshot](https://github.com/darkoverlordofdata/badabing/raw/master/Screenshot2.png "Screenshot")
 
-### install
-
-    for ubuntu/elementaryos (https://launchpad.net/~darkoverlordofdata/+archive/ubuntu/badabing)
-
-    sudo add-repository ppa:darkoverlordofdata/badabing
-    sudo apt update 
-    sudo apt install com.github.darkoverlordofdata.badabing
-
-    otherwise, build from source. Updated to work on Raspbian Buster (rpi3)
-
-### dependancies
-
-    sudo apt install valac -y
-    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
-
-    this app pops up a notification when a new wallpaper is installed. 
-    You missed it and want to review it later? 
-    Install the indicator-notifications GTK3 applet:
-
-    sudo apt-add-repository ppa:jconti/recent-notifications
-    sudo apt update 
-    sudo apt install recent-notifications
-
 ### build
 
     meson build --prefix=/usr
@@ -57,7 +34,7 @@
 
 ### post build
 
-    On bsd, you must run ./freebsd_schema.py to add required preferences keys to dconf.
+    On freebsd, you must run ./freebsd_schema.py to add required preferences keys to dconf.
 
     Integrates with catlock (https://github.com/darkoverlordofdata/kitty-cat-lock.git), my screen lock application.
     use ./enable_catlock.sh to copy theme to catlock.
@@ -72,17 +49,6 @@
         use ./install.sh to create bin/badabing.sh, and add as daily job to crontab.
         manually add bin/badabing.sh to autostart tool.
 
-### what's it (supposed to) do?
-
-    get the xml/json from bing, using maximum to determine the # of records to request.
-    the 1st entry is the current wallpaper.
-    Loop thru, make sure all are in cache, download any that are not.
-    Loop thru cache, any that are not in xml should be purged.
-    save the xml as the local 'database'
-
-    use gui (--display) to edit preferences, view cache list
-
-    when used with catlock, the current wallpaper will be used when locking screen.
 
 
 ### icon
@@ -91,8 +57,29 @@
 
     [terms](https://community.icons8.com/t/can-i-use-icons8-for-free/30)
 
+### other
+
+    originaly concieved on ElementaryOS. Over the course of time and distro surf, Ive run/tested this on Ubuntu, Debian (Buster), Raspberrian, Antergos, EndeavourOS, RebornOS, GhostBSD, and NomadBSD. Requires minimal Gnome installation for gsettings, dconf, and notifications 
+
+    for ubuntu/elementaryos (https://launchpad.net/~darkoverlordofdata/+archive/ubuntu/badabing)
+
+    sudo add-repository ppa:darkoverlordofdata/badabing
+    sudo apt update 
+    sudo apt install com.github.darkoverlordofdata.badabing
+
+    otherwise, build from source. 
 
 
+### dependancies
 
+    sudo apt install valac -y
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
 
+    this app pops up a notification when a new wallpaper is installed. 
+    You missed it and want to review it later? 
+    Install the indicator-notifications GTK3 applet:
+
+    sudo apt-add-repository ppa:jconti/recent-notifications
+    sudo apt update 
+    sudo apt install recent-notifications
 

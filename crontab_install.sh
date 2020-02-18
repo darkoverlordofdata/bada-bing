@@ -7,6 +7,8 @@ cat << 'EOF' > ~/bin/badabing.sh
 #
 #   run badabing from crontab
 #
+#	(cp ${workspaceFolder}/data/badabing.sh ~/bin/badabing.sh)
+#
 EOF
 echo "SHELL=$SHELL" >> ~/bin/badabing.sh
 echo "HOME=$HOME" >> ~/bin/badabing.sh

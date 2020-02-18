@@ -16,3 +16,10 @@
     * NomadBSD (using openbox/feh)
     * add templates for metalock to use same pic as background for screen lock.
     * change get_user_cache_dir to get_user_data_dir, the cache dir is not persistent on all os/distro.
+
+* 0.4 - 2/18/2022 - refactor
+
+    * switching from metalock to my own catlock as primary screen lock. Metalock still works.
+    * update daektop selection - gnome/mate/lxde/openbox should be supported.
+    * schedule by task sleep or crontab
+    * configuration for Vala Language Client with vscode.
