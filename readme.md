@@ -63,11 +63,11 @@
 
     for ubuntu/elementaryos (https://launchpad.net/~darkoverlordofdata/+archive/ubuntu/badabing)
 
-    sudo add-repository ppa:darkoverlordofdata/badabing
+    sudo add-apt-repository ppa:darkoverlordofdata/badabing
     sudo apt update 
     sudo apt install com.github.darkoverlordofdata.badabing
 
-    otherwise, build from source. 
+    for other distros, bsd, or for latest version, build from source. 
 
 
 ### dependancies
