@@ -71,6 +71,7 @@ Keywords=Wallpaper;
         //  1920x1200
 
     public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
+    public const string GNOME_SCREENSAVER = "org.gnome.desktop.screensaver";
             //  US, UK, DE, CA, AU, FR, CH, JP
 
 }

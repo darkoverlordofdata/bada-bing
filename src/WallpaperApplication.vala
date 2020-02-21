@@ -266,10 +266,13 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             var desktop = Environment.get_variable("DESKTOP_SESSION");
             if (desktop == "gnome") {//"org.gnome.desktop.background"
                 print("gnome\n");
-                var settings = new Settings(GNOME_WALLPAPER);
-                settings.set_string("picture-uri", @"file://$cache_jpg");
+                var settingsw = new Settings(GNOME_WALLPAPER);
+                settingsw.set_string("picture-uri", @"file://$cache_jpg");
+                var settingss = new Settings(GNOME_SCREENSAVER);
+                settingss.set_string("picture-uri", @"file://$cache_jpg");
                 try {
                     Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$cache_jpg");
+                    Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.screensaver picture-uri file://$cache_jpg");
                 } catch (GLib.Error e) {
                     print(@"Error: $(e.message)\n");
                     critical (e.message);
