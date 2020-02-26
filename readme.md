@@ -73,7 +73,7 @@
 ### dependancies
 
     sudo apt install valac -y
-    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev -y
+    sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev gettext -y
 
     this app pops up a notification when a new wallpaper is installed. 
     You missed it and want to review it later? 

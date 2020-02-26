@@ -264,7 +264,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             FileUtils.set_data(cache_api, source.data);
 
             var desktop = Environment.get_variable("DESKTOP_SESSION");
-            if (desktop == "gnome") {//"org.gnome.desktop.background"
+            if (desktop == "gnome" || desktop == "ubuntu") {//"org.gnome.desktop.background"
                 print("gnome\n");
                 var settingsw = new Settings(GNOME_WALLPAPER);
                 settingsw.set_string("picture-uri", @"file://$cache_jpg");
@@ -309,7 +309,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 } 
                 else if (FileUtils.test("/usr/local/bin/feh", FileTest.EXISTS)
                       || FileUtils.test("/usr/bin/feh", FileTest.EXISTS)) {
-                    print("pcfmanfm\n");
+                    print("feh\n");
                     try {
                         print(@"feh --bg-scale $cache_jpg\n");
                         Process.spawn_command_line_async (@"feh --bg-scale $cache_jpg");
@@ -324,27 +324,29 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             }
             print("SIZE = %d, %d\n", screen_width, screen_height);
 
-            /*
-             * Copy to catlock background, resizing to screen dimensions
-             */
-            try {
-                assert(screen_width != 0);
-                assert(screen_height != 0);
-				var block_width = 430;
-				var block_height = 170;
-				var gw = screen_width / 2 - 0.5*block_width;
-				var gh = screen_height / 2 - 0.5*block_height;
-				var data_dir = Environment.get_user_data_dir();
-				var shell_copy = @"$(data_dir)/catlock/themes/badabing/copy.sh $(data_dir) $(cache_jpg) $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
+            var data_dir = Environment.get_user_data_dir();
+            if (FileUtils.test(@"$(data_dir)/catlock/themes/badabing/copy.sh", FileTest.EXISTS)) { 
+                /*
+                * Copy to catlock background, resizing to screen dimensions
+                */
+                try {
+                    assert(screen_width != 0);
+                    assert(screen_height != 0);
+                    var block_width = 430;
+                    var block_height = 170;
+                    var gw = screen_width / 2 - 0.5*block_width;
+                    var gh = screen_height / 2 - 0.5*block_height;
+                    var shell_copy = @"$(data_dir)/catlock/themes/badabing/copy.sh $(data_dir) $(cache_jpg) $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
 
-               	Process.spawn_command_line_async (shell_copy);
-            } catch (GLib.Error e) {
-                print(@"Error: $(e.message)\n");
-                critical (e.message);
-            }                
+                    Process.spawn_command_line_async (shell_copy);
+                } catch (GLib.Error e) {
+                    print(@"Error: $(e.message)\n");
+                    critical (e.message);
+                }                
+            }
 
             Notify.init("Bada Bing!");
-            var icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.png";
+            var icon = "/usr/share/icons/com.github.darkoverlordofdata.badabing.png";
 
             try {
                 new Notify.Notification(title, copyright, icon).show();

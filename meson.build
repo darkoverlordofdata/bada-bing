@@ -1,5 +1,5 @@
 # project name and programming language
-project('com.github.darkoverlordofdata.badabing', ['vala', 'c'], version: '0.0.1')
+project('com.github.darkoverlordofdata.badabing', ['vala', 'c'], version: '0.0.4')
 
 
 # Set our translation domain

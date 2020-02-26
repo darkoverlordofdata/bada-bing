@@ -202,7 +202,7 @@ Type=Application
 Version=1.0
 Name=Bada Bing
 Comment=Hey Linux, I got yer wallpaper
-Exec=com.github.darkoverlordofdata.badabing --update
+Exec=com.github.darkoverlordofdata.badabing --update --force --schedule=21600
 Icon=/usr/share/icons/com.github.darkoverlordofdata.badabing.svg
 Terminal=false
 Categories=Utility;

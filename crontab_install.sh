@@ -15,7 +15,7 @@ echo "HOME=$HOME" >> ~/bin/badabing.sh
 echo "PATH=$PATH" >> ~/bin/badabing.sh
 cat << 'EOF' >> ~/bin/badabing.sh
 
-geometry=$(xrandr | grep -w connected  | awk -F'[ \+]' '{print $3}')
+geometry=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
 width=$(echo $geometry | cut -f1 -dx)
 height=$(echo $geometry | cut -f2 -dx)
 
