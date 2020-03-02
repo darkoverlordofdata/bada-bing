@@ -75,6 +75,7 @@
             }
         }
 
+        WallpaperApplication.initializeDesktop(desktop_manager);
 
         
         var screen = get_screen();

@@ -64,7 +64,7 @@ height=$(echo $geometry | cut -f2 -dx)
 #
 #   edit the crontab to add the cronjob   
 #
-croncmd="DISPLAY=$DISPLAY $HOME/%s"
+croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
 cronjob="1 0  * * * $croncmd"
 ( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
 """.printf(CRONJOB_PATH));
@@ -99,7 +99,7 @@ cronjob="1 0  * * * $croncmd"
 #
 #   edit the crontab to remove the cronjob   
 #
-croncmd="DISPLAY=$DISPLAY $HOME/%s"
+croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
 cronjob="1 0  * * * $croncmd"
 
 crontab -l | grep -v -F "$croncmd" | crontab -
