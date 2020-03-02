@@ -81,7 +81,7 @@ Keywords=Wallpaper;
         //  1920x1280
         //  1920x1200
 
-    public const string IMAGE_PATH = "~/Wallpapers/badabing.jpg";
+    //  public const string IMAGE_PATH = "~/Wallpapers/badabing.jpg";
 
     public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
     public const string GNOME_SCREENSAVER = "org.gnome.desktop.screensaver";
