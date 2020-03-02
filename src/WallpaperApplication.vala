@@ -52,7 +52,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
     }
 
     private MainWindow window;
-    private string wallpaper_path;
+    private static string wallpaper_path;
 
     
     /**
@@ -125,8 +125,9 @@ public class BadaBing.WallpaperApplication : Gtk.Application
         }
 
 
+        var home = Environment.get_home_dir();
         if (FileUtils.test(@"$home/Wallpapers", FileTest.EXISTS)) 
-            wallpaper_path = @"$wallpaper_path";
+            wallpaper_path = @"$home/Wallpapers/badabing.jpg";
         else
             wallpaper_path = @"$home/Pictures/badabing.jpg";
  
