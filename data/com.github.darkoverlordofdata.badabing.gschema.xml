@@ -19,16 +19,22 @@
         <description>When use indicator, start with minimized window.</description>
     </key>
 
-    <key name="interval" type="i">
-        <default>21600</default>
-        <summary>Update interval</summary>
-        <description>Time in seconds to update wallpaper.</description>
-    </key>
-
     <key name="start-on-boot" type="b">
       <default>false</default>
       <summary>Start on boot</summary>
       <description>Start application when user log into the desktop.</description>
+    </key>
+
+    <key name="use-cron-job" type="b">
+      <default>false</default>
+      <summary>Use crontab jobs</summary>
+      <description>Use a crontab job to update daily.</description>
+    </key>
+
+    <key name="create-lock-assets" type="b">
+      <default>false</default>
+      <summary>Create lock screen assets</summary>
+      <description>Create assets for Catlock.</description>
     </key>
 
     <key name="maximum" type="i">
@@ -53,6 +59,12 @@
       <default>"1900x1200"</default>
       <summary>Sceen Resolution</summary>
       <description>Target resolution</description>
+    </key>
+
+    <key name="image-path" type="s">
+      <default>"~/Wallpapers/badabing.jpg"</default>
+      <summary>Wappaper Image</summary>
+      <description>Wallpaper image</description>
     </key>
 
   </schema>

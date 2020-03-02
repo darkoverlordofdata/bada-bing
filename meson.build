@@ -45,6 +45,10 @@ executable(
     'src/Views/PreferencesView.vala',
     'src/Views/PreferencesView/PreferencesAppearance.vala',
     'src/Views/PreferencesView/PreferencesGeneral.vala',
+    'src/Preferences/IPreference.vala',
+    'src/Preferences/AutoStart.vala',
+    'src/Preferences/CronJob.vala',
+    'src/Preferences/LockScreen.vala',
 
     import('gnome').compile_resources(
         'as-resources', join_paths('data', meson.project_name() + '.gresource.xml'),
@@ -76,5 +80,10 @@ executable(
     install: true
 )
 
-# Add post install script
+# Add post install scripts
 meson.add_install_script('meson/post_install.py')
+# if build_machine.system() == 'freebsd'
+#   meson.add_install_script('meson/freebsd_schema.py')
+#   meson.add_install_script('meson/enable_catlock.sh')
+# endif
+# meson.add_install_script('meson/crontab_install.sh')

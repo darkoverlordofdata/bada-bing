@@ -22,6 +22,17 @@ namespace BadaBing {
         XmlParser,
         JsonParser,
     }
+
+    public enum Desktop {
+        Gnome,
+        Ubuntu,
+        Mate,
+        PCManFM,
+        Feh,
+        Unspecified
+    }
+
+    public static Desktop desktop_manager = Desktop.Unspecified;
         
     public const string APPLICATION_ID =   "com.github.darkoverlordofdata.badabing";
     public const string APPLICATION_URI = "/com/github/darkoverlordofdata/badabing";
@@ -41,7 +52,7 @@ Name=Bada Bing
 GenericName=Wallpaper
 Comment=Hey Linux, we gotch yer wallpaper
 Categories=Utility;
-Exec=com.github.darkoverlordofdata.badabing --update --force --schedule=21600
+Exec=com.github.darkoverlordofdata.badabing --update --force --schedule
 Icon=/usr/local/share/icons/com.github.darkoverlordofdata.badabing.svg
 Terminal=false
 Type=Application
@@ -70,8 +81,18 @@ Keywords=Wallpaper;
         //  1920x1280
         //  1920x1200
 
+    public const string IMAGE_PATH = "~/Wallpapers/badabing.jpg";
+
     public const string GNOME_WALLPAPER = "org.gnome.desktop.background";
     public const string GNOME_SCREENSAVER = "org.gnome.desktop.screensaver";
             //  US, UK, DE, CA, AU, FR, CH, JP
+            
+    public const string AUTOSTART_PATH = "~/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
+
+    public const string AUTOSTART_URI = "com.github.darkoverlordofdata.badabing";
+
+    public const string CRONJOB_PATH   = ".config/badabing/cronjob.sh";
+    public const string CATLOCK_PATH   = ".local/share/catlock/themes/badabing/copy.sh";
+        
 
 }

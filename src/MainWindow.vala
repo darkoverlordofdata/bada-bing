@@ -42,7 +42,41 @@
     public MainWindow(WallpaperApplication app) {
         Object (application: app);
 
+        var home = Environment.get_home_dir();
+        var config = Environment.get_user_config_dir();
 
+        if (desktop_manager == Desktop.Unspecified) {
+
+            // try to figure out what we have
+            var session = Environment.get_variable("DESKTOP_SESSION");
+            if (session != null) {
+
+                if (session == "gnome") {
+                    desktop_manager = Desktop.Gnome;
+                }
+                else if (session == "ubuntu") {
+                    desktop_manager = Desktop.Ubuntu;
+                }
+                else if (session == "mate" || session.index_of("/mate") > 0) {
+                    desktop_manager = Desktop.Mate;
+                }
+            }
+            else if ((FileUtils.test("/usr/local/bin/pcmanfm", FileTest.EXISTS) 
+                || FileUtils.test("/usr/bin/pcmanfm", FileTest.EXISTS)
+                && FileUtils.test(@"$config/pcmanfm/default/desktop-items-0.conf", FileTest.EXISTS)
+                )) {
+                desktop_manager = Desktop.PCManFM;
+            }
+            else if ((FileUtils.test("/usr/local/bin/feh", FileTest.EXISTS)
+                || FileUtils.test("/usr/bin/feh", FileTest.EXISTS)
+                && FileUtils.test(@"$home/.fehbg", FileTest.EXISTS)
+                )) {
+                    desktop_manager = Desktop.Feh;
+            }
+        }
+
+
+        
         var screen = get_screen();
         screen.monitors_changed.connect (monitors_changed_cb);
         monitors_changed_cb (screen);
@@ -97,6 +131,7 @@
         app.add_window(this);
     }
     
+
     public void hideBackButton() {
         button.visible = false;
         button.no_show_all = true;

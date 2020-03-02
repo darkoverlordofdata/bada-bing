@@ -14,16 +14,31 @@ install_data(
     install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
 )
 
+#
+# this is so the desktop file points to the correct icon location,
+# it will be either '/usr/local/share' or '/usr/share'
+#
+desktop_data = configuration_data()
+desktop_data.set('prefix', join_paths(get_option('prefix'), 'share'))
+configure_file(input : 'com.github.darkoverlordofdata.badabing.desktop.in',
+              output : 'com.github.darkoverlordofdata.badabing.desktop',
+              configuration : desktop_data,
+              type: 'desktop',
+              install: true,
+              install_dir: join_paths(get_option('datadir'), 'applications')
+ )
+               
+
 i18n = import('i18n')
 
-i18n.merge_file(
-  input: meson.project_name() + '.desktop.in',
-  output: meson.project_name() + '.desktop',
-  po_dir: join_paths(meson.source_root(), 'po'),
-  type: 'desktop',
-  install: true,
-  install_dir: join_paths(get_option('datadir'), 'applications')
-)
+# i18n.merge_file(
+#   input: meson.project_name() + '.desktop.in',
+#   output: meson.project_name() + '.desktop',
+#   po_dir: join_paths(meson.source_root(), 'po'),
+#   type: 'desktop',
+#   install: true,
+#   install_dir: join_paths(get_option('datadir'), 'applications')
+# )
 
 i18n.merge_file(
   input: meson.project_name() + '.appdata.xml.in',
