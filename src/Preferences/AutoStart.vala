@@ -31,39 +31,19 @@ public class BadaBing.AutoStart : Object, IPreference
             file.make_directory();
 
         //  var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
-        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$(AUTOSTART_URI).desktop";
+        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$APPLICATION_ID.desktop";
         var autostart = File.new_for_path(path);
         var fs = autostart.create(FileCreateFlags.NONE);
         var ds = new DataOutputStream(fs);
-        //  var local_icon = "/usr/local/share/icons/com.github.darkoverlordofdata.badabing.svg";
-        //  var prefix = (FileUtils.test(local_icon, FileTest.EXISTS)) 
-        //                  ?  "/usr/local/share"
-        //                  :  "/usr/share";
-
         var prefix = (FileUtils.test("/usr/local/share/", FileTest.EXISTS)) 
                     ?  "/usr/local/share"
                     :  "/usr/share";
 
-
-
-        ds.put_string("""[Desktop Entry]
-Type=Application
-Version=1.0
-Name=Bada Bing
-Comment=Hey Linux, I got yer wallpaper
-Exec=com.github.darkoverlordofdata.badabing --update --width=%d --height=%d %s
-Icon=%s/icons/com.github.darkoverlordofdata.badabing.svg
-Terminal=false
-Categories=Utility;
-StartupNotify=false
-X-GNOME-Autostart-enabled=true
-""".printf(WallpaperApplication.screen_width, 
-            WallpaperApplication.screen_height, 
-            (WallpaperApplication.notify ? "--notify" : ""), 
-            prefix));
-                                    
-    
-        //  FileUtils.chmod(path, 0775);
+        ds.put_string(desktop_content(prefix, APPLICATION_ID,
+                                        WallpaperApplication.screen_width, 
+                                        WallpaperApplication.screen_height, 
+                                        (WallpaperApplication.notify ? "--notify" : "")));            
+                                                
     }
     
     /**
@@ -72,12 +52,31 @@ X-GNOME-Autostart-enabled=true
     * removes the badabing.desktop file from ~/.config/autostart
     */
     public void disable() {
-        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$(AUTOSTART_URI).desktop";
+        var path = @"$(GLib.Environment.get_home_dir())/.config/autostart/$APPLICATION_ID.desktop";
         var autostart = File.new_for_path(path);
         if (autostart.query_exists()) {
             autostart.delete();
         }    
     }
 
+    /**
+    * desktop_content -
+    * 
+    * create the content for name.desktop file
+    */
+    public string desktop_content(string prefix, string name, int width, int height, string notify) {
+        return """[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Bada Bing
+Comment=Hey Linux, I got yer wallpaper
+Exec=%s --update --width=%d --height=%d %s
+Icon=%s/icons/%s.svg
+Terminal=false
+Categories=Utility;
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
+""".printf(name, width, height, notify, prefix, name);
+    }
 
 }

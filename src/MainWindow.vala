@@ -23,6 +23,7 @@
     private Gtk.Button button;
     public int width;
     public int height;
+    //  public char frodo[BUFLEN];
 
      private void monitors_changed_cb (Gdk.Screen screen)
      {

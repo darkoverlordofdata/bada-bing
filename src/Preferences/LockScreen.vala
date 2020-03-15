@@ -31,7 +31,29 @@ public class BadaBing.LockScreen : Object, IPreference
 
 		var catlock_sh = File.new_for_path(@"$(GLib.Environment.get_home_dir())/$CATLOCK_PATH");
 		var stream = new DataOutputStream(catlock_sh.create(FileCreateFlags.NONE));
-		stream.put_string("""#!/usr/bin/env bash
+		stream.put_string(copy_assets());
+	
+	}
+
+	/**
+	* Disable catlock -
+	* 
+	* remove the catlock copy job
+	*/
+	public void disable() {
+		var catlock_sh = File.new_for_path(@"$(GLib.Environment.get_home_dir())/$CATLOCK_PATH");
+		if (catlock_sh.query_exists()) {
+			catlock_sh.delete();
+		}    
+	}
+
+	/**
+	* copy_assets
+	* 
+	* copy the assets for lock screen
+	*/
+	public string copy_assets() {
+		return """#!/usr/bin/env bash
 #
 #  $1 - user data dir, usually ~/.local/share
 #  $2 - chached background jpg 
@@ -58,22 +80,9 @@ convert $2 -resize $3x$4 $1/catlock/themes/badabing/bg.jpg
 #     convert $2 -resize $3x$4 -fill black -colorize 40% $1/catlock/themes/badabing/box.jpg
 
 # fi       
-""");
-	
-	}
+""";
 
-	/**
-	* Disable catlock -
-	* 
-	* remove the catlock copy job
-	*/
-	public void disable() {
-		var catlock_sh = File.new_for_path(@"$(GLib.Environment.get_home_dir())/$CATLOCK_PATH");
-		if (catlock_sh.query_exists()) {
-			catlock_sh.delete();
-		}    
 	}
-
 
 
 }

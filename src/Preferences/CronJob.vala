@@ -31,45 +31,25 @@ public class BadaBing.CronJob : Object, IPreference
         var SHELL = Environment.get_variable("SHELL");
         var PATH = Environment.get_variable("PATH");
 
-        var badabing = File.new_for_path(@"$(GLib.Environment.get_home_dir())/.config/badabing");
+        var badabing = File.new_for_path(@"$HOME/$CRONJOB_DIR");
         if (!badabing.query_exists())
             badabing.make_directory_with_parents();
             
-        var cronjob_sh = File.new_for_path(@"$(GLib.Environment.get_home_dir())/$CRONJOB_PATH");
+        var cronjob_sh = File.new_for_path(@"$HOME/$CRONJOB_PATH");
         var stream = new DataOutputStream(cronjob_sh.create(FileCreateFlags.NONE));
-        stream.put_string("""#!/usr/bin/env bash
-#
-#   run badabing from crontab
-#
-SHELL=%s
-HOME=%s
-PATH=%s
-export DISPLAY=%s
-
-geometry=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
-width=$(echo $geometry | cut -f1 -dx)
-height=$(echo $geometry | cut -f2 -dx)
-
-/usr/bin/env com.github.darkoverlordofdata.badabing --update --width=$width --height=$height %s
-""".printf(SHELL, HOME, PATH, DISPLAY, (WallpaperApplication.notify ? "--notify" : "") ));
+        var notify = (WallpaperApplication.notify ? "--notify" : "");
+        stream.put_string(run_cron(SHELL, HOME, PATH, DISPLAY, APPLICATION_ID, notify));
 
         try {
-
+            /* 
+             * run a temp script to add the job to the crontab
+             */
             FileIOStream iostream;
-            File crontab_sh = File.new_tmp ("tpl-XXXXXX.sh", out iostream);
-            print ("tmp crontab_sh name: %s\n", crontab_sh.get_path ());
+            File temp_sh = File.new_tmp ("tpl-XXXXXX.sh", out iostream);
+            print ("tmp temp_sh name: %s\n", temp_sh.get_path ());
             var stream2 = new DataOutputStream(iostream.output_stream);
-
-            stream2.put_string("""#!/usr/bin/env bash
-#
-#   edit the crontab to add the cronjob   
-#
-croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
-cronjob="1 0  * * * $croncmd"
-( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
-""".printf(CRONJOB_PATH));
-
-            Process.spawn_command_line_async (@"bash $(crontab_sh.get_path ())");
+            stream2.put_string(add_cron(CRONJOB_PATH));
+            Process.spawn_command_line_async (@"bash $(temp_sh.get_path ())");
         } catch (GLib.Error e) {
             print (@"Error: $(e.message)\n");
             critical (e.message);
@@ -91,11 +71,29 @@ cronjob="1 0  * * * $croncmd"
         }    
 
         try {
+            /* 
+             * run a temp script to remove the job from the crontab
+             */
             FileIOStream iostream;
-            File crontab_sh = File.new_tmp ("tpl-XXXXXX.sh", out iostream);
-            print ("tmp crontab_sh name: %s\n", crontab_sh.get_path ());
-            var stream2 = new DataOutputStream(iostream.output_stream);
-            stream2.put_string("""#!/usr/bin/env bash
+            File temp_sh = File.new_tmp ("tpl-XXXXXX.sh", out iostream);
+            print ("tmp temp_sh name: %s\n", temp_sh.get_path ());
+            var stream = new DataOutputStream(iostream.output_stream);
+            stream.put_string(remove_cron(CRONJOB_PATH));
+            Process.spawn_command_line_async (@"bash $(temp_sh.get_path ())");
+        } catch (GLib.Error e) {
+            print (@"Error: $(e.message)\n");
+            critical (e.message);
+        }
+        
+    }
+
+    /**
+    * remove_cron
+    * 
+    * script to remove job from crontab
+    */
+    public string remove_cron(string path) {
+        return """#!/usr/bin/env bash
 #
 #   edit the crontab to remove the cronjob   
 #
@@ -103,14 +101,47 @@ croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
 cronjob="1 0  * * * $croncmd"
 
 crontab -l | grep -v -F "$croncmd" | crontab -
-""".printf(CRONJOB_PATH));
-
-            Process.spawn_command_line_async (@"bash $(crontab_sh.get_path ())");
-        } catch (GLib.Error e) {
-            print (@"Error: $(e.message)\n");
-            critical (e.message);
-        }
-        
+""".printf(path);
     }
+
+
+    /**
+    * add_cron
+    * 
+    * script to add job to crontab
+    */
+    public string add_cron(string path) {
+        return """#!/usr/bin/env bash
+#
+#   edit the crontab to add the cronjob   
+#
+croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
+cronjob="1 0  * * * $croncmd"
+( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
+""".printf(path);
+    }
+
+    /**
+    * add_cron
+    * 
+    * script to add job to crontab
+    */
+    public string run_cron(string shell, string home, string path, string display, string name, string notify) {
+        return """#!/usr/bin/env bash
+#
+#   run badabing from crontab
+#
+SHELL=%s
+HOME=%s
+PATH=%s
+export DISPLAY=%s
+
+geometry=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+width=$(echo $geometry | cut -f1 -dx)
+height=$(echo $geometry | cut -f2 -dx)
+
+/usr/bin/env %s --update --width=$width --height=$height %s
+""".printf(shell, home, path, display, name, notify);
+    }    
 }
 

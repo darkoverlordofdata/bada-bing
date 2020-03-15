@@ -89,10 +89,11 @@ Keywords=Wallpaper;
             
     public const string AUTOSTART_PATH = "~/.config/autostart/com.github.darkoverlordofdata.badabing.desktop";
 
-    public const string AUTOSTART_URI = "com.github.darkoverlordofdata.badabing";
+    public const string CRONJOB_DIR     = ".config/badabing";
+    public const string CRONJOB_PATH    = ".config/badabing/cronjob.sh";
+    public const string CATLOCK_PATH    = ".local/share/catlock/themes/badabing/copy.sh";
 
-    public const string CRONJOB_PATH   = ".config/badabing/cronjob.sh";
-    public const string CATLOCK_PATH   = ".local/share/catlock/themes/badabing/copy.sh";
+    public const int BUFLEN = 256;
         
 
 }

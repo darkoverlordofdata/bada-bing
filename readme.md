@@ -39,17 +39,24 @@
     Integrates with catlock (https://github.com/darkoverlordofdata/kitty-cat-lock.git), my screen lock application.
     use ./enable_catlock.sh to copy theme to catlock.
 
-    Preferences:
+    General Preferences:
 
-    On linux 
-        enabling autostart will create a desktop file in the .config/autostart folder. 
-        enabling refesh will run every 1-24 hrs based on selection.
-    
-    On bsd
-        use ./install.sh to create bin/badabing.sh, and add as daily job to crontab.
-        manually add bin/badabing.sh to autostart tool.
+        autostart:
+            creates a desktop file in ./config/autostart
+
+        cron:
+            run daily at 12.01 am
+
+        notify:
+            notify when the screen changes
+
+        screen lock:
+            openbox with catlock
 
 
+### todo
+
+    screen lock drop down list: catlock; metalock
 
 ### icon
 
