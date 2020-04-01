@@ -28,7 +28,7 @@
 
 ### build
 
-    meson build --prefix=/usr
+    meson build --prefix=/usr/local
     ninja -C build
     sudo ninja -C build install
 
