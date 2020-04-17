@@ -6,12 +6,12 @@
     "configurations": [
         {
             "name": "Debug",
-            "type": "gdb",
+            "type": "lldb",
             "request": "launch",
-            "target": "${workspaceFolder}/build/meson-out/com.github.darkoverlordofdata.badabing",
-            "arguments": "--display",
+            "program": "${workspaceFolder}/build/com.github.darkoverlordofdata.badabing",
+            "args": ["--display"],
             "cwd": "${workspaceRoot}",
-            "valuesFormatting": "parseText"
+            // "valuesFormatting": "parseText"
         }
     ]
 }

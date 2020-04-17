@@ -26,6 +26,7 @@ namespace BadaBing {
     public enum Desktop {
         Gnome,
         Ubuntu,
+        Pop,
         Mate,
         PCManFM,
         Feh,

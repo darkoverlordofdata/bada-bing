@@ -58,6 +58,9 @@
                 else if (session == "ubuntu") {
                     desktop_manager = Desktop.Ubuntu;
                 }
+                else if (session == "pop") {
+                    desktop_manager = Desktop.Pop;
+                }
                 else if (session == "mate" || session.index_of("/mate") > 0) {
                     desktop_manager = Desktop.Mate;
                 }

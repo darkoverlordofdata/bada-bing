@@ -149,6 +149,9 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             case "ubuntu":
                 desktop_manager = Desktop.Ubuntu;
                 break;
+            case "pop":
+                desktop_manager = Desktop.Pop;
+                break;
             case "mate":
                 desktop_manager = Desktop.Mate;
                 break;
@@ -246,7 +249,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
     public static void initializeDesktop(Desktop desktop_manager) {
         var home = Environment.get_home_dir();
         switch (desktop_manager) {
-            case Desktop.Gnome, Desktop.Ubuntu:
+            case Desktop.Gnome, Desktop.Ubuntu, Desktop.Pop:
                 try {
                     print(@"gsettings set org.gnome.desktop.background picture-uri file://$wallpaper_path");
                     Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$wallpaper_path");
@@ -349,9 +352,10 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             var home = Environment.get_home_dir();
             var config = Environment.get_user_config_dir();
             var desktop = Environment.get_variable("DESKTOP_SESSION");
+            print(@"DESKTOP_SESSION = $desktop\n");
             var dest = @"$wallpaper_path";
-            if (desktop == "gnome" || desktop == "ubuntu") {
-                print("gnome\n");
+            if (desktop == "gnome" || desktop == "ubuntu" || desktop == "pop") {
+                print("gnome \n");
                 try {
                     // copy to stadard location
                     Process.spawn_command_line_async(@"cp $cache_jpg $wallpaper_path");

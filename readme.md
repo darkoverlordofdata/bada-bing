@@ -82,6 +82,10 @@
     sudo apt install valac -y
     sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev gettext -y
 
+#### for pop! os - 
+    sudo apt install appmenu-gtk3-module
+
+
     this app pops up a notification when a new wallpaper is installed. 
     You missed it and want to review it later? 
     Install the indicator-notifications GTK3 applet:
