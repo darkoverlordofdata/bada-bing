@@ -77,3 +77,4 @@
 
 
 
+nohup python /usr/local/share/bin/com.github.darkoverlordofdata.badabing.py &

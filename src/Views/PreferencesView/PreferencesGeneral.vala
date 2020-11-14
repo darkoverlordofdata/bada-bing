@@ -20,6 +20,7 @@
 
     CronJob cronjob;
     AutoStart autostart;
+    TrayIcon tray_icon;
     LockScreen lockscreen;
 
     public PreferencesGeneral() 
@@ -37,6 +38,7 @@
     {
         cronjob = new CronJob ();
         autostart = new AutoStart ();
+        tray_icon = new TrayIcon ();
         lockscreen = new LockScreen ();
 
         var setting = new Settings(APPLICATION_ID);
@@ -60,6 +62,28 @@
             else {
                 autostart.disable();
                 setting.set_boolean("start-on-boot", false);
+            }
+        });
+
+        //Enable Tray Icon
+        var tray_icon_label = new Gtk.Label(_("Enable TrayIcon:"));
+        tray_icon_label.halign = Gtk.Align.END;
+        var tray_icon_sw = new Gtk.Switch();
+        tray_icon_sw.halign = Gtk.Align.START;
+        if (setting.get_boolean("tray-icon")) {
+            tray_icon_sw.active = true;
+        } 
+        else {
+            tray_icon_sw.active = false;
+        }
+        tray_icon_sw.notify["active"].connect(() => {
+            if (tray_icon_sw.get_active()) {
+                tray_icon.enable();
+                setting.set_boolean("tray-icon", true);
+            } 
+            else {
+                tray_icon.disable();
+                setting.set_boolean("tray-icon", false);
             }
         });
 
@@ -142,14 +166,19 @@
         content_area.attach(boot_label, 2, 7, 1, 1);
         content_area.attach(boot_sw, 3, 7, 1, 1);
 
-        content_area.attach(cron_label, 2, 8, 1, 1);
-        content_area.attach(cron_sw, 3, 8, 1, 1);
+        
+        content_area.attach(tray_icon_label, 2, 8, 1, 1);
+        content_area.attach(tray_icon_sw, 3, 8, 1, 1);
 
-        content_area.attach(ind_label, 2, 11, 1, 1);
-        content_area.attach(ind_sw, 3, 11, 1, 1);
 
-        content_area.attach(lock_label, 2, 13, 1, 1);
-        content_area.attach(lock_sw, 3, 13, 1, 1);
+        content_area.attach(cron_label, 2, 9, 1, 1);
+        content_area.attach(cron_sw, 3, 9, 1, 1);
+
+        content_area.attach(ind_label, 2, 12, 1, 1);
+        content_area.attach(ind_sw, 3, 12, 1, 1);
+
+        content_area.attach(lock_label, 2, 14, 1, 1);
+        content_area.attach(lock_sw, 3, 14, 1, 1);
     }
 
 }

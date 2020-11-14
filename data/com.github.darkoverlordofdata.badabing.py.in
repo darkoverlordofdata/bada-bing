@@ -15,13 +15,11 @@ from gi.repository import Gtk as gtk
 from gi.repository import AppIndicator3 as appindicator
 from gi.repository import Notify as notify
 
-APPINDICATOR_ID = 'com.github.darkoverlordofdata.badabing'
-
-# CURRPATH = os.path.dirname(os.path.realpath(__file__))
+APPINDICATOR_ID = "@package@"
 
 class Indicator():
     def __init__(self):
-        self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, "@prefix@/icons/com.github.darkoverlordofdata.badabing.svg", appindicator.IndicatorCategory.SYSTEM_SERVICES)
+        self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, "@prefix@/icons/@package@.svg", appindicator.IndicatorCategory.SYSTEM_SERVICES)
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(self.build_menu())
         notify.init(APPINDICATOR_ID)
@@ -45,8 +43,8 @@ class Indicator():
         item_quit.connect('activate', self.quit)
 
         menu.append(item_gallery)
-        menu.append(item_download)
         menu.append(item_preferences)
+        menu.append(item_download)
         menu.append(item_about)
         menu.append(item_quit)
         menu.show_all()
@@ -62,7 +60,7 @@ class Indicator():
         aboutdialog.set_version("0.0.4")
         aboutdialog.set_copyright("Copyright darkoverlordofdata 2019")
         aboutdialog.set_authors(["bruce davidson <darkoverlordofdata@gmail.com>"])
-        aboutdialog.set_logo_icon_name("com.github.darkoverlordofdata.badabing")
+        aboutdialog.set_logo_icon_name("@package@")
         aboutdialog.set_website("https://github.com/darkoverlordofdata/badabing")
         aboutdialog.set_website_label("website")
         aboutdialog.set_title("About BadaBing")
@@ -70,13 +68,13 @@ class Indicator():
 
 
     def gallery_badabing(self, source):
-        os.system("com.github.darkoverlordofdata.badabing --gallery")
+        os.system("@package@ --gallery")
 
     def download_badabing(self, source):
-        os.system("com.github.darkoverlordofdata.badabing --download")
+        os.system("@package@ --download")
 
     def preferences_badabing(self, source):
-        os.system("com.github.darkoverlordofdata.badabing --preferences")
+        os.system("@package@ --preferences")
 
     def quit(self, source):
         gtk.main_quit()

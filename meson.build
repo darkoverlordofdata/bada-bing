@@ -47,6 +47,7 @@ executable(
     'src/Views/PreferencesView/PreferencesGeneral.vala',
     'src/Preferences/IPreference.vala',
     'src/Preferences/AutoStart.vala',
+    'src/Preferences/TrayIcon.vala',
     'src/Preferences/CronJob.vala',
     'src/Preferences/LockScreen.vala',
 

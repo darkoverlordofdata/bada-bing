@@ -20,6 +20,8 @@ install_data(
 #
 desktop_data = configuration_data()
 desktop_data.set('prefix', join_paths(get_option('prefix'), 'share'))
+desktop_data.set('package', meson.project_name())
+
 configure_file(input : 'com.github.darkoverlordofdata.badabing.desktop.in',
               output : 'com.github.darkoverlordofdata.badabing.desktop',
               configuration : desktop_data,

@@ -25,6 +25,12 @@
       <description>Start application when user log into the desktop.</description>
     </key>
 
+    <key name="tray-icon" type="b">
+      <default>false</default>
+      <summary>Enable tray icon</summary>
+      <description>Add a tray icon for the app.</description>
+    </key>
+
     <key name="use-cron-job" type="b">
       <default>false</default>
       <summary>Use crontab jobs</summary>
