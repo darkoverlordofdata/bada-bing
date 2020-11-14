@@ -1,13 +1,13 @@
 #!/usr/local/bin/python3.7
 
-# run this on bsd to create keys in dconf
+# run this on bsd to create keys in dconf for NomadBSD
 
 import os
 from gi.repository  import Gio
 
 schema_source = Gio.SettingsSchemaSource.new_from_directory(
 	# get default schema
-    os.path.expanduser("~/data"),
+    os.path.expanduser("~/GitHub/badabing/data"),
     Gio.SettingsSchemaSource.get_default(),
     False,
 )

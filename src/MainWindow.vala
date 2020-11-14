@@ -134,6 +134,47 @@
         show_all();
 
         app.add_window(this);
+
+        /**
+         * --gallery
+         * 
+         * Display Gallery
+         */ 
+        if (BadaBing.WallpaperApplication.menu_gallery) {
+            try {
+                panel.set_visible_child_name("galery");
+            } catch(Error e) {
+                warning(e.message);
+            }
+        }
+
+        /**
+         * --preferences
+         * 
+         * Display Preferences
+         */ 
+        if (BadaBing.WallpaperApplication.menu_preferences) {
+            try {
+                panel.set_visible_child_name("preferences");
+            } catch(Error e) {
+                warning(e.message);
+            }
+        }
+
+        /**
+         * --download
+         * 
+         * Perform download
+         */ 
+        if (BadaBing.WallpaperApplication.menu_download) {
+            try {
+                WallpaperApplication.updateWallpaper();
+            } catch(Error e) {
+                warning(e.message);
+            }
+        }
+
+
     }
     
 

@@ -43,3 +43,49 @@ width=$(echo $geometry | cut -f1 -dx)
 height=$(echo $geometry | cut -f2 -dx)
 
 /usr/local/bin/com.github.darkoverlordofdata.badabing --update --width=$width --height=$height
+
+=======================================================================================
+=======================================================================================
+=======================================================================================
+
+mate
+SIZE = 0, 0
+**
+ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Bail out! ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Abort trap (core dumped)
+[darko@barsoomian /usr/home/darko]$ com.github.darkoverlordofdata.badabing
+gsettings set org.mate.background picture-filename /home/darko/Pictures/badabing.jpgDESKTOP_SESSION = mate
+mate
+SIZE = 0, 0
+**
+ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Bail out! ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Abort trap (core dumped)
+[darko@barsoomian /usr/home/darko]$ com.github.darkoverlordofdata.badabing
+gsettings set org.mate.background picture-filename /home/darko/Pictures/badabing.jpgDESKTOP_SESSION = mate
+mate
+SIZE = 0, 0
+**
+ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Bail out! ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Abort trap (core dumped)
+[darko@barsoomian /usr/home/darko]$ com.github.darkoverlordofdata.badabing
+gsettings set org.mate.background picture-filename /home/darko/Pictures/badabing.jpgDESKTOP_SESSION = mate
+mate
+SIZE = 0, 0
+**
+ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Bail out! ERROR:../src/WallpaperApplication.vala:420:bada_bing_wallpaper_application_updateWallpaper: assertion failed: (screen_width != 0)
+Abort trap (core dumped)
+[darko@barsoomian /usr/home/darko]$ com.github.darkoverlordofdata.badabing
+gsettings set org.mate.background picture-filename /home/darko/Pictures/badabing.jpgHey, you clicked /home/darko/.local/share/badabing/ConneryPond_EN-US4665862450.jpg 
+DESKTOP_SESSION = mate
+mate
+SIZE = 1366, 768
+Notify
+convert: unable to open image `/home/darko/.local/share/catlock/themes/badabing/avatar.png': No such file or directory @ error/blob.c/OpenBlob/2881.
+convert: image sequence is required `-composite' @ error/mogrify.c/MogrifyImageList/7985.
+convert: no images defined `/home/darko/.local/share/catlock/themes/badabing/box.jpg' @ error/convert.c/ConvertImageCommand/3226.
+[darko@barsoomian /usr/home/darko]$ 
+

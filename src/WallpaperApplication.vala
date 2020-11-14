@@ -76,6 +76,9 @@ public class BadaBing.WallpaperApplication : Gtk.Application
      *  --width             Screen width
      *  --desktop           <pcmanfm, feh, gnome, mate>
      *  --notify            Notify user
+     *  --gallery           Display Gallery
+     *  --preferences       Display Preferences
+     *  --download          Perform Download
      * 
      */
 	const OptionEntry[] options = {
@@ -90,6 +93,9 @@ public class BadaBing.WallpaperApplication : Gtk.Application
         { "auto", 0, 0, OptionArg.NONE, ref auto, "Auto start", null },
         { "desktop", 0, 0, OptionArg.STRING, ref desktop, "Desktop to use", "STRING" },
 		{ "notify", 0, 0, OptionArg.NONE, ref notify, "Notify when wallpaper is updated", null },
+		{ "gallery", 0, 0, OptionArg.NONE, ref menu_gallery, "Display Gallery", null },
+		{ "preferences", 0, 0, OptionArg.NONE, ref menu_preferences, "Display Preferences", null },
+		{ "download", 0, 0, OptionArg.NONE, ref menu_download, "Perform Download", null },
 		{ null }
     };
 
@@ -106,6 +112,10 @@ public class BadaBing.WallpaperApplication : Gtk.Application
     public static bool auto = false;
     public static string? locale = null;
     public static string? desktop = null;
+
+    public static bool menu_gallery = false;
+    public static bool menu_preferences = false;
+    public static bool menu_download = false;
     
     private static GenericArray<string> files;
 
@@ -170,6 +180,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 critical(@"Unknown desktop: $desktop\n");
                 Process.exit(1);
         }
+
+
 
         /**
          * --auto

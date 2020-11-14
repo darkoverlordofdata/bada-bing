@@ -28,6 +28,13 @@ configure_file(input : 'com.github.darkoverlordofdata.badabing.desktop.in',
               install_dir: join_paths(get_option('datadir'), 'applications')
  )
                
+configure_file(input : 'com.github.darkoverlordofdata.badabing.py.in',
+              output : 'com.github.darkoverlordofdata.badabing.py',
+              configuration : desktop_data,
+              type: 'py',
+              install: true,
+              install_dir: join_paths(get_option('datadir'), 'bin')
+ )
 
 i18n = import('i18n')
 

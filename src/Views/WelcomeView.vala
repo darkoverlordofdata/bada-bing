@@ -66,12 +66,12 @@
                     break;
 
                 case 3:
-                try {
-                    WallpaperApplication.updateWallpaper();
-                } catch(Error e) {
-                    warning(e.message);
-                }
-                break;
+                    try {
+                        WallpaperApplication.updateWallpaper();
+                    } catch(Error e) {
+                        warning(e.message);
+                    }
+                    break;
 
                 default:
                     parent.hideBackButton();
