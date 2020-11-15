@@ -43,10 +43,14 @@
 
 ### post build
 
+    Set preferences interactively to enable automation.
     General Preferences:
 
         Launch on start:
             creates a desktop file in ./config/autostart
+
+        Enable tray icon
+            puts an icon with menu in the system tray 
 
         Run daily cron job:
             creates daily job in crontab at 12.01 am
@@ -75,6 +79,3 @@
 
     [terms](https://community.icons8.com/t/can-i-use-icons8-for-free/30)
 
-
-
-nohup python /usr/local/share/bin/com.github.darkoverlordofdata.badabing.py &

@@ -99,7 +99,7 @@ public class BadaBing.CronJob : Object, IPreference
 #   edit the crontab to remove the cronjob   
 #
 croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
-cronjob="1 0  * * * $croncmd >> $HOME/.local/share/badabing/logs/badabing.log 2>&1"
+cronjob="1 0  * * * $croncmd >> $HOME/.local/share/badabing/badabing.log 2>&1"
 
 crontab -l | grep -v -F "$croncmd" | crontab -
 """.printf(path);
@@ -117,7 +117,7 @@ crontab -l | grep -v -F "$croncmd" | crontab -
 #   edit the crontab to add the cronjob   
 #
 croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
-cronjob="1 0  * * * $croncmd >> $HOME/.local/share/badabing/logs/badabing.log 2>&1"
+cronjob="1 0  * * * $croncmd >> $HOME/.local/share/badabing/badabing.log 2>&1"
 ( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
 """.printf(path);
     }
