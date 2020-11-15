@@ -30,6 +30,7 @@ public class BadaBing.CronJob : Object, IPreference
         var DISPLAY = Environment.get_variable("DISPLAY");
         var SHELL = Environment.get_variable("SHELL");
         var PATH = Environment.get_variable("PATH");
+        var DESKTOP_SESSION = Environment.get_variable("DESKTOP_SESSION");
 
         var badabing = File.new_for_path(@"$HOME/$CRONJOB_DIR");
         if (!badabing.query_exists())
@@ -38,7 +39,7 @@ public class BadaBing.CronJob : Object, IPreference
         var cronjob_sh = File.new_for_path(@"$HOME/$CRONJOB_PATH");
         var stream = new DataOutputStream(cronjob_sh.create(FileCreateFlags.NONE));
         var notify = (WallpaperApplication.notify ? "--notify" : "");
-        stream.put_string(run_cron(SHELL, HOME, PATH, DISPLAY, APPLICATION_ID, notify));
+        stream.put_string(run_cron(SHELL, HOME, PATH, DISPLAY, APPLICATION_ID, notify, DESKTOP_SESSION));
 
         try {
             /* 
@@ -98,7 +99,7 @@ public class BadaBing.CronJob : Object, IPreference
 #   edit the crontab to remove the cronjob   
 #
 croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
-cronjob="1 0  * * * $croncmd"
+cronjob="1 0  * * * $croncmd >> $HOME/.local/share/badabing/logs/badabing.log 2>&1"
 
 crontab -l | grep -v -F "$croncmd" | crontab -
 """.printf(path);
@@ -116,7 +117,7 @@ crontab -l | grep -v -F "$croncmd" | crontab -
 #   edit the crontab to add the cronjob   
 #
 croncmd="DISPLAY=$DISPLAY bash $HOME/%s"
-cronjob="1 0  * * * $croncmd"
+cronjob="1 0  * * * $croncmd >> $HOME/.local/share/badabing/logs/badabing.log 2>&1"
 ( crontab -l | grep -v -F "$croncmd" ; echo "$cronjob" ) | crontab -
 """.printf(path);
     }
@@ -126,7 +127,7 @@ cronjob="1 0  * * * $croncmd"
     * 
     * script to add job to crontab
     */
-    public string run_cron(string shell, string home, string path, string display, string name, string notify) {
+    public string run_cron(string shell, string home, string path, string display, string name, string notify, string desktop) {
         return """#!/usr/bin/env bash
 #
 #   run badabing from crontab
@@ -135,13 +136,17 @@ SHELL=%s
 HOME=%s
 PATH=%s
 export DISPLAY=%s
+export DESKTOP_SESSION=%s
 
 geometry=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
 width=$(echo $geometry | cut -f1 -dx)
 height=$(echo $geometry | cut -f2 -dx)
 
 /usr/bin/env %s --update --width=$width --height=$height %s
-""".printf(shell, home, path, display, name, notify);
+""".printf(shell, home, path, display, desktop, name, notify);
     }    
 }
 
+
+
+//sudo: /home/darko/.config/badabing/cronjob.sh: command not found
