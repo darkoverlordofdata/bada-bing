@@ -19,7 +19,7 @@ APPINDICATOR_ID = "@package@"
 
 class Indicator():
     def __init__(self):
-        self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, "@prefix@/icons/@package@.svg", appindicator.IndicatorCategory.SYSTEM_SERVICES)
+        self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, "@prefix@/icons/@package@.mono.png", appindicator.IndicatorCategory.SYSTEM_SERVICES)
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
         self.indicator.set_menu(self.build_menu())
         notify.init(APPINDICATOR_ID)
@@ -57,14 +57,15 @@ class Indicator():
         # authors = ["bruce davidson <darkoverlordofdata@gmail.com>"]
         aboutdialog.set_comments("Hey Linux, I got yer wallpaper here.")
         aboutdialog.set_program_name("Bada Bing")
-        aboutdialog.set_version("0.0.4")
+        aboutdialog.set_version("0.0.5")
         aboutdialog.set_copyright("Copyright darkoverlordofdata 2019")
         aboutdialog.set_authors(["bruce davidson <darkoverlordofdata@gmail.com>"])
         aboutdialog.set_logo_icon_name("@package@")
         aboutdialog.set_website("https://github.com/darkoverlordofdata/badabing")
         aboutdialog.set_website_label("website")
         aboutdialog.set_title("About BadaBing")
-        aboutdialog.show()
+        aboutdialog.run()
+        aboutdialog.hide()
 
 
     def gallery_badabing(self, source):

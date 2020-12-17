@@ -379,8 +379,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             else if (desktop == "mate" || desktop.index_of("/mate") > 0) {
                 print("mate\n");
                 try {
-                    //  Process.spawn_command_line_async(@"cp $cache_jpg $wallpaper_path");
-                    Process.spawn_command_line_sync(@"cp $cache_jpg $wallpaper_path");
+                    //  Process.spawn_command_line_sync(@"cp $cache_jpg $wallpaper_path");
+                    Process.spawn_command_line_sync(@"convert $cache_jpg -resize $(screen_width)x$(screen_height)\\! $wallpaper_path");
                     Process.spawn_command_line_async (@"gsettings set org.mate.background picture-filename $wallpaper_path");
                 } catch (GLib.Error e) {
                     print(@"Error: $(e.message)\n");

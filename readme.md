@@ -34,6 +34,8 @@
         sudo apt install valac -y
         sudo apt install libgtk-3-dev libgranite-dev libjson-glib-dev libappindicator3-dev libsoup2.4-dev libnotify-dev gettext -y
 
+        sudo apt install python-is-python3
+
 
 ### build
 
@@ -43,7 +45,7 @@
 
 ### post build
 
-    Set preferences interactively to enable automation.
+    Enable automation by using gui to set preferences.
     General Preferences:
 
         Launch on start:
@@ -72,6 +74,7 @@
     check ~/.face or ~/Pictues/avatar.png for screen lock assets
     take Quit out of StatusIcon script
     screen lock drop down list: catlock; metalock
+    b/w icon for 'Indicator Applet Complete'
 
 ### icon
 
@@ -79,3 +82,6 @@
 
     [terms](https://community.icons8.com/t/can-i-use-icons8-for-free/30)
 
+
+https://ubuntu-mate.community/t/tip-on-re-ordering-the-indicators/5346
+https://ubuntu-mate.community/t/tip-on-re-ordering-the-indicators/5346

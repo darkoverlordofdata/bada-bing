@@ -62,7 +62,7 @@ public class BadaBing.LockScreen : Object, IPreference
 #
 #	Copy & resize the wallpaper to fit on the device
 #
-convert $2 -resize $3x$4 $1/catlock/themes/badabing/bg.jpg
+convert $2 -resize $3x$4\! $1/catlock/themes/badabing/bg.jpg
 #
 #	copy to modal background, using avatar (192x192) if available 
 #
@@ -71,7 +71,7 @@ convert $2 -resize $3x$4 $1/catlock/themes/badabing/bg.jpg
 	let center=($3/2)-96
 	let top=$4/6
 
-	convert $2 -resize $3x$4 -fill black -colorize 40% $1/catlock/themes/badabing/box1.jpg
+	convert $2 -resize $3x$4\! -fill black -colorize 40% $1/catlock/themes/badabing/box1.jpg
 	convert $1/catlock/themes/badabing/box1.jpg  $1/catlock/themes/badabing/avatar.png -geometry +$center+$top -composite $1/catlock/themes/badabing/box.jpg
 	rm -f $1/catlock/themes/badabing/box1.jpg
 
