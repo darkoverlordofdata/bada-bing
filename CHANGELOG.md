@@ -29,3 +29,9 @@
     * change tray icon from svg to png for better fit
     * fixes to screen resizing for catlock
 
+* 0.6 - 1/11/2021
+
+    * check for pantheon desktop session (elementaryos)
+    * write description info for selected wallpaper to ~/Pictures/.badabing
+    * .local/share/catlock/themes folder structure
+    

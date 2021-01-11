@@ -24,8 +24,8 @@ public class BadaBing.LockScreen : Object, IPreference
 	* create the catock folder and copy job
 	*/
 	public void enable() {
-		print (@"creating $(GLib.Environment.get_home_dir())/.local/share/catlock/themes/badabing");
-		var catlock = File.new_for_path (@"$(GLib.Environment.get_home_dir())/.local/share/catlock/themes/badabing");
+		print (@"creating $(GLib.Environment.get_home_dir())/.local/share/catlock/themes");
+		var catlock = File.new_for_path (@"$(GLib.Environment.get_home_dir())/.local/share/catlock/themes");
 		if (!catlock.query_exists())
 			catlock.make_directory_with_parents();
 
@@ -55,29 +55,31 @@ public class BadaBing.LockScreen : Object, IPreference
 	public string copy_assets() {
 		return """#!/usr/bin/env bash
 #
-#  $1 - user data dir, usually ~/.local/share
-#  $2 - chached background jpg 
-#  $3 - screen width
-#  $4 - screen height
+#  $1 - home, usually ~/
+#  $2 - user data dir, usually ~/.local/share
+#  $3 - chached background jpg 
+#  $4 - screen width
+#  $5 - screen height
 #
 #	Copy & resize the wallpaper to fit on the device
 #
-convert $2 -resize $3x$4\! $1/catlock/themes/badabing/bg.jpg
+convert $3 -resize $4x$5\! $2/catlock/themes/badabing.locked.jpg
 #
 #	copy to modal background, using avatar (192x192) if available 
 #
-# if [ -f $1/catlock/themes/badabing/avatar.png ]; then
+# if [ -f $1/.iface ]; then
 
-	let center=($3/2)-96
-	let top=$4/6
+	let center=($4/2)-96
+	let top=$5/6
 
-	convert $2 -resize $3x$4\! -fill black -colorize 40% $1/catlock/themes/badabing/box1.jpg
-	convert $1/catlock/themes/badabing/box1.jpg  $1/catlock/themes/badabing/avatar.png -geometry +$center+$top -composite $1/catlock/themes/badabing/box.jpg
-	rm -f $1/catlock/themes/badabing/box1.jpg
+	convert $3 -resize $4x$5\! -fill black -colorize 40% $2/catlock/themes/badabing.tmp.jpg
+	convert $2/catlock/themes/badabing.tmp.jpg  $2/catlock/themes/avatar.png -geometry +$center+$top -composite $2/catlock/themes/badabing.input.jpg
+#	convert $2/catlock/themes/badabing.tmp.jpg  $1/.iface -geometry +$center+$top -composite $2/catlock/themes/badabing.input.jpg
+	rm -f $2/catlock/themes/badabing.tmp.jpg
 
 # else
 
-#     convert $2 -resize $3x$4 -fill black -colorize 40% $1/catlock/themes/badabing/box.jpg
+#     convert $3 -resize $4x$5 -fill black -colorize 40% $2/catlock/themes/badabing.input.jpg
 
 # fi       
 """;

@@ -1,6 +1,6 @@
 #
-# python /usr/local/share/bin/com.github.darkoverlordofdata.badabing.py
-# nohup python /usr/local/share/bin/com.github.darkoverlordofdata.badabing.py &
+# python3 /usr/local/share/bin/com.github.darkoverlordofdata.badabing.py
+# nohup python3 /usr/local/share/bin/com.github.darkoverlordofdata.badabing.py &
 
 import gi
 import os

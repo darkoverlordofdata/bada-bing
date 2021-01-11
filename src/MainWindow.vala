@@ -52,11 +52,17 @@
             var session = Environment.get_variable("DESKTOP_SESSION");
             if (session != null) {
 
+                print(@"check session = $session\n");
+
                 if (session == "gnome") {
                     desktop_manager = Desktop.Gnome;
                 }
                 else if (session == "ubuntu") {
                     desktop_manager = Desktop.Ubuntu;
+                }
+                else if (session == "pantheon") {
+                    print("Desktop.Pantheon : MainWindow.vala line 62\n");
+                    desktop_manager = Desktop.Pantheon;
                 }
                 else if (session == "pop") {
                     desktop_manager = Desktop.Pop;

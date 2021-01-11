@@ -53,6 +53,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
 
     private MainWindow window;
     private static string wallpaper_path;
+    private static string description_path;
 
     
     /**
@@ -136,10 +137,14 @@ public class BadaBing.WallpaperApplication : Gtk.Application
 
 
         var home = Environment.get_home_dir();
-        if (FileUtils.test(@"$home/Wallpapers", FileTest.EXISTS)) 
+        if (FileUtils.test(@"$home/Wallpapers", FileTest.EXISTS)) {
             wallpaper_path = @"$home/Wallpapers/badabing.jpg";
-        else
+            description_path = @"$home/Wallpapers/.badabing";
+        }
+        else {
             wallpaper_path = @"$home/Pictures/badabing.jpg";
+            description_path = @"$home/Pictures/.badabing";
+        }
  
         
         /** set globals */
@@ -159,6 +164,9 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             case "ubuntu":
                 desktop_manager = Desktop.Ubuntu;
                 break;
+                case "pantheon":
+                desktop_manager = Desktop.Pantheon;
+                break;
             case "pop":
                 desktop_manager = Desktop.Pop;
                 break;
@@ -176,8 +184,8 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 break;
                 
             default:
-                print(@"Unknown desktop: $desktop\n");
-                critical(@"Unknown desktop: $desktop\n");
+                print(@"BadaBing --desktop error: Unknown desktop: $desktop\n");
+                critical(@"BadaBing --desktop error: Unknown desktop: $desktop\n");
                 Process.exit(1);
         }
 
@@ -259,9 +267,10 @@ public class BadaBing.WallpaperApplication : Gtk.Application
      * Set the registration slot to point to our wallpaper
      */
     public static void initializeDesktop(Desktop desktop_manager) {
+        print(@"initializeDesktop $desktop_manager \n");
         var home = Environment.get_home_dir();
         switch (desktop_manager) {
-            case Desktop.Gnome, Desktop.Ubuntu, Desktop.Pop:
+            case Desktop.Gnome, Desktop.Ubuntu, Desktop.Pop, Desktop.Pantheon:
                 try {
                     print(@"gsettings set org.gnome.desktop.background picture-uri file://$wallpaper_path");
                     Process.spawn_command_line_async (@"gsettings set org.gnome.desktop.background picture-uri file://$wallpaper_path");
@@ -304,7 +313,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                 break;
 
             default:
-                print("unable to determine which desktop manager is in use\n");
+                print("WallpaperApplication::initializeDesktop - unable to determine which desktop manager is in use\n");
                 Process.exit(1);
                 break;
         }
@@ -366,7 +375,16 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             var desktop = Environment.get_variable("DESKTOP_SESSION");
             print(@"DESKTOP_SESSION = $desktop\n");
             var dest = @"$wallpaper_path";
-            if (desktop == "gnome" || desktop == "ubuntu" || desktop == "pop") {
+
+            var desc = File.new_for_path(description_path);
+            if (desc.query_exists()) {
+                File.new_for_path(description_path).delete();
+            }
+            var desc_out = new DataOutputStream(desc.create(FileCreateFlags.NONE));
+            desc_out.put_string(@"$copyright\n");
+            desc_out.put_string(@"$title\n");
+
+            if (desktop == "gnome" || desktop == "ubuntu" || desktop == "pop" || desktop == "pantheon") {
                 print("gnome \n");
                 try {
                     // copy to stadard location
@@ -424,7 +442,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
             print("SIZE = %d, %d\n", screen_width, screen_height);
 
             var data_dir = Environment.get_user_data_dir();
-            if (FileUtils.test(@"$(data_dir)/catlock/themes/badabing/copy.sh", FileTest.EXISTS)) { 
+            if (FileUtils.test(@"$(data_dir)/catlock/themes/badabing.copy.sh", FileTest.EXISTS)) { 
                 /*
                 * Copy to catlock background, resizing to screen dimensions
                 */
@@ -435,7 +453,7 @@ public class BadaBing.WallpaperApplication : Gtk.Application
                     var block_height = 170;
                     var gw = screen_width / 2 - 0.5*block_width;
                     var gh = screen_height / 2 - 0.5*block_height;
-                    var shell_copy = @"bash $(data_dir)/catlock/themes/badabing/copy.sh $(data_dir) $wallpaper_path $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
+                    var shell_copy = @"bash $(data_dir)/catlock/themes/badabing.copy.sh $home $(data_dir) $wallpaper_path $(screen_width) $(screen_height) $(block_width) $(block_height) $(gw) $(gh)";
 
                     Process.spawn_command_line_async (shell_copy);
                 } catch (GLib.Error e) {
